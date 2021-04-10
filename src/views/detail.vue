@@ -25,7 +25,6 @@ import comment from '@/components/Comment.vue'
     },
     data() {
       return {
-        content:`xx`,
         id:this.$route.params.id,
         data:{}
       }
