@@ -39,7 +39,7 @@ import comment from '@/components/Comment.vue'
         }).then(res => {
           console.log(res);
           if(res.data.code === 0 ){
-            this.data = res.data.data
+            this.data = res.data.data;
           }
         })
       }
