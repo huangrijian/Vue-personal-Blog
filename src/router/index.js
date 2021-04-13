@@ -11,6 +11,7 @@ const detail = () => import('@/views/detail.vue')
 const personal = () => import('@/views/Personal.vue')
 const article = () => import('@/views/Article.vue')
 const editArticle = () => import('@/views/ArticleEdit.vue')
+const ArticleLists = () => import('@/components/articleLists/ArticleLists.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
       path:'',
       name:'home',
       component:home
+      },
+      {
+        path:'/ArticleLists',
+        name:'ArticleLists',
+        component:ArticleLists
       },
       {
         path:'/personal',
@@ -71,6 +77,7 @@ const router = new VueRouter({
 
 // 路由守卫 -> 进去路由前
 router.beforeEach((to,from,next) => {
+
   // 由于刷新会丢失登录状态，所以刷新后要从Cookie里获取token再次存放在vuex
    store.commit('setToken',Cookie.get('token'))
   //  判断有无token，有则设置当前状态为登录状态

@@ -48,7 +48,6 @@
             },
             handleEdit(row) {
                 let id = row.id;
-                
                 this.$router.push({name:'editArticle',params: {id:id}})
             },
             handleDelect(row){

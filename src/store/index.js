@@ -10,7 +10,10 @@ export default new Vuex.Store({
   state: {
     //  isSignIn 登录状态，0为未登录
     isSignIn:0,
-    token:''
+    token:'',
+
+    // 所有文章标题
+    articleTitle:[]
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
@@ -19,7 +22,12 @@ export default new Vuex.Store({
     },
     setToken(state,val) {
       state.token = val;
+    },
+
+    setArticleTitle(state,val) {
+      state.articleTitle = val;
     }
+
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 
   actions: {

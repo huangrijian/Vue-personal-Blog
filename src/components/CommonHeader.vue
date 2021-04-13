@@ -16,15 +16,30 @@
             class="nav"
             >
               <el-menu-item index="1" >
-                 <router-link to="/"><i class="iconfont icon-home"></i>首页</router-link>
+                 <router-link to="/"><i class="iconfont icon-home"></i>博客首页</router-link>
               </el-menu-item>
-              <el-menu-item index="2">
-                 <router-link to="/article" v-if="isSignIn === 1">我的博客</router-link>
+              <el-menu-item index="2" >
+                 <router-link to="/ArticleLists"><i class="iconfont icon-home"></i>技术博文</router-link>
               </el-menu-item>
               <el-menu-item index="3" >
+                 <router-link to="/"><i class="iconfont icon-home"></i>生活分享</router-link>
+              </el-menu-item>
+              <el-menu-item index="4" >
+                 <router-link to="/"><i class="iconfont icon-home"></i>博客推荐</router-link>
+              </el-menu-item>
+              <el-menu-item index="5" >
+                 <router-link to="/"><i class="iconfont icon-home"></i>关于我</router-link>
+              </el-menu-item>
+              <el-menu-item index="6" >
+                 <router-link to="/"><i class="iconfont icon-home"></i>留言</router-link>
+              </el-menu-item>
+              <el-menu-item index="7">
+                 <router-link to="/article" v-if="isSignIn === 1">我的博客</router-link>
+              </el-menu-item>
+              <el-menu-item index="8" >
                  <router-link to="/login" v-if="isSignIn === 0" class="login">登录</router-link>
               </el-menu-item>
-               <el-menu-item index="3" >
+               <el-menu-item index="9" >
                  <router-link to="/personal"  v-if="isSignIn === 1"  class="login">{{UserInfo.nickname}},欢迎回来</router-link>
               </el-menu-item>
             </el-menu>
@@ -32,6 +47,7 @@
           </el-col>
         </el-row>
       </div>
+
     </header>
 </template>
 

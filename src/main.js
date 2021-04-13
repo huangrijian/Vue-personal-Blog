@@ -26,6 +26,8 @@ import store from './store/index.js'
 // 挂载到Vue实例上，全局可通过this.$store进行调用
 Vue.prototype.$store = store
 
+// 注册全局事件 --- 事件总线
+Vue.prototype.$EventBus = new Vue()
 
 Vue.config.productionTip = false
 
