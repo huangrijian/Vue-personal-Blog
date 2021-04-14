@@ -16,7 +16,8 @@
             <mavon-editor v-model="content"/>
        </div>
        <div class="save_btn">
-           <el-button type="primary" @click="save">保存</el-button>
+           <el-button type="primary" @click="save">保存为技术文章</el-button>
+           <el-button type="primary" @click="save(1)">保存为生活说说</el-button>
        </div>
     </div>
 </template>
@@ -41,50 +42,78 @@
             goBack(){
                 this.$router.go(-1)
             },
-           save(){
-
+           save(type){
+             
+            //  如果有重复的分类，则返回
              if((this.class01&&this.class01&&this.class01) && (this.class01 === this.class02 || this.class01 === this.class03)){
-                this.$message({
+               return this.$message({
                   message: '请不要填写重复的分类名称',
                   type: 'warning'
                 });
              }else{
-                //  判断当前的保存是新增保存还是编辑保存
-                if(this.$route.params.id){
-                //  如果是编辑保存，则发起更新请求
+                if(type == 0){
+                  // 当类型为生活文章
+                }else if(type == 1) {
+                  // 当类型为说说动态
+
+                  //  如果是新增保存，则发起新增请求
                   let data = {
                     title:this.title,
                     content:this.content,
-                    article_id:this.$route.params.id,
-
                     classname01:this.class01,
                     classname02:this.class02,
                     classname03:this.class03,
-
-                    classid_01:this.classid_01,
-                    classid_02:this.classid_02,
-                    classid_03:this.classid_03
+                    type:type
                   }
-                this.$http.post('/api/article/update',data).then((res) => {
+                  this.$http.post('/api/article/add',data).then((res) => {
                     if(res.data.code === 0 ){
                       this.$router.push({name:'article'})
                     }
-                })
-                }else {
-                //  如果是新增保存，则发起新增请求
-                let data = {
-                  title:this.title,
-                  content:this.content,
-                  classname01:this.class01,
-                  classname02:this.class02,
-                  classname03:this.class03,
-                }
-                this.$http.post('/api/article/add',data).then((res) => {
-                  if(res.data.code === 0 ){
-                    this.$router.push({name:'article'})
-                  }
                   })
+
+
+                }else {
+                  // 当类型为技术文章
+                   //  判断当前的保存是新增保存还是编辑保存
+                    if(this.$route.params.id){
+                      //  如果是编辑保存，则发起更新请求
+                    let data = {
+                      title:this.title,
+                      content:this.content,
+                      article_id:this.$route.params.id,
+
+                      classname01:this.class01,
+                      classname02:this.class02,
+                      classname03:this.class03,
+
+                      classid_01:this.classid_01,
+                      classid_02:this.classid_02,
+                      classid_03:this.classid_03
+                    }
+                  this.$http.post('/api/article/update',data).then((res) => {
+                      if(res.data.code === 0 ){
+                        this.$router.push({name:'article'})
+                      }
+                  })
+                  }else {
+                  //  如果是新增保存，则发起新增请求
+                  let data = {
+                    title:this.title,
+                    content:this.content,
+                    classname01:this.class01,
+                    classname02:this.class02,
+                    classname03:this.class03,
+                  }
+                  this.$http.post('/api/article/add',data).then((res) => {
+                    if(res.data.code === 0 ){
+                      this.$router.push({name:'article'})
+                    }
+                    })
+                  }
                 }
+
+               
+               
              }
 
            

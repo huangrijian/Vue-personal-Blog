@@ -1,6 +1,9 @@
 <template>
   <div id="app">
       <router-view v-if="isRouterShow"></router-view>
+      <div id="bgvid" >
+          <img src="~@/assets/img/bgbg.jpg" alt="">
+      </div>
   </div>
 </template>
 <script>
@@ -25,5 +28,23 @@ export default {
 }
 </script>
 <style lang="scss">
+#app {
+  width: 100%;
+}
+#bgvid { 
+  position: fixed; 
+  right: 0; 
+  bottom: 0; 
+  width: 100%;
+  height: 100%; 
+  width: auto; 
+  height: auto; 
+  z-index: -100; 
+  background-size: cover;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 
+}
 </style>

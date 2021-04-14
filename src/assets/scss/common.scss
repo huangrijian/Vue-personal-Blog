@@ -7,8 +7,36 @@ textarea {
     resize: none;
 }
 
+.maginTop {
+  margin-top: 20px;
+}
+
 .block {
   background-color: rgb(255, 255, 255);
   border-radius: 6px;
   padding: 20px;
+}
+
+// 去除mavon-editor的默认样式
+.v-note-wrapper,
+.v-show-content {
+  border: none !important;
+}
+.v-note-wrapper {
+  min-height: 0!important;
+}
+
+.v-show-content {
+  background-color: white !important;
+  padding: 0px !important;
+}
+.markdown-body pre {
+  padding: 0px !important;
+}
+
+.element::-webkit-scrollbar { width: 0 !important }
+
+
+::-webkit-scrollbar {
+      display: none;
 }

@@ -19,16 +19,16 @@
                  <router-link to="/"><i class="iconfont icon-home"></i>博客首页</router-link>
               </el-menu-item>
               <el-menu-item index="2" >
-                 <router-link to="/ArticleLists"><i class="iconfont icon-home"></i>技术博文</router-link>
+                 <router-link to="/Lists"><i class="iconfont icon-home"></i>技术博文</router-link>
               </el-menu-item>
               <el-menu-item index="3" >
-                 <router-link to="/"><i class="iconfont icon-home"></i>生活分享</router-link>
+                 <router-link to="/timeLocus"><i class="iconfont icon-home"></i>时间轨迹</router-link>
               </el-menu-item>
               <el-menu-item index="4" >
-                 <router-link to="/"><i class="iconfont icon-home"></i>博客推荐</router-link>
+                 <router-link to="/recommend"><i class="iconfont icon-home"></i>博客推荐</router-link>
               </el-menu-item>
               <el-menu-item index="5" >
-                 <router-link to="/"><i class="iconfont icon-home"></i>关于我</router-link>
+                 <router-link to="/aboutMe"><i class="iconfont icon-home"></i>关于我</router-link>
               </el-menu-item>
               <el-menu-item index="6" >
                  <router-link to="/"><i class="iconfont icon-home"></i>留言</router-link>

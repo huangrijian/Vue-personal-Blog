@@ -11,7 +11,10 @@ const detail = () => import('@/views/detail.vue')
 const personal = () => import('@/views/Personal.vue')
 const article = () => import('@/views/Article.vue')
 const editArticle = () => import('@/views/ArticleEdit.vue')
-const ArticleLists = () => import('@/components/articleLists/ArticleLists.vue')
+const Lists = () => import('@/views/List.vue')
+const timeLocus = () => import('@/views/timeLocus.vue')
+const aboutMe = () => import('@/views/aboutMe.vue')
+const recommend = () => import('@/views/recommend.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -26,9 +29,9 @@ const routes = [
       component:home
       },
       {
-        path:'/ArticleLists',
-        name:'ArticleLists',
-        component:ArticleLists
+        path:'/Lists',
+        name:'Lists',
+        component:Lists
       },
       {
         path:'/personal',
@@ -38,6 +41,21 @@ const routes = [
           // 需要登录权限
           requireAuth:true
         }
+      },
+      {
+        path:'/aboutMe',
+        name:'aboutMe',
+        component:aboutMe
+      },
+      {
+        path:'/recommend',
+        name:'recommend',
+        component:recommend
+      },
+      {
+        path:'/timeLocus',
+        name:'timeLocus',
+        component:timeLocus
       },
       {
         path:'/detail/:id',

@@ -10,7 +10,10 @@
         <mavon-editor v-model="data.content"
           defaultOpen="preview"
           :toolbarsFlag="false"
-          :subfield="false">
+          :subfield="false"
+          codeStyle="atom-one-dark"
+          :boxShadow="false"
+          >
         </mavon-editor>
       </div>
   </div>
