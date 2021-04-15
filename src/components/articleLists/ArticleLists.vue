@@ -2,7 +2,7 @@
   <div>
      <div class="wrapper">
         <el-row :gutter="10" class="maginTop">
-        <el-col :xs="8" :sm="6" :md="4" :lg="18" :xl="18">
+        <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
           <div class="grid-content bg-purple">
             <div class="block">
               <!-- 标题 -->
@@ -36,7 +36,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="4" :sm="6" :md="8" :lg="6" :xl="6">
+        <el-col :lg="6" :xl="6">
           <div class="grid-content bg-purple-light synopsis">
             <div class="block">
               5
@@ -81,7 +81,7 @@ li {
   .image {
     flex: 1.5;
     img {
-      width: 100%;
+      width: 200px;
       border-radius: 5px;
     }
   }

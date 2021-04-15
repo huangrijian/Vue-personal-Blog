@@ -3,7 +3,7 @@
     <div class="wrapper">
       <!-- 版头 -->
       <el-row :gutter="10" class="head">
-        <el-col :xs="8" :sm="6" :md="4" :lg="18" :xl="18">
+        <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
           <div class="grid-content bg-purple">
             <!-- 轮播图 -->
             <el-carousel trigger="click" height="180px">
@@ -13,7 +13,7 @@
             </el-carousel>
           </div>
           </el-col>
-        <el-col :xs="4" :sm="6" :md="8" :lg="6" :xl="6">
+        <el-col :lg="6" :xl="6">
           <div class="grid-content bg-purple-light synopsis">
             <!-- 个人简介 -->
             <div class="block">
@@ -34,7 +34,7 @@
      
        <el-row :gutter="10" >
           <!-- 博客列表 -->
-        <el-col :xs="8" :sm="6" :md="4" :lg="18" :xl="18" class="BlogList">
+        <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18" class="BlogList">
           <div class="grid-content bg-purple">
             <div class="block">
               <!-- 小标题组件 -->
@@ -45,7 +45,7 @@
           </div>
           </el-col>
           <!-- 右侧 -->
-        <el-col :xs="4" :sm="6" :md="8" :lg="6" :xl="6" class="rightBox">
+        <el-col :lg="6" :xl="6" class="rightBox">
           <div class="grid-content bg-purple-light">
             <!-- 文章分类标签 -->
             <div class="block">
@@ -58,10 +58,6 @@
           </div>
           </el-col>
       </el-row>
-
-      <!-- 博客列表 -->
-      <div class="main">
-      </div>
     </div>
   </div>
 </template>
@@ -128,7 +124,7 @@ export default {
   methods:{
     // 获取所有文章
     GetAllArticle(){
-     this.$http.get('/api/article/allList').then(res => {
+     this.$http.get('/api/article/allList',{params:{curPage:1,pageSize:9}}).then(res => {
         if(res.data.code === 0){
           // 获取文章数组
           this.AllArticle = res.data.data

@@ -3,7 +3,7 @@
     <ul class="BlogUl">
       <li class="liItem" :key="index" v-for="(item,index) in AllArticle" @click="GotoArticleDetail(item.id)">
         <div class="img">
-          <img src="https://www.zhangqinblog.com//files/learnShare/images/2019-06-20-1.png" alt="">
+          <img :src="item.pic_url" alt="">
         </div>
         <div class="title">{{item.title}}</div>
         <div class="brief">{{item.content}}</div>
@@ -30,6 +30,11 @@
         return val.slice(0,10)
       },
 
+    },
+    watch:{
+      AllArticle(val){
+        console.log("文章数据",val);
+      }
     },
     data() {
       return {
@@ -70,7 +75,7 @@
         transition: all 0.6s;
       }
       img:hover{
-        transform: scale(1.1);
+        transform: scale(1.2);
       }
 
     }

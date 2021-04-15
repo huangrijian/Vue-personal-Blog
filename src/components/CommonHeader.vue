@@ -36,10 +36,10 @@
               <el-menu-item index="7">
                  <router-link to="/article" v-if="isSignIn === 1">我的博客</router-link>
               </el-menu-item>
-              <el-menu-item index="8" >
+              <!-- <el-menu-item index="8" >
                  <router-link to="/login" v-if="isSignIn === 0" class="login">登录</router-link>
-              </el-menu-item>
-               <el-menu-item index="9" >
+              </el-menu-item> -->
+               <el-menu-item index="8" >
                  <router-link to="/personal"  v-if="isSignIn === 1"  class="login">{{UserInfo.nickname}},欢迎回来</router-link>
               </el-menu-item>
             </el-menu>
@@ -124,4 +124,5 @@ header {
 .el-menu.el-menu--horizontal {
    border-bottom: 0
 }
+
 </style>

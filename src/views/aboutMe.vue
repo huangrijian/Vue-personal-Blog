@@ -14,9 +14,9 @@
             <p><span>希望看到这里的你也不要轻易地放弃</span></p>
             <p><span>这条路上的你并不是孤军奋战，有千千万万的猿在陪你前行</span></p>
             <p><span>联系方式：linsanity9236@163.com</span></p>
-            <div class="bottom">
+            <!-- <div class="bottom">
               本博客已经开源，源码上传到gitee。本博客前端采用vue+element-ui+axios、MVVM架构模式，后端采用nodejs+express+mysql。如果有不清楚的欢迎来信。
-            </div>
+            </div> -->
      </div>
     </div>
   </div>
@@ -30,6 +30,9 @@
 
 <style lang="scss" scoped>
   .aboutMe {
+    background-color: rgba(0, 0, 0,0);
+    color: #fff;
+    margin-bottom: 350px;
     .avatar {
       display: flex;
       justify-content: center;

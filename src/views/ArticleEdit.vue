@@ -11,6 +11,20 @@
           <el-input v-model="class02" size="mini" placeholder="分类2"></el-input>
           <el-input v-model="class03" size="mini" placeholder="分类3"></el-input>
         </div>
+        <!-- 上传封面 -->
+        <div>
+          <el-upload
+            class="avatar-uploader"
+            action="http://127.0.0.1:3000/api/article/upload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            name="head_img"
+            >
+            <img :src="imageUrl?imageUrl:defaultAvatar" class="avatar">
+          </el-upload>
+        </div>
+        <!-- 文章内容 -->
        <div class="edit_title">文章内容 (Markdown编辑器)</div>
        <div class="markdown">
             <mavon-editor v-model="content"/>
@@ -35,10 +49,29 @@
 
                 classid_01:'',
                 classid_02:'',
-                classid_03:''
+                classid_03:'',
+
+                imageUrl:'',
+                defaultAvatar:require("@/assets/img/avatar.jpg"),
             }
         },
         methods:{
+          // 封面上传相关方法
+       handleAvatarSuccess(res) {
+          this.imageUrl = res.data
+        },
+        beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+          return isJPG && isLt2M;
+        },
             goBack(){
                 this.$router.go(-1)
             },
@@ -70,8 +103,6 @@
                       this.$router.push({name:'article'})
                     }
                   })
-
-
                 }else {
                   // 当类型为技术文章
                    //  判断当前的保存是新增保存还是编辑保存
@@ -88,7 +119,9 @@
 
                       classid_01:this.classid_01,
                       classid_02:this.classid_02,
-                      classid_03:this.classid_03
+                      classid_03:this.classid_03,
+
+                      pic_url:this.imageUrl
                     }
                   this.$http.post('/api/article/update',data).then((res) => {
                       if(res.data.code === 0 ){
@@ -103,6 +136,7 @@
                     classname01:this.class01,
                     classname02:this.class02,
                     classname03:this.class03,
+                    pic_url:this.imageUrl
                   }
                   this.$http.post('/api/article/add',data).then((res) => {
                     if(res.data.code === 0 ){
@@ -111,12 +145,7 @@
                     })
                   }
                 }
-
-               
-               
-             }
-
-           
+             }       
            },
           //  获取文章详情
             getDetail() {
@@ -179,5 +208,10 @@
     margin: 0 10px 0 0 ;
     width: 10%;
   }
+}
+
+// 封面
+.avatar {
+  width: 200px;
 }
 </style>
