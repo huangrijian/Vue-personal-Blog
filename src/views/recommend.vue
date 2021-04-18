@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper maginTop">
+    <div class="wrapper marginTop">
       <div class="block recommend">
         <title-box title="优秀博客"></title-box>
         <div>

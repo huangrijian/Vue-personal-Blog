@@ -4,13 +4,20 @@
       <!-- 版头 -->
       <el-row :gutter="10" class="head">
         <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
-          <div class="grid-content bg-purple">
+          <div class="grid-content bg-purple slideshowBox">
             <!-- 轮播图 -->
-            <el-carousel trigger="click" height="180px">
-              <el-carousel-item v-for="item in 4" :key="item">
-                <img class="headImg" src="https://www.zhangqinblog.com//files/learnShare/images/2019-9-3-1.jpg" alt="">
+            <el-carousel trigger="click" height="260px" class="slideshow">
+              <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
+                <img class="headImg" :src="item.pic_url" alt="">
               </el-carousel-item>
             </el-carousel>
+
+            <div class="block">
+              <div class="img1" :key="index" v-for="(item,index) in headerArticle">
+                <img :src="item.pic_url" alt="">
+                <div class="tit">{{item.title}}</div>
+              </div>
+            </div>
           </div>
           </el-col>
         <el-col :lg="6" :xl="6">
@@ -78,6 +85,11 @@ export default {
     return {
       AllArticle:[],
       AllArticleClassName:[],
+      // 轮播图数据
+      LbtArticle:[],
+      // 头部文章数据
+      headerArticle:[],
+
         // 音频列表
         audio:  [
             {
@@ -127,7 +139,12 @@ export default {
      this.$http.get('/api/article/allList',{params:{curPage:1,pageSize:9}}).then(res => {
         if(res.data.code === 0){
           // 获取文章数组
-          this.AllArticle = res.data.data
+          this.AllArticle = res.data.data;
+          // 截取一部分给轮播图展示
+          this.LbtArticle = res.data.data.slice(0,6)
+          // 截取一部分给轮播图右边的盒子
+          this.headerArticle = res.data.data.slice(6,8)
+          // 标题数组
           let titleArry = []
           let titleidArry = []
           // 获取文章id和标题
@@ -177,13 +194,60 @@ export default {
 }
 .headImg {
   width: 100%;
+  transform: translateY(-60px);
 }
+// 轮播图
+.slideshowBox {
+  display: flex;
+  .slideshow {
+    flex: 2;
+    border-radius: 5px;
+  }
+  .block {
+    margin-left: 10px;
+    flex: 1;
+    padding: 0;
+    background-color: rgba(233, 233, 233,0);
+  }
+}
+// 轮播图旁边的盒子
+.block .img1 {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  img {
+    width: 100%;
+    border-radius: 5px;
+    height: 128px;
+    transition: all 0.6s;
+    cursor:pointer;
+  }
+  .tit {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: rgb(228, 225, 225);
+    width: 100%;
+    text-align: center;
+  }
+  img:hover {
+    transform: scale(1.2);
+  }
+
+}
+
+
+.el-carousel__container {
+    height: 250px!important;
+}
+
 .head {
   margin-top: 20px;
   // 个人简介
   .synopsis {
-    height:180px;
-
+    height:260px;
     .block {
       height: 100%;
       background-color: rgb(78, 78, 78);

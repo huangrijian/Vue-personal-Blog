@@ -7,7 +7,7 @@ textarea {
     resize: none;
 }
 
-.maginTop {
+.marginTop {
   margin-top: 20px;
 }
 
@@ -39,4 +39,11 @@ textarea {
 
 ::-webkit-scrollbar {
       display: none;
+}
+
+// 弹框
+.el-dialog__wrapper .tankuang {
+  background: url('~@/assets/img/555.png')!important;
+  width: 50%!important;
+  height: 70%!important;
 }

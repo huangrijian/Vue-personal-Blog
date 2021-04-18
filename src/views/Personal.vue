@@ -29,7 +29,7 @@
 </template>
 
 <script>
-
+  import Cookie from 'js-cookie'
   export default {
     data() {
       return {
@@ -58,19 +58,34 @@
         return isJPG && isLt2M;
       },
       exit(){
-        this.$router.push({name:'home'})
+        Cookie.set('token','')
+        this.$router.push({path:'/'})
+        location.reload();
       },
+      // 获取用户信息
       GetInfo(){
          this.$http.get('/api/users/info').then( (res) => {
            console.log(res);
+          //  获取用户头像地址
            this.nickname = res.data.data.nickname
-           if(res.data.data.head_img === '' || res.data.data.head_img === ''){
+           if(res.data.data.head_img === '' || res.data.data.head_img === null){
              this.imageUrl = ''
            }else {
              this.imageUrl = res.data.data.head_img
            }
          })
+      },
+      // 更新用户信息
+      onSubmit(){
+        this.$http.post('/api/users/updateUser',{
+          nickname:this.nickname,
+          head_img:this.imageUrl
+        }).then(res => {
+          console.log(res);
+          location.reload();
+        })
       }
+
     },
     created(){
       this.GetInfo();

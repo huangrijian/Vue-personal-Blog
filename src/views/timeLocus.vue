@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper maginTop">
+    <div class="wrapper marginTop">
       <el-row :gutter="10">
         <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
           <div class="grid-content bg-purple">

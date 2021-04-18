@@ -1,7 +1,7 @@
 <template>
   <div>
      <div class="wrapper">
-        <el-row :gutter="10" class="maginTop">
+        <el-row :gutter="10" class="marginTop">
         <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
           <div class="grid-content bg-purple">
             <div class="block">
@@ -13,7 +13,7 @@
                   <div class="title">{{item.title}}</div>
                   <div class="content">
                     <div class="image">
-                       <img src="https://www.zhangqinblog.com//files/lifeDribs/images/2020-4-1.jpg" alt="">
+                       <img :src="item.pic_url" alt="">
                     </div>
                     <div class="describe">
                       <p>{{item.content}}</p>
@@ -79,10 +79,17 @@ li {
 .content {
   display: flex;
   .image {
-    flex: 1.5;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor:pointer;
     img {
       width: 200px;
-      border-radius: 5px;
+      height: 130px;
+      
+      transition: all 0.4s;
+    }
+    img:hover {
+      transform: scale(1.3);
     }
   }
   .describe {

@@ -7,14 +7,14 @@
         <el-input v-model="form.name"></el-input>
       </el-form-item>
        <el-form-item prop="password">
-        <el-input v-model="form.password"></el-input>
+        <el-input v-model="form.password" @keyup.enter.native="onSubmit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button class="login" type="primary" @click="onSubmit">登录</el-button>
       </el-form-item>
-      <!-- <el-form-item>
+      <el-form-item>
         <p>还没注册？去<span class="sign" @click="sign">注册</span></p>
-      </el-form-item> -->
+      </el-form-item>
     </el-form>
     </div>
    
@@ -122,12 +122,17 @@
       }
     },
     methods:{
-
+      // 注册
       register(){
         let data = {"username":this.regform.regname,"nickname":this.regform.nickname,"password":this.regform.pass};
         this.$http.post('/api/users/register',data)
         .then(res=>{
-            console.log(res);           
+            if(res.data.code == -1 ){
+               this.$message({
+                message: '用户名或昵称已存在，请重新注册',
+                type: 'warning'
+              });
+            }  
         })
       },
 
@@ -193,8 +198,9 @@
     width: 100%;
   }
   .sign {
-    font-size: 16px;
-    color: rgb(25, 146, 202);
+    font-size: 25px;
+    color: rgb(18, 217, 243);
+    font-weight: 600;
   }
 }
 </style>

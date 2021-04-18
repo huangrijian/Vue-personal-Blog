@@ -31,17 +31,10 @@
       },
 
     },
-    watch:{
-      AllArticle(val){
-        console.log("文章数据",val);
-      }
-    },
     data() {
       return {
-        that:this,
       }
     },
-
     methods:{
           // 去文章详情
       GotoArticleDetail(id){

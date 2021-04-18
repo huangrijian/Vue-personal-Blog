@@ -3,7 +3,7 @@
     <h2>{{data.title}}</h2>
       <div class="timeBox">
         <span v-if="data.create_time" class="timer"><i class="iconfont icon-date"></i>{{data.create_time | timer()}}</span>
-        <span><i class="el-icon-view"></i>763</span>
+        <span><i class="el-icon-view"></i>{{data.visited}}</span>
       </div>
       <!-- 具体文章内容 -->
       <div class="detail">

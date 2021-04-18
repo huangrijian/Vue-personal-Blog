@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper maginTop">
+    <div class="wrapper marginTop">
      <div class="block aboutMe">
        <div class="avatar">
          <img src="https://avatar.csdnimg.cn/C/8/0/0_gg1234561123_1614580696.jpg" alt="">

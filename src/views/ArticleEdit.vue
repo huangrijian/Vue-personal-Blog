@@ -166,8 +166,8 @@
                         this.classid_02 = res.data.data.classify_id02
                         this.classid_03 = res.data.data.classify_id03
 
-                        console.log("this.classid_01",this.classid_01);
-                        console.log("文章详情",res);
+                        // 获取文章封面pic_url:this.imageUrl
+                        this.imageUrl = res.data.data.pic_url
                     }
                 }).catch(e=>{
                     console.log(e)

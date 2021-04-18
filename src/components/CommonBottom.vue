@@ -3,11 +3,11 @@
     <div class="conent">
       <div class="pic">
         <div>
-          <img src="https://www.zhangqinblog.com//templates/Images/weixin_code.png" alt="">
-          <p>微信公众号</p>
+          <img src="~@/assets/img/wx.jpg" alt="">
+          <p>微信号</p>
         </div>
-        <div>
-          <img src="https://www.zhangqinblog.com//templates/Images/weixin_code.png" alt="">
+         <div>
+          <img src="~@/assets/img/wx.jpg" alt="">
           <p>微信号</p>
         </div>
       </div>
@@ -46,7 +46,7 @@
   background-color: #373D41;
   position: relative;
   .conent {
-    margin-top: 20px;
+    margin-top: 10px;
     position:absolute;
     left: 50%;
     top: 50%;
