@@ -82,10 +82,11 @@ li {
     overflow: hidden;
     border-radius: 5px;
     cursor:pointer;
+    width: 200px;
+    height: 130px;
     img {
-      width: 200px;
-      height: 130px;
-      
+      width: 100%;
+      height: 100%;
       transition: all 0.4s;
     }
     img:hover {

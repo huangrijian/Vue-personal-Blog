@@ -9,14 +9,15 @@
             <el-carousel trigger="click" height="260px" class="slideshow">
               <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
                 <div class="slideshowBox">
-                  <img class="headImg" :src="item.pic_url" alt="">
+                  <img class="headImg" @click="GotoDetail(item.id)" :src="item.pic_url" alt="">
+                  <div class="title threed">{{item.title}}</div>
                 </div>
               </el-carousel-item>
             </el-carousel>
 
             <div class="block">
               <div class="img1" :key="index" v-for="(item,index) in headerArticle">
-                <img :src="item.pic_url" alt="">
+                <img :src="item.pic_url" @click="GotoDetail(item.id)" alt="">
                 <div class="tit">{{item.title}}</div>
               </div>
             </div>
@@ -34,6 +35,24 @@
               </div>
               <div>
                 <!-- 按钮区域 -->
+                <ul class="buttonBox">
+                  <li class="item">
+                    <a href="javascript:;" title="个人微信号" class="item-wx"></a>
+                    <img class="pic" src="http://localhost:8080/img/wx.1b785c2b.jpg" alt="">
+                  </li>
+                   <li class="item">
+                    <a href="javascript:;" target="_blank" title="个人邮箱地址" class="item-e-mail"></a>
+                    <img class="pic" src="http://localhost:8080/img/wx.1b785c2b.jpg" alt="">
+                  </li>
+                  <li class="item">
+                    <a href="https://gitee.com/huang-rijian" title="gitee主页" target="_blank" class="item-git"></a>
+                  </li>
+                  <li class="item">
+                    <a href="javascript:;" title="个人企鹅号" class="item-qq"></a>
+                    <img class="pic" src="http://localhost:8080/img/wx.1b785c2b.jpg" alt="">
+                  </li>
+                </ul>
+                <p class="threed">黄先森个人博客站</p>
               </div>
             </div>
           </div>
@@ -136,6 +155,9 @@ export default {
     }
   },
   methods:{
+    GotoDetail(id){
+      this.$router.push({path:'detail/'+id})
+    },
     // 获取所有文章
     GetAllArticle(){
      this.$http.get('/api/article/allList',{params:{curPage:1,pageSize:9}}).then(res => {
@@ -199,8 +221,27 @@ export default {
   transform: translateY(-60px);
 }
 // 轮播图
+.slideshowBox :hover .title {
+  opacity: 1;
+ 
+}
 .slideshowBox {
   display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: center;
+  align-content: center;
+  cursor:pointer;
+  .title {
+    font-size: 40px!important;
+    padding: 25px;
+    color: #fff;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    top: 60px;
+     transition: all 0.5s;
+  }
   .slideshow {
     flex: 2;
     border-radius: 5px;
@@ -211,6 +252,82 @@ export default {
     padding: 0;
     background-color: rgba(233, 233, 233,0);
   }
+}
+
+.buttonBox {
+  display: flex;
+  margin-top: 20px;
+  .item {
+    margin: 0 5px;
+    cursor:pointer;
+    position: relative;
+    a {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: aliceblue;
+    }
+    .item-e-mail {
+      background: url('~@/assets/img/e-mail.png') no-repeat;
+      background-position: 9px 9px;
+      background-size: 65%;
+      background-color: #fff;
+    }
+    .item-wx {
+      background: url('~@/assets/img/wxx.png') no-repeat;
+      background-position: 5px 5px;
+      background-size: 80%;
+      background-color: #fff;
+    }
+    .item-git {
+      background: url('~@/assets/img/git.png') no-repeat;
+      background-position: 5px 5px;
+      background-size: 80%;
+      background-color: #fff;
+    }
+    .item-qq {
+      background: url('~@/assets/img/qq.png') no-repeat;
+      background-position: 5px 5px;
+      background-size: 80%;
+      background-color: #fff;
+    }
+    img {
+      width: 60px;
+      transition: all 0.5s;
+      opacity: 0;
+      position: absolute;
+      top: -70px;
+      left: -5px;
+    }
+  }
+}
+
+// 特效字体
+.threed{
+color: #fafafa;
+letter-spacing: 0;
+font-size: 25px!important;
+text-align: center;
+margin-top: 23px!important;
+text-shadow: 
+    0px 1px 0px #999, 
+    0px 2px 0px #888, 
+    0px 3px 0px #777, 
+    0px 4px 0px #666, 
+    0px 5px 0px #555, 
+    0px 6px 0px #444, 
+    0px 7px 0px #333, 
+    0px 8px 7px #001135 
+}
+
+// 鼠标悬浮，显示图片
+ .buttonBox .item a:hover {
+   box-shadow: 0 0 15px rgb(255, 255, 255);
+ }
+ .buttonBox .item:hover .pic {
+    opacity: 1;
+    box-shadow: 0 0 6px rgb(255, 255, 255);
 }
 // 轮播图旁边的盒子
 .block .img1 {
@@ -255,7 +372,7 @@ export default {
       background-color: rgb(78, 78, 78);
       h2 {
         padding-bottom: 10px;
-        color: rgb(161, 160, 160);
+        color: rgb(214, 211, 211);
       }
       p {
         margin: 10px 0;

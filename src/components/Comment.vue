@@ -39,6 +39,7 @@
                               <span class="My-new-icondianzan" @click="clickLike(item.commentId,$event)"><i class="el-icon-thumb"></i>999</span>
                               <span class="vertical">|</span>
                               <span>回复</span>
+                              <span class="delete" v-if="thisNickName === '怪蜀黍'"  @click="handleDelect(item.id)">删除</span>
                           </div>
                       </div>
                   </div>
@@ -52,6 +53,7 @@
 <script>
 import Cookie from 'js-cookie'
   export default {
+    inject: ['reload'],
     props:['articleId'],
     data() {
       return {
@@ -60,9 +62,45 @@ import Cookie from 'js-cookie'
 
         imageUrl:sessionStorage.getItem("avatar"),
         defaultAvatar:require("@/assets/img/pl.jpg"),
+
+        thisNickName:sessionStorage.getItem("nickname"),
       }
     },
     methods:{
+
+     handleDelect(id) {
+        this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            // 发起删除的网络请求
+                    this.$http.post('/api/comment/delete',{
+                        comment_id:id
+                    })
+                    .then(res => {
+                        if(res.data.code === 0){
+                            //发起删除请求操作
+                            this.$message({
+                                type: 'success',
+                                message: `评论删除成功!`
+                            });
+                            setTimeout(() => {
+                                this.reload()
+                            }, 500);  
+                        }
+                    }).catch(e=>{
+                        console.log(e)
+                    })
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      },
+
       GotoLogin(){
         this.$router.push({name:'login'})
       },
@@ -192,6 +230,11 @@ import Cookie from 'js-cookie'
                     }
                     .vertical {
                         margin: 0 10px;
+                    }
+                    .delete {
+                      margin-right: 10px;
+                      color: skyblue;
+                      cursor:pointer
                     }
                 }
             }

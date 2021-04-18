@@ -3,7 +3,7 @@
     <div class="wrapper marginTop">
      <div class="block aboutMe">
        <div class="avatar">
-         <img src="https://avatar.csdnimg.cn/C/8/0/0_gg1234561123_1614580696.jpg" alt="">
+         <img src="https://portrait.gitee.com/uploads/avatars/user/2763/8289321_huang-rijian_1614261509.png!avatar100" alt="">
        </div>
             <p><span>黄日健</span></p>
             <p><span>男、99后</span></p>

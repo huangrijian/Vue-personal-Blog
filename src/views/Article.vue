@@ -57,14 +57,12 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-
                   this.$message({
                     type: 'success',
                     message: `文章删除成功!`
                   });
-
                     // 发起删除的网络请求
-                    this.$axios.post('/api/article/delete',{
+                    this.$http.post('/api/article/delete',{
                         article_id:id
                     })
                     .then(res => {
@@ -76,7 +74,7 @@
                             });
                             setTimeout(() => {
                                 location.reload()
-                            }, 1500);  
+                            }, 500);  
                         }
                     }).catch(e=>{
                         console.log(e)
