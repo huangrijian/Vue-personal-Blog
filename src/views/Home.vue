@@ -38,18 +38,17 @@
                 <ul class="buttonBox">
                   <li class="item">
                     <a href="javascript:;" title="个人微信号" class="item-wx"></a>
-                    <img class="pic" src="http://localhost:8080/img/wx.1b785c2b.jpg" alt="">
+                    <img class="pic" src="~@/assets/img/wx.jpg" alt="">
                   </li>
                    <li class="item">
                     <a href="javascript:;" target="_blank" title="个人邮箱地址" class="item-e-mail"></a>
-                    <img class="pic" src="http://localhost:8080/img/wx.1b785c2b.jpg" alt="">
                   </li>
                   <li class="item">
                     <a href="https://gitee.com/huang-rijian" title="gitee主页" target="_blank" class="item-git"></a>
                   </li>
                   <li class="item">
                     <a href="javascript:;" title="个人企鹅号" class="item-qq"></a>
-                    <img class="pic" src="http://localhost:8080/img/wx.1b785c2b.jpg" alt="">
+                    <img class="pic" src="~@/assets/img/myqq.jpg" alt="">
                   </li>
                 </ul>
                 <p class="threed">黄先森个人博客站</p>
@@ -82,7 +81,7 @@
             </div>
 
             <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-            <aplayer :music="audio[0]" :list="audio"  :showlrc="true"></aplayer>
+              <aplayer :music="audio[0]" :list="audio"  :showlrc="true"></aplayer>
           </div>
           </el-col>
       </el-row>
