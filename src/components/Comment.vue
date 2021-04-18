@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="comment-box">
-      <div v-if="isSignIn === 0" class="signInText">登录留言吧</div>
+      <div v-if="isSignIn === 0" class="signInText"><span class="login" @click="GotoLogin">登录</span>留言吧</div>
         <div class="bottom">
           <div class="dec">
               <span>共<span class="commentTotal">{{commentArray.length}}</span>条留言</span>
           </div>
           <div class="CommentInput">
-              <img :src="head_img" alt="">
+              <img  :src="imageUrl?imageUrl:defaultAvatar"  alt="">
               <el-input
               type="textarea"
               :rows="3"
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie'
   export default {
     props:['articleId'],
     data() {
@@ -57,11 +58,14 @@
         commentArray:[],
         textarea:'',
 
-        head_img:sessionStorage.getItem("avatar")
-
+        imageUrl:sessionStorage.getItem("avatar"),
+        defaultAvatar:require("@/assets/img/pl.jpg"),
       }
     },
     methods:{
+      GotoLogin(){
+        this.$router.push({name:'login'})
+      },
       // 获取文章评论
       GetArticleComment(){
         if(this.articleId){
@@ -81,16 +85,24 @@
       },
       // 发送评论
       SendComment(textarea){
-        // 发起评论请求
-        this.$http.post('/api/comment/publish',{
-          content:textarea,
-          // 有则发送文章id，无则发送0
-          article_id:this.articleId ? this.articleId:0
-        }).then(res => {
-          this.GetArticleComment();
-          this.textarea = ''
-        })
-      },
+         if(Cookie.get('token')){
+            // 发起评论请求
+            this.$http.post('/api/comment/publish',{
+              content:textarea,
+              // 有则发送文章id，无则发送0
+              article_id:this.articleId ? this.articleId:0
+            }).then(res => {
+              this.GetArticleComment();
+              this.textarea = ''
+            })
+          }else {
+            this.$message({
+                message: '请登录后进行操作',
+                type: 'warning'
+              });
+              this.$router.push({name:'login'})
+          }
+      }
     },
     computed:{
       // 查询登录状态
@@ -207,6 +219,15 @@
 .My-new-icondianzan {
       // 鼠标小手
   cursor:pointer;
+}
+
+.signInText {
+   margin-bottom: 10px;
+   .login {
+    // 鼠标小手
+    cursor:pointer;
+    color: skyblue;
+  }
 }
 
 </style>

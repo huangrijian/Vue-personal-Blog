@@ -58,7 +58,10 @@
         return isJPG && isLt2M;
       },
       exit(){
+        // 清除Cookie
         Cookie.set('token','')
+        // 清除sessionStorage
+        sessionStorage.clear();
         this.$router.push({path:'/'})
         location.reload();
       },

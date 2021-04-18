@@ -7,13 +7,14 @@
         <el-input v-model="form.name"></el-input>
       </el-form-item>
        <el-form-item prop="password">
-        <el-input v-model="form.password" @keyup.enter.native="onSubmit"></el-input>
+        <el-input type="password" v-model="form.password" @keyup.enter.native="onSubmit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button class="login" type="primary" @click="onSubmit">登录</el-button>
       </el-form-item>
       <el-form-item>
-        <p>还没注册？去<span class="sign" @click="sign">注册</span></p>
+        <span>还没注册？去<span class="sign" @click="sign">注册</span></span>
+        <span>随便看看？去<span class="sign" @click="Gohome">主页</span></span>
       </el-form-item>
     </el-form>
     </div>
@@ -40,6 +41,7 @@
       </el-form-item>
       <el-form-item>
         <p>注册完成？去<span class="sign" @click="Gotologin">登录</span></p>
+        <span>随便看看？去<span class="sign" @click="Gohome">主页</span></span>
       </el-form-item>
     </el-form>
     </div>
@@ -132,8 +134,18 @@
                 message: '用户名或昵称已存在，请重新注册',
                 type: 'warning'
               });
-            }  
+            }else {
+                this.$message({
+                message: '注册成功',
+                type: 'success'
+              });
+              this.status = 1;
+            }
         })
+      },
+      // 去主页
+      Gohome(){
+        this.$router.push({name:'home'})
       },
 
     Gotologin(){
@@ -201,6 +213,7 @@
     font-size: 25px;
     color: rgb(18, 217, 243);
     font-weight: 600;
+    margin-right: 15px;
   }
 }
 </style>

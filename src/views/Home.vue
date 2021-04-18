@@ -8,7 +8,9 @@
             <!-- 轮播图 -->
             <el-carousel trigger="click" height="260px" class="slideshow">
               <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
-                <img class="headImg" :src="item.pic_url" alt="">
+                <div class="slideshowBox">
+                  <img class="headImg" :src="item.pic_url" alt="">
+                </div>
               </el-carousel-item>
             </el-carousel>
 
