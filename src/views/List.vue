@@ -57,7 +57,7 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
       })
       }else {
         // 获取全部文章信息
-        this.$http.get('/api/article/allList',{params:{curPage:curPage,pageSize:pageSize}}).then(res => {
+        this.$http.get('/api/article/typeList',{params:{curPage:curPage,pageSize:pageSize}}).then(res => {
         if(res.data.code === 0){
           // 获取文章数组
           this.AllArticle = res.data.data;

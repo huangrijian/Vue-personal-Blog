@@ -3,7 +3,7 @@
       <div class="wrapper">
         <el-row>
           <el-col :span="4">
-            <div class="logo">阿健博客</div>
+            <div class="logo threed">黄先森个人博客站</div>
           </el-col>
           <el-col :span="20">
             <!-- 导航菜单 -->

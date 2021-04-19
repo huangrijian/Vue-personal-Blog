@@ -196,6 +196,7 @@ import Cookie from 'js-cookie'
         margin-bottom: 55px;
         img {
             width: 75px;
+            height: 75px;
             margin: 0 15px;
             border-radius: 5px;
         }

@@ -34,7 +34,9 @@ import titleBox from '../components/TitleBox/titleBox.vue'
         ArrayStudy:[
           {name:"网道 / WangDoc.com",url:"https://wangdoc.com/javascript/"},
           {name:"阿里图标",url:"https://www.iconfont.cn/"},
-          {name:"W3school",url:"https://www.w3school.com.cn/html/index.asp"},]
+          {name:"W3school",url:"https://www.w3school.com.cn/html/index.asp"},
+          {name:'在线编码平台 codepen.io',url:"https://codepen.io/"}
+          ]
       }
     },
 

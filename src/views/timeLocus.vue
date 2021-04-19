@@ -27,7 +27,7 @@
         <el-col  :lg="6" :xl="6">
           <div class="grid-content bg-purple-light synopsis">
             <div class="block">
-              5
+              
             </div>
             </div>
         </el-col>
@@ -49,7 +49,7 @@
     methods:{
         // 获取所有文章
       GetAllArticle(){
-      this.$http.get('/api/article/allList').then(res => {
+      this.$http.get('/api/article/typeList',{params:{type:1}}).then(res => {
           if(res.data.code === 0){
             // 获取文章数组
             this.AllArticle = res.data.data

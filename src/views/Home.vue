@@ -8,8 +8,8 @@
             <!-- 轮播图 -->
             <el-carousel trigger="click" height="260px" class="slideshow">
               <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
-                <div class="slideshowBox">
-                  <img class="headImg" @click="GotoDetail(item.id)" :src="item.pic_url" alt="">
+                <div class="slideshowBox" @click="GotoDetail(item.id)">
+                  <img class="headImg" :src="item.pic_url" alt="">
                   <div class="title threed">{{item.title}}</div>
                 </div>
               </el-carousel-item>
@@ -41,7 +41,7 @@
                     <img class="pic" src="~@/assets/img/wx.jpg" alt="">
                   </li>
                    <li class="item">
-                    <a href="javascript:;" target="_blank" title="个人邮箱地址" class="item-e-mail"></a>
+                    <a href="javascript:;" title="个人邮箱：linsanity9236@163.com" class="item-e-mail"></a>
                   </li>
                   <li class="item">
                     <a href="https://gitee.com/huang-rijian" title="gitee主页" target="_blank" class="item-git"></a>
@@ -157,15 +157,15 @@ export default {
     GotoDetail(id){
       this.$router.push({path:'detail/'+id})
     },
-    // 获取所有文章
+    // 获取全部文章
     GetAllArticle(){
-     this.$http.get('/api/article/allList',{params:{curPage:1,pageSize:9}}).then(res => {
+     this.$http.get('/api/article/typeList').then(res => {
         if(res.data.code === 0){
-          // 获取文章数组
-          this.AllArticle = res.data.data;
-          // 截取一部分给轮播图展示
-          this.LbtArticle = res.data.data.slice(0,6)
-          // 截取一部分给轮播图右边的盒子
+          // 获取前9篇文章
+          this.AllArticle = res.data.data.slice(0,9)
+          // 截取最新的6篇给轮播图展示  .concat() 先将文章数组复制出一个新数组再进行反转，如果使用.reverse(),则会改变文章数组，而不产生新数组
+          this.LbtArticle = res.data.data.concat().reverse().slice(0,6)
+            // 截取一部分给轮播图右边的盒子
           this.headerArticle = res.data.data.slice(6,8)
           // 标题数组
           let titleArry = []
@@ -255,7 +255,7 @@ export default {
 
 .buttonBox {
   display: flex;
-  margin-top: 20px;
+  margin: 20px 0 ;
   .item {
     margin: 0 5px;
     cursor:pointer;
@@ -302,23 +302,7 @@ export default {
   }
 }
 
-// 特效字体
-.threed{
-color: #fafafa;
-letter-spacing: 0;
-font-size: 25px!important;
-text-align: center;
-margin-top: 23px!important;
-text-shadow: 
-    0px 1px 0px #999, 
-    0px 2px 0px #888, 
-    0px 3px 0px #777, 
-    0px 4px 0px #666, 
-    0px 5px 0px #555, 
-    0px 6px 0px #444, 
-    0px 7px 0px #333, 
-    0px 8px 7px #001135 
-}
+
 
 // 鼠标悬浮，显示图片
  .buttonBox .item a:hover {
