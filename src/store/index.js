@@ -24,9 +24,6 @@ export default new Vuex.Store({
       state.token = val;
     },
 
-    setArticleTitle(state,val) {
-      state.articleTitle = val;
-    }
 
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 

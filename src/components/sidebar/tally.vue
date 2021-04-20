@@ -41,5 +41,6 @@
 <style lang="scss" scoped>
 .el-tag {
   margin: 6px;
+  cursor:pointer;
 }
 </style>

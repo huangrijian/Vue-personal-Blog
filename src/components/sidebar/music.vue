@@ -23,17 +23,10 @@ import {GetSong,GetPlayMisicUrl,GetPlayMisicLyric} from "@/musicNetWork/music.js
         audio:  [
           // 默认播放列表
             {
-              title:'云烟成雨',
-              artist: '房东的猫',
-              url:'http://m7.music.126.net/20210420135623/738630cf21ec5aa6ff0893b2f4470ab0/ymusic/0ca4/1dd7/df4b/86e8bf58a5a367aad23e84bef976bba3.mp3',
-              pic: "https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1586816677,1747929729&fm=179&app=42&f=JPEG?w=150&h=150&s=F3B1398DA0C3EEEC261890E903007030" ,
-              lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
-            },
-            {
                 title:'a song for love',
                 artist: '春畑道哉',
                 url: 'https://rt01-sycdn.kuwo.cn/7b5137bac33d558e774c26a95ed38bf4/6077019a/resource/n1/18/25/1394031454.mp3',
-                pic: "https://img4.kuwo.cn/star/albumcover/500/79/90/3173998088.jpg" ,
+                pic: "https://dss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2500882770,2076592191&fm=179&app=42&f=PNG?w=150&h=150&s=65527B8B48D619EF5834259A0300C090" ,
                 lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
             },
             {

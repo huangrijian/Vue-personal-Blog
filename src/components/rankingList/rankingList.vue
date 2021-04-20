@@ -11,24 +11,25 @@
     inject: ['reload'],
     data() {
       return {
-        titArry : this.$store.state.articleTitle,
+        // this.$store.state.articleTitle,
+        titArry : '',
         titleidArry : [],
-
         ClassArray:['green','purple','green','purple','green','purple','green','purple','green','purple']
       }
     },
     methods:{
       handle(id) {
-        console.log(id);
-        // this.$r
         this.$router.push({name:'detail',params: {id:id}})
         this.reload()
       }
     },
-    mounted(){
-      // 将sessionStorage上的文章标题列表和id取出
+    created(){
+      setTimeout(() => {
+      // 将sessionStorage上的文章标题列表和id取出 
+      //需要等待500毫秒,等着home.vue发起请求,把标题数据设置到sessionStorage
       this.titArry = JSON.parse(sessionStorage.getItem('titleArry'));
       this.titleidArry = JSON.parse(sessionStorage.getItem('titleidArry'));
+      },500)
     }
   }
 </script>

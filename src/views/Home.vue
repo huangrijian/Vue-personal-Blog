@@ -66,13 +66,12 @@ export default {
           let titleArry = []
           let titleidArry = []
           // 获取文章id和标题
-          this.AllArticle.forEach((item, index) => {
-         //item 就是当日按循环到的对象  //index是循环的索引，从0开始
+          this.LbtArticle.forEach((item, index) => {
+         //item 就是当前按循环到的对象  //index是循环的索引，从0开始
           titleArry.push(item.title)
           titleidArry.push(item.id)
         })
-          // 保存到vuex和本地
-          this.$store.commit('setArticleTitle',titleArry)
+          // 保存到本地
           sessionStorage.setItem("titleArry", JSON.stringify(titleArry));
           sessionStorage.setItem("titleidArry", JSON.stringify(titleidArry));
         }

@@ -15,6 +15,7 @@
 <script>
 import ArticleLists from '../components/articleLists/ArticleLists.vue'
   export default {
+     inject: ['reload'],
   components: { ArticleLists },
   data() {
     return {
@@ -26,6 +27,15 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
       pageSize:10,
       // 全部文章数量
       count:''
+    }
+  },
+   beforeRouteUpdate (to, from, next) {
+     this.reload()
+     next()
+  },
+  watch:{
+    key(val){
+        alert(val)
     }
   },
   methods:{
