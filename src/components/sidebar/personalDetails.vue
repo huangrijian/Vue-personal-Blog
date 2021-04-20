@@ -4,9 +4,9 @@
              <div class="block">
               <h2>黄先森个人简介</h2>
               <div>
-                <p>职业：大三学生、前端学习者</p>
-                <p>现居：广东省广州市</p>
-                <p>Email:923691372@qq.com</p>
+                <p><i class="iconfont My-new-iconzhiye"></i>职业：大三学生、前端学习者</p>
+                <p><i class="iconfont My-new-icondingwei1"></i>现居：广东省广州市</p>
+                <p><i class="iconfont My-new-iconyouxiang"></i>Email:923691372@qq.com</p>
               </div>
               <div>
                
@@ -110,6 +110,10 @@
  .buttonBox .item:hover .pic {
     opacity: 1;
     box-shadow: 0 0 6px rgb(255, 255, 255);
+}
+
+.iconfont {
+  margin-right: 5px;
 }
 
 </style>

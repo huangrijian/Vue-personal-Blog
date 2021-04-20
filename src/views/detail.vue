@@ -7,8 +7,8 @@
       <article-contents :data="data"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
-          <el-button type="primary" round @click="isClick&&like()"><i class="el-icon-thumb"></i>点赞（{{likeCount}}）</el-button>
-          <el-button type="success" round @click="dialogVisible = true"><i class="el-icon-present"></i>打赏</el-button>
+          <el-button type="primary" round @click="isClick&&like()"><i class="iconfont  My-new-icondianzan"></i>点赞（{{likeCount}}）</el-button>
+          <el-button type="success" round @click="dialogVisible = true"><i class="iconfont My-new-icondashang"></i>打赏</el-button>
       </div>
       <!-- 弹框 -->
       <el-dialog

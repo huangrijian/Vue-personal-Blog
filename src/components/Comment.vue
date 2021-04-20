@@ -36,7 +36,7 @@
                           </div>
                           <div class="timerorlike">
                               <span class="timer">{{item.create_time}}</span>
-                              <span class="My-new-icondianzan" @click="clickLike(item.commentId,$event)"><i class="el-icon-thumb"></i>999</span>
+                              <span  @click="clickLike(item.commentId,$event)"><i class="iconfont  My-new-icondianzan"></i>999</span>
                               <span class="vertical">|</span>
                               <span>回复</span>
                               <span class="delete" v-if="thisNickName === '怪蜀黍'"  @click="handleDelect(item.id)">删除</span>

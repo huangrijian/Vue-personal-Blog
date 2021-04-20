@@ -16,28 +16,28 @@
             class="nav"
             >
               <el-menu-item index="1" >
-                 <router-link to="/"><i class="iconfont icon-home"></i>博客首页</router-link>
+                 <router-link to="/"><i class="iconfont My-new-iconshouye"></i>博客首页</router-link>
               </el-menu-item>
               <el-menu-item index="2" >
-                 <router-link to="/Lists"><i class="iconfont icon-home"></i>技术博文</router-link>
+                 <router-link to="/Lists"><i class="iconfont My-new-iconzixun"></i>技术博文</router-link>
               </el-menu-item>
               <el-menu-item index="3" >
-                  <router-link to="/timeLocus"><i class="iconfont icon-home"></i>时间轨迹</router-link>
+                  <router-link to="/timeLocus"><i class="iconfont My-new-icondaojishi"></i>时间轨迹</router-link>
               </el-menu-item>
               <el-menu-item index="4" >
-                 <router-link to="/recommend"><i class="iconfont icon-home"></i>博客推荐</router-link>
+                 <router-link to="/recommend"><i class="iconfont My-new-icondianzan"></i>博客推荐</router-link>
               </el-menu-item>
               <el-menu-item index="5" >
-                 <router-link to="/aboutMe"><i class="iconfont icon-home"></i>关于我</router-link>
+                 <router-link to="/aboutMe"><i class="iconfont My-new-iconwode1"></i>关于我</router-link>
               </el-menu-item>
               <el-menu-item index="6" >
-                 <router-link to="/LeaveWord"><i class="iconfont icon-home"></i>留言</router-link>
+                 <router-link to="/LeaveWord"><i class="iconfont My-new-iconbianji"></i>留言</router-link>
               </el-menu-item>
               <el-menu-item index="7">
                  <router-link to="/article" v-if="isSignIn === 1 && nickname === '怪蜀黍'">我的博客</router-link>
               </el-menu-item>
               <el-menu-item index="8" >
-                 <router-link to="/login" v-if="isSignIn === 0" class="login">登录</router-link>
+                 <router-link to="/login" v-if="isSignIn === 0" class="login"><i class="iconfont My-new-iconxuanzhonghaoyou"></i>登录</router-link>
               </el-menu-item>
                <el-menu-item index="9" >
                  <router-link to="/personal"  v-if="isSignIn === 1 "  class="login">{{UserInfo.nickname === '怪蜀黍' ? '尊敬的管理员：' + UserInfo.nickname : '尊敬的游客：'+ UserInfo.nickname}},欢迎您</router-link>

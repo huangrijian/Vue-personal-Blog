@@ -10,7 +10,7 @@
         <el-input type="password" v-model="form.password" @keyup.enter.native="onSubmit"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button class="login" type="primary" @click="onSubmit">登录</el-button>
+        <el-button class="login iconfont My-new-iconxuanzhonghaoyou" type="primary" @click="onSubmit">登录</el-button>
       </el-form-item>
       <el-form-item>
         <span>还没注册？去<span class="sign" @click="sign">注册</span></span>

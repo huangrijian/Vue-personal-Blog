@@ -13,6 +13,12 @@
           <li :key="index" v-for="(item,index) in ArrayStudy"><a :href="item.url" target="_blank">{{item.name}}</a></li>
         </ul>
       </div>
+      <title-box class="assets" title="个人项目集"></title-box>
+      <div>
+        <ul>
+          <li :key="index" v-for="(item,index) in production"><a :href="item.url" target="_blank">{{item.name}}</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -34,7 +40,12 @@ import titleBox from '../components/TitleBox/titleBox.vue'
           {name:"阿里图标",url:"https://www.iconfont.cn/"},
           {name:"W3school",url:"https://www.w3school.com.cn/html/index.asp"},
           {name:'在线编码平台 codepen.io',url:"https://codepen.io/"}
-          ]
+          ],
+        
+        production:[
+          {name:'niuniu音乐(线上)',url:'http://bao.lqjhome.cn:13008'},
+          {name:'niuniu音乐(Gitee)',url:'https://gitee.com/huang-rijian/vue-net-ease-cloud-music'},
+        ]
       }
     },
 
