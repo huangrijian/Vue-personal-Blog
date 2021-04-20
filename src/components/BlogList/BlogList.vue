@@ -15,7 +15,7 @@
         <div class="Item-end">
           <span>+文章阅读</span>
           <span class="timer">{{item.create_time | timer()}}</span>
-          <span class="like"><i class="el-icon-thumb"></i>999</span>
+          <span class="like"><i class="el-icon-thumb"></i>{{item.like_count}}</span>
         </div>
       </li>
     </ul>
@@ -112,5 +112,9 @@
    
     box-shadow: 0px 2px 10px 3px rgba(179, 177, 177, 0.5); 
   }
+}
+
+.el-icon-thumb {
+  margin-right: 3px;
 }
 </style>

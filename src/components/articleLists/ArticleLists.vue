@@ -55,6 +55,7 @@ ul {
 }
 li {
   margin:20px 0 30px 0;
+  cursor:pointer;
 }
 .title {
   margin-bottom: 10px;

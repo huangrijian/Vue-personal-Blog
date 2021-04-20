@@ -74,12 +74,9 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
 </script>
 
 <style lang="scss" scoped>
-.pagination {
+.el-pagination {
   margin-top: 15px;
-  .pagination-s {
-    display: flex;
-    justify-content: center;
-  }
-
+  display: flex;
+  justify-content: center;
 }
 </style>
