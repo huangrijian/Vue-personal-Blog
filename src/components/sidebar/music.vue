@@ -4,10 +4,9 @@
      <div class="search bar7">
         <div>
             <input type="text" placeholder="请输入歌名" name="crid" @keyup.enter="playMusic(songName)" v-model="songName">
-            <button type="submit"></button>
+            <button type="submit" @click="playMusic(songName)"></button>
         </div>
     </div>
-
      <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
      <aplayer :music="audio[0]" :list="audio"  :showlrc="true"></aplayer>
   </div>
@@ -22,50 +21,48 @@ import {GetSong,GetPlayMisicUrl,GetPlayMisicLyric} from "@/musicNetWork/music.js
         songName:'',
          // 音频列表
         audio:  [
+          // 默认播放列表
             {
-                title:'永不失联的爱 (Live)',
-                artist: '单依纯',
-                url: 'http://ws.stream.qqmusic.qq.com/C400003pHTmt1BBWWu.m4a?guid=9472311977&vkey=85AFEF73A06870A73160510ED9E44D38DD924B0F04DB692D4BF92F57A92ACE6D72406FCA50E32DD542178E97818B422AF30981081DF0C18A&uin=923691372&fromtag=66',
-                pic: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000003pPGDz4cbwj1_1.jpg?max_age=2592000',
-                lrc: '[00:00.00] (,,•́ . •̀,,) 暂无歌词',
+              title:'云烟成雨',
+              artist: '房东的猫',
+              url:'http://m7.music.126.net/20210420135623/738630cf21ec5aa6ff0893b2f4470ab0/ymusic/0ca4/1dd7/df4b/86e8bf58a5a367aad23e84bef976bba3.mp3',
+              pic: "https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1586816677,1747929729&fm=179&app=42&f=JPEG?w=150&h=150&s=F3B1398DA0C3EEEC261890E903007030" ,
+              lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
             },
-
-            
             {
-                title:'不该 (Live)',
-                artist: '刘惜君 / R1SE赵磊',
-                url: '../../assets/music/m1.mp3',
-                pic: "https://y.gtimg.cn/music/photo_new/T002R300x300M000002pgY7c3LgAqu_1.jpg?max_age=2592000" ,
-                lrc: '[00:00.00] (,,•́ . •̀,,) 暂无歌词',
+                title:'a song for love',
+                artist: '春畑道哉',
+                url: 'https://rt01-sycdn.kuwo.cn/7b5137bac33d558e774c26a95ed38bf4/6077019a/resource/n1/18/25/1394031454.mp3',
+                pic: "https://img4.kuwo.cn/star/albumcover/500/79/90/3173998088.jpg" ,
+                lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
             },
-            // {
-            //     title:'晴天',
-            //     artist: '周杰伦',
-            //     url: 'http://sy.sycdn.kuwo.cn/0e376a770dcae9116d4d64d236090aa8/6076ff95/resource/n2/99/30/814703912.mp3',
-            //     pic: 'https://img2.kuwo.cn/star/albumcover/500/64/96/2266534336.jpg', // prettier-ignore
-            //     lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
-            // },
-            // {
-            //     title:'a song for love',
-            //     artist: '春畑道哉',
-            //     url: 'https://rt01-sycdn.kuwo.cn/7b5137bac33d558e774c26a95ed38bf4/6077019a/resource/n1/18/25/1394031454.mp3',
-            //     pic: "https://img4.kuwo.cn/star/albumcover/500/79/90/3173998088.jpg" ,
-            //     lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
-            // },
-            // {
-            //   title:'素颜',
-            //   artist: '许嵩 / 何曼婷',
-            //   url:'http://m8.music.126.net/20210414232103/d274a7df3cd275d3153aa8daa6caa35b/ymusic/946c/0b37/2bba/8858bdf600a858c1d7b2c6a225768d94.mp3',
-            //   pic: "http://p1.music.126.net/LMyITvYRS7NsgA9lYUKpqg==/109951164179134667.jpg?param=130y130" ,
-            //   lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
-            // }
+            {
+              title:'有何不可',
+              artist: '许嵩',
+              url:'http://m7.music.126.net/20210420134610/4ae52e699088400fb0b7ef51d689bed5/ymusic/a024/09a7/c4c3/fc0d416790bc729172c636e2d2d1109a.mp3',
+              pic: "https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3946104814,302364624&fm=179&app=42&f=JPEG?w=150&h=150&s=061C7F86DCAB3E9C467499230300F043" ,
+              lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
+            },
+            {
+              title:'素颜',
+              artist: '许嵩 / 何曼婷',
+              url:'http://m7.music.126.net/20210420135041/e08eacca6a456bf29c495b2bb31b24eb/ymusic/946c/0b37/2bba/8858bdf600a858c1d7b2c6a225768d94.mp3',
+              pic: "https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3287273770,3794212801&fm=179&app=42&f=PNG?w=150&h=150&s=EC1873994F5266CC0C75D0CA030080B1" ,
+              lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
+            },
+            {
+              title:'所念皆星河',
+              artist: 'CMJ',
+              url:'http://m8.music.126.net/20210420135328/0268e8cace47622c76b58056ead6b3cb/ymusic/020c/5652/075e/5fcded78c7a8df3f91e404ddbdaf226b.mp3',
+              pic: "https://bkimg.cdn.bcebos.com/pic/42a98226cffc1e178a82357016dae103738da9774315?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2UxNTA=,g_7,xp_5,yp_5/format,f_auto" ,
+              lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
+            }
         ],
       }
     },
     methods: {
-      
-      // 
       playMusic(songName){
+        this.songName = ''
         // 定义一个存放歌词数据对象的数组
         let songDataArray = []
         GetSong(songName).then(res => {
