@@ -1,26 +1,14 @@
 <template>
   <div>
     <article-lists :AllArticle="AllArticle"></article-lists>
-    <div class="wrapper pagination">
-      <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
-          <div class="grid-content bg-purple pagination-s">
            <!-- 分页 -->
-                  <el-pagination
-                    background
-                    layout="prev, pager, next"
-                    :total="count"
-                    @current-change="change"
-                    >
-                  </el-pagination>
-          </div>
-        </el-col>
-        <el-col :lg="6" :xl="6">
-          <div class="grid-content bg-purple-light synopsis">
-          </div>
-        </el-col>
-      </el-row>
-    </div>        
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="count"
+      @current-change="change"
+      >
+    </el-pagination>      
   </div>
 </template>
 

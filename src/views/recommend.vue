@@ -1,21 +1,19 @@
 <template>
   <div>
-    <div class="wrapper marginTop">
-      <div class="block recommend">
-        <title-box title="优秀博客"></title-box>
-        <div>
-          <ul>
-            <li :key="index" v-for="(item,index) in ArrayBlog"><a href="http://wwww.baidu.com" target="_blank">{{item}}</a></li>
-          </ul>
-        </div>
-         <title-box class="assets" title="资源导航"></title-box>
-        <div>
-          <ul>
-            <li :key="index" v-for="(item,index) in ArrayStudy"><a :href="item.url" target="_blank">{{item.name}}</a></li>
-          </ul>
-        </div>
+    <div class="block recommend">
+      <title-box title="优秀博客"></title-box>
+      <div>
+        <ul>
+          <li :key="index" v-for="(item,index) in ArrayBlog"><a href="http://wwww.baidu.com" target="_blank">{{item}}</a></li>
+        </ul>
       </div>
-    </div>  
+        <title-box class="assets" title="资源导航"></title-box>
+      <div>
+        <ul>
+          <li :key="index" v-for="(item,index) in ArrayStudy"><a :href="item.url" target="_blank">{{item.name}}</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 

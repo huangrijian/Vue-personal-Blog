@@ -101,6 +101,9 @@ const router = new VueRouter({
 
 // 路由守卫 -> 进去路由前
 router.beforeEach((to,from,next) => {
+   // 让页面回到顶部
+  document.documentElement.scrollTop = 0
+
   // 由于刷新会丢失登录状态，所以刷新后要从Cookie里获取token再次存放在vuex
    store.commit('setToken',Cookie.get('token'))
   //  判断有无token，有则设置当前状态为登录状态
@@ -136,9 +139,6 @@ router.beforeEach((to,from,next) => {
     // 不需要登录权限的页面直接next
     next()
   }
-   
-
-
 })
 
 export default router

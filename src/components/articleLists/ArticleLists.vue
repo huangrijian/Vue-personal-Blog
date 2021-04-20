@@ -1,50 +1,35 @@
 <template>
   <div>
-     <div class="wrapper">
-        <el-row :gutter="10" class="marginTop">
-        <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
-          <div class="grid-content bg-purple">
-            <div class="block">
-              <!-- 标题 -->
-              <title-box title="技术博文"></title-box>
-              <!-- 列表 -->
-              <ul>
-                <li :key="index" v-for="(item,index) in AllArticle" @click="GotoArticleDetail(item.id)">
-                  <div class="title">{{item.title}}</div>
-                  <div class="content">
-                    <div class="image">
-                       <img :src="item.pic_url" alt="">
-                    </div>
-                    <div class="describe">
-                      <p>{{item.content}}</p>
-                      <div class="tag">
-                        <el-tag v-if="item.class_name01" size="small">{{item.class_name01}}</el-tag>
-                        <el-tag v-if="item.class_name02" size="small" type="success">{{item.class_name02}}</el-tag>
-                        <el-tag v-if="item.class_name03" size="small" type="danger">{{item.class_name03}}</el-tag>
-                      </div>
-                      <div class="describe-bottom">
-                        <span class="author">黄先森</span>
-                        <span v-if="item.create_time" class="timer">{{item.create_time.slice(0,10)}}</span>
-                        <span class="browse"><i class="el-icon-view"></i>577</span>
-                        <span class="like"><i class="el-icon-thumb"></i>399</span>
-                        <el-button size="mini" type="primary" plain>阅读文章</el-button>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+    <div class="block">
+      <!-- 标题 -->
+      <title-box title="技术博文"></title-box>
+      <!-- 列表 -->
+      <ul>
+        <li :key="index" v-for="(item,index) in AllArticle" @click="GotoArticleDetail(item.id)">
+          <div class="title">{{item.title}}</div>
+          <div class="content">
+            <div class="image">
+                <img :src="item.pic_url" alt="">
+            </div>
+            <div class="describe">
+              <p>{{item.content}}</p>
+              <div class="tag">
+                <el-tag v-if="item.class_name01" size="small">{{item.class_name01}}</el-tag>
+                <el-tag v-if="item.class_name02" size="small" type="success">{{item.class_name02}}</el-tag>
+                <el-tag v-if="item.class_name03" size="small" type="danger">{{item.class_name03}}</el-tag>
+              </div>
+              <div class="describe-bottom">
+                <span class="author">黄先森</span>
+                <span v-if="item.create_time" class="timer">{{item.create_time.slice(0,10)}}</span>
+                <span class="browse"><i class="el-icon-view"></i>577</span>
+                <span class="like"><i class="el-icon-thumb"></i>399</span>
+                <el-button size="mini" type="primary" plain>阅读文章</el-button>
+              </div>
             </div>
           </div>
-        </el-col>
-        <el-col :lg="6" :xl="6">
-          <div class="grid-content bg-purple-light synopsis">
-            <div class="block">
-              5
-            </div>
-            </div>
-        </el-col>
-      </el-row>
-     </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <ul>
-      <li :key="index"  @click="handle(titleidArry[index])"  v-for="(item,index) in titArry"><span>{{index + 1}}</span>{{item}}</li>
-    </ul>
+    <div id="frozen-btn">
+      <button class="green" :class="ClassArray[index]"  :key="index"  @click="handle(titleidArry[index])"  v-for="(item,index) in titArry"><span>{{index + 1}}.</span>{{item}}</button>
+    </div>
   </div>
 </template>
 
@@ -12,7 +12,9 @@
     data() {
       return {
         titArry : this.$store.state.articleTitle,
-        titleidArry : []
+        titleidArry : [],
+
+        ClassArray:['green','purple','green','purple','green','purple','green','purple','green','purple']
       }
     },
     methods:{
@@ -32,22 +34,54 @@
 </script>
 
 <style lang="scss" scoped>
-ul {
-  li {
-    display: flex;
-    margin: 10px 0;
-    font-size: 16px;
-    cursor:pointer;
-    span {
-      margin-right: 5px;
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      background-color: rgb(219, 29, 29);
-      font-size: 10px;
-      text-align: center;
-      line-height: 15px;
-    }
-  }
+/* 冰冻效果 */
+#frozen-btn button {
+  border: 0;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 50px;
+  color: white;
+  outline: none;
+  position: relative;
+  cursor:pointer;
+}
+
+#frozen-btn button:before {
+  content: '';
+  display: block;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.4) 50%);
+  background-size: 210% 100%;
+  background-position: right bottom;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-radius: 50px;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+
+#frozen-btn .green {
+  background-image: linear-gradient(to right, #25aae1, #40e495);
+  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+  width: 100%;
+}
+
+#frozen-btn .purple {
+  background-image: linear-gradient(to right, #6253e1, #852D91);
+  box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+
+#frozen-btn .purple:hover:before {
+  background-position: left bottom;
+}
+
+#frozen-btn .green:hover:before {
+  background-position: left bottom;
 }
 </style>

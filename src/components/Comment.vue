@@ -32,7 +32,7 @@
                       <div class="side">
                           <div class="CommentTitle">
                               <span class="nickname">{{item.nickname}}: </span>
-                              <span>{{item.cmcontent}}</span>
+                              <span class="cmcontent">{{item.cmcontent}}</span>
                           </div>
                           <div class="timerorlike">
                               <span class="timer">{{item.create_time}}</span>
@@ -215,12 +215,12 @@ import Cookie from 'js-cookie'
         .Commentareabox {
             padding: 15px 0;
             overflow: hidden;
+            display: flex;
             .pic,
             .side {
-                float: left;
                 .nickname {
                     color: skyblue;
-                }
+                }              
                 .timerorlike {
                     margin-top: 15px;
                     .timer {
