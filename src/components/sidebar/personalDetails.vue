@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="personalDetails">
      <!-- 个人简介 -->
              <div class="block">
               <h2>黄先森个人简介</h2>

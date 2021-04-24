@@ -8,7 +8,7 @@
         </div>
     </div>
      <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-     <aplayer :music="audio[0]" :list="audio"  :showlrc="true"></aplayer>
+     <aplayer :music="audio[0]" :list="audio"  :showlrc="true" ></aplayer>
   </div>
 </template>
 
@@ -19,14 +19,15 @@ import {GetSong,GetPlayMisicUrl,GetPlayMisicLyric} from "@/musicNetWork/music.js
     data() {
       return {
         songName:'cmj',
+     
          // 音频列表
         audio:  [
           // 默认播放列表
             {
-                title:'a song for love',
-                artist: '春畑道哉',
+                title:'所念皆星河',
+                artist: 'CMJ',
                 url: 'https://rt01-sycdn.kuwo.cn/7b5137bac33d558e774c26a95ed38bf4/6077019a/resource/n1/18/25/1394031454.mp3',
-                pic: "https://dss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2500882770,2076592191&fm=179&app=42&f=PNG?w=150&h=150&s=65527B8B48D619EF5834259A0300C090" ,
+                pic: "http://p4.music.126.net/M34HFzLO2xhDLuX_zEALKA==/109951164291347934.jpg?param=100y100" ,
                 lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
             },
         ],
@@ -76,7 +77,10 @@ import {GetSong,GetPlayMisicUrl,GetPlayMisicLyric} from "@/musicNetWork/music.js
     mounted(){
       // 页面刷新添加一个自动点击事件
       let searchMusic = document.querySelector('#searchMusic');
-      searchMusic.click();
+        searchMusic.click();
+
+      
+
     }
   }
 </script>

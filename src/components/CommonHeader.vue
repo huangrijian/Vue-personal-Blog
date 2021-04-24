@@ -1,5 +1,7 @@
 <template>
-    <header>
+<div>
+  <!-- pc端导航 -->
+  <header>
       <div class="wrapper">
         <el-row>
           <el-col :span="4">
@@ -46,8 +48,42 @@
           </el-col>
         </el-row>
       </div>
-
-    </header>
+  </header>
+  <div id="mobileNav">
+    <!-- 移动端导航 -->
+      <el-row class="tac">
+      <el-menu
+          default-active="2"
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          router="true">
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span class="logotit">黄先森个人博客站</span>
+              <span v-if="UserInfo.nickname">{{UserInfo.nickname}},欢迎您</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/" @click="Goto">博客首页</el-menu-item>
+              <el-menu-item index="/Lists" @click="Goto">技术博文</el-menu-item>
+               <el-menu-item index="/timeLocus" @click="Goto">时间轨迹</el-menu-item>
+              <el-menu-item index="/recommend" @click="Goto">博客推荐</el-menu-item>
+              <el-menu-item index="/aboutMe" @click="Goto">关于我</el-menu-item>
+               <el-menu-item  index="/LeaveWord" @click="Goto">留言</el-menu-item>
+              <el-menu-item index="/personal" v-if="UserInfo.nickname" @click="Goto">{{UserInfo.nickname}}的个人中心</el-menu-item>
+              <el-menu-item  index="/login" v-else @click="Goto">登录</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-row>
+  </div>
+  
+</div>
+    
 </template>
 
 <script>
@@ -78,6 +114,19 @@
            sessionStorage.setItem("nickname", this.nickname);
           //  console.log(this.UserInfo);
          })
+      },
+      // 移动端导航
+      handleOpen(key, keyPath,index) {
+        console.log(key, keyPath);
+        console.log(index);
+      },
+      handleClose(key, keyPath,index) {
+        console.log(key, keyPath);
+        console.log(index);
+      },
+      Goto(){
+        let but = document.querySelector('.el-submenu__title');
+        but.click();
       }
     },
     computed:{
@@ -113,6 +162,7 @@ header {
     a {
       padding: 20px;
       .iconfont {
+        color: #fff;
         // 垂直居中
         vertical-align: top;
         margin: 0 5px 0 0 ;

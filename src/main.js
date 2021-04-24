@@ -8,6 +8,8 @@ import '@/assets/scss/reset.scss'
 import '@/assets/font/iconfont.css'
 // 引入公共样式
 import '@/assets/scss/common.scss'
+// 引入移动端样式
+import '@/assets/scss/mobile.scss'
 // 引入文本编辑器
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'

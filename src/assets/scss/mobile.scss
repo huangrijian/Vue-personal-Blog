@@ -1,0 +1,128 @@
+@media only screen and (max-width:798px) {
+	
+
+  html,body {
+    overflow-x: hidden;
+    background-color: #fdfcf8;
+  }
+
+  //导航
+  // 先隐藏header
+  header {
+    display: none!important;
+  }
+  // 显示移动端导航
+  #mobileNav{
+    display: block;
+  }
+  .logotit {
+    margin-right: 15px;
+  }
+
+
+  // 音乐
+  .sidebar .maginbot {
+    padding: 0 20px!important;
+  }
+  div.search {
+    margin-bottom: 30px!important;
+  }
+
+  // 首页-轮播图
+  .block .img1 img {
+    display: none;
+  }
+  .headImg {
+    margin-left: 7%!important;
+    border-radius: 5px;
+    transform:none!important;
+  }
+  .slideshowBox .block{
+    flex: 0!important;
+  }
+  .slideshowBox .title{
+    span {
+      font-size: 30px !important;
+    }
+    top: 20px!important;
+    opacity: 1!important;
+  }
+
+  // sidebar
+  .sidebar {
+    .personalDetails {
+      margin: 0 20px;
+    }
+  }
+
+
+  // 首页-技术博文
+  .BlogUl .liItem{
+    width: 100%!important;
+    .img {
+      height: auto!important;
+      img {
+        border-radius: 5px;
+      }
+    }
+  }
+  .describe {
+    .el-button--primary {
+      display: none;
+    }
+  }
+
+  // 标题
+  .title {
+    margin-bottom: 10px;
+    font-size: 24px!important;
+    font-weight: 600;
+  }
+
+  // 
+  .register .registerBox[data-v-26084dc2], .register .LoginBox-Box[data-v-26084dc2], .LoginBox .registerBox[data-v-26084dc2], .LoginBox .LoginBox-Box[data-v-26084dc2] {
+    margin: 25px!important;
+  }
+
+  //技术博文-
+  .main {
+    transform: translateY(-25px);
+  }
+  .content {
+    display: flex;
+    flex-wrap: wrap!important;
+    overflow: hidden;
+    .image {
+      width: 100%!important;
+      height: 100%!important;
+    }
+  }
+  .content .describe .describe-bottom {
+    position:static!important;
+  }
+
+  // 关于我
+  .content{
+    width: 100%!important;
+
+  }
+
+  // 时间轴
+  .markdown-body p {
+    width: 85%!important;
+    font-size: 14px!important;
+  }
+  .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 90%!important;
+  }
+
+  // 底部
+  #mybottom {
+    height: 260px!important;
+    .conent {
+      margin-top: 5px;
+    }
+  }
+}

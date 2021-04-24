@@ -6,7 +6,7 @@
       <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
         <div class="slideshowBox" @click="GotoDetail(item.id)">
           <img class="headImg" :src="item.pic_url" alt="">
-          <div class="title threed">{{item.title}}</div>
+          <div class="title threed"><span>{{item.title}}</span></div>
         </div>
       </el-carousel-item>
     </el-carousel>

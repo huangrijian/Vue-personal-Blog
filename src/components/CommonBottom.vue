@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom">
+  <div id="mybottom" class="bottom">
     <div class="conent">
       <div class="pic">
         <div>
