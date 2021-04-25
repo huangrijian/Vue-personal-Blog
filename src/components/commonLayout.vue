@@ -2,17 +2,20 @@
   <div class="commonLayout">
     <!-- 导航条 -->
     <common-header></common-header>
-    <!-- 视图切换 -->
+
       <div class="wrapper marginTop">
-      <!-- 版头 -->
       <el-row :gutter="10" class="head">
         <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
           <div class="grid-content bg-purple slideshowBox">
-            <router-view></router-view>
+                <!-- 视图切换 -->
+                <keep-alive include="recommend,aboutMe,timeLocus">
+                  <router-view></router-view>
+                </keep-alive>
           </div>
           </el-col>
         <el-col :lg="6" :xl="6">
           <div class="grid-content bg-purple-light synopsis">
+            <!-- 侧边栏 -->
             <div class="sidebar">
               <personal-details ></personal-details>
               <music class="maginbot"></music>
@@ -29,7 +32,6 @@
       </el-row>
        </div>
 
-    <!-- 侧边栏 -->
     
     <!-- 底部 -->
     <common-bottom></common-bottom>

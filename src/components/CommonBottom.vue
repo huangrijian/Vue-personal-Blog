@@ -1,5 +1,7 @@
 <template>
   <div id="mybottom" class="bottom">
+    <!-- 计时器 -->
+    <timer class="timer threed"></timer>
     <div class="conent">
       <div class="pic">
         <div>
@@ -29,7 +31,9 @@
 </template>
 
 <script>
+import timer from './timer.vue'
   export default {
+  components: { timer },
     methods:{
       login(){
         this.$router.push({name:'login'})
@@ -45,6 +49,13 @@
   height: 230px;
   background-color: #373D41;
   position: relative;
+  .timer {
+    position: absolute;
+    right: 15px;
+    color: white;
+    bottom: 15px;
+    font-size: 20px!important;
+  }
   .conent {
     margin-top: 10px;
     position:absolute;

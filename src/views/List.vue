@@ -15,7 +15,7 @@
 <script>
 import ArticleLists from '../components/articleLists/ArticleLists.vue'
   export default {
-     inject: ['reload'],
+  inject: ['reload'],
   components: { ArticleLists },
   data() {
     return {

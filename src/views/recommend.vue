@@ -26,7 +26,8 @@
 <script>
 import titleBox from '../components/TitleBox/titleBox.vue'
   export default {
-  components: { titleBox },
+    name:'recommend',
+    components: { titleBox },
     data() {
       return {
         ArrayBlog:['赵老师博客','魏义齐个人博客',

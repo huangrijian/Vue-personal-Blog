@@ -1,6 +1,10 @@
 <template>
   <div id="app">
+
+      
       <router-view v-if="isRouterShow"></router-view>
+
+
       <div id="bgvid" >
           <img src="~@/assets/img/bgbg.jpg" alt="">
       </div>

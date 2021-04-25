@@ -76,7 +76,6 @@
                 this.$router.go(-1)
             },
            save(type){
-             
             //  如果有重复的分类，则返回
              if((this.class01&&this.class01&&this.class01) && (this.class01 === this.class02 || this.class01 === this.class03)){
                return this.$message({
@@ -88,8 +87,6 @@
                   // 当类型为生活文章
                 }else if(type == 1) {
                   // 当类型为说说动态
-
-                  //  如果是新增保存，则发起新增请求
                   let data = {
                     title:this.title,
                     content:this.content,
@@ -103,6 +100,10 @@
                       this.$router.push({name:'article'})
                     }
                   })
+
+                  // 修改时间状态
+                  this.$store.commit('changeTimeLocus',1)
+
                 }else {
                   // 当类型为技术文章
                    //  判断当前的保存是新增保存还是编辑保存

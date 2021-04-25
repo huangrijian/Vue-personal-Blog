@@ -21,9 +21,12 @@
 
 <script>
   export default {
+    name:'timeLocus',
+    inject: ['reload'],
     data() {
       return {
         AllArticle:[],
+        state:this.$store.state.timeLocus
       }
     },
     methods:{
@@ -40,6 +43,13 @@
     },
     created(){
       this.GetAllArticle();
+    },
+    activated(){
+      if(this.$store.state.timeLocus == 1){
+        // 为1说明当前文章数据被刷新了，需要重新刷新当前组件
+        this.reload();
+        this.$store.commit('changeTimeLocus',0)
+      }
     }
   }
 </script>

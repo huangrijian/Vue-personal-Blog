@@ -9,7 +9,6 @@
                 <p><i class="iconfont My-new-iconyouxiang"></i>Email:923691372@qq.com</p>
               </div>
               <div>
-               
                 <ul class="buttonBox">
                   <li class="item">
                     <a href="javascript:;" title="个人微信号" class="item-wx"></a>

@@ -3,7 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // 挂载vuex
 Vue.use(Vuex)
- 
+
 // 创建vuex对象并向外暴露
 export default new Vuex.Store({
   // 全局属性变量
@@ -11,6 +11,9 @@ export default new Vuex.Store({
     //  isSignIn 登录状态，0为未登录
     isSignIn:0,
     token:'',
+
+    // 时间轴状态，默认0为缓存状态，1为活跃状态
+    timeLocus:0,
 
     // 所有文章标题
     articleTitle:[]
@@ -24,7 +27,9 @@ export default new Vuex.Store({
       state.token = val;
     },
 
-
+    changeTimeLocus(state,val){
+      state.timeLocus = val;
+    }
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 
   actions: {
