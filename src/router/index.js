@@ -102,7 +102,15 @@ const router = new VueRouter({
 // 路由守卫 -> 进去路由前
 router.beforeEach((to,from,next) => {
    // 让页面回到顶部
-  document.documentElement.scrollTop = 0
+  //  pc端直接返回
+  window.pageYOffset = document.documentElement.scrollTop = 0;
+  // 移动端添加返回动画
+  let timer = setInterval(() => {
+      document.body.scrollTop-=50;
+      if(document.body.scrollTop <= 0) {
+        clearInterval(timer)
+      }
+  },1)
 
   // 由于刷新会丢失登录状态，所以刷新后要从Cookie里获取token再次存放在vuex
    store.commit('setToken',Cookie.get('token'))

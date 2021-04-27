@@ -68,13 +68,13 @@
               <span v-if="UserInfo.nickname">{{UserInfo.nickname}},欢迎您</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/" @click="Goto">博客首页</el-menu-item>
-              <el-menu-item index="/Lists" @click="Goto">技术博文</el-menu-item>
-               <el-menu-item index="/timeLocus" @click="Goto">时间轨迹</el-menu-item>
-              <el-menu-item index="/recommend" @click="Goto">博客推荐</el-menu-item>
-              <el-menu-item index="/aboutMe" @click="Goto">关于我</el-menu-item>
-               <el-menu-item  index="/LeaveWord" @click="Goto">留言</el-menu-item>
-              <el-menu-item index="/personal" v-if="UserInfo.nickname" @click="Goto">{{UserInfo.nickname}}的个人中心</el-menu-item>
+              <el-menu-item index="/" @click="Goto"><i class="iconfont My-new-iconshouye"></i>博客首页</el-menu-item>
+              <el-menu-item index="/Lists" @click="Goto"><i class="iconfont My-new-iconzixun"></i>技术博文</el-menu-item>
+               <el-menu-item index="/timeLocus" @click="Goto"><i class="iconfont My-new-icondaojishi"></i>时间轨迹</el-menu-item>
+              <el-menu-item index="/recommend" @click="Goto"><i class="iconfont My-new-icondianzan"></i>博客推荐</el-menu-item>
+              <el-menu-item index="/aboutMe" @click="Goto"><i class="iconfont My-new-iconwode1"></i>关于我</el-menu-item>
+               <el-menu-item  index="/LeaveWord" @click="Goto"><i class="iconfont My-new-iconbianji"></i>留言</el-menu-item>
+              <el-menu-item index="/personal" v-if="UserInfo.nickname" @click="Goto"><i class="iconfont My-new-iconwode1"></i>{{UserInfo.nickname}}的个人中心</el-menu-item>
               <el-menu-item  index="/login" v-else @click="Goto">登录</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -175,7 +175,9 @@ header {
   }
 }
 
-
+i {
+  margin-right: 8px;
+}
 
 
 .el-menu.el-menu--horizontal {

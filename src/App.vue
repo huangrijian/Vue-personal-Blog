@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-      
+      <back-top></back-top>
       <router-view v-if="isRouterShow"></router-view>
 
 
@@ -11,7 +11,9 @@
   </div>
 </template>
 <script>
+import BackTop from './components/backTop/BackTop.vue'
 export default {
+  components: { BackTop },
   provide () {
     return {
       reload: this.reload

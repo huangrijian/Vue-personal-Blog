@@ -29,7 +29,7 @@
       //需要等待500毫秒,等着home.vue发起请求,把标题数据设置到sessionStorage
       this.titArry = JSON.parse(sessionStorage.getItem('titleArry'));
       this.titleidArry = JSON.parse(sessionStorage.getItem('titleidArry'));
-      },500)
+      },800)
     }
   }
 </script>

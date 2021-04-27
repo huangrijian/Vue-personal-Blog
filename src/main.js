@@ -15,6 +15,8 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
 
+import '@/assets/js/top.js'
+
 import setAxios from './network/index.js'
 setAxios()
 
