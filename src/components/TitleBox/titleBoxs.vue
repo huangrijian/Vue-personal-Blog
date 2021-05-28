@@ -1,12 +1,12 @@
 <template>
   <div>
-    <span class="rb_hot_click_title">最新推荐</span>
+    <span class="rb_hot_click_title">{{title}}</span>
   </div>
 </template>
 
 <script>
   export default {
-    
+    props:['title']
   }
 </script>
 

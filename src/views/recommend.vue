@@ -19,6 +19,12 @@
           <li :key="index" v-for="(item,index) in production"><a :href="item.url" target="_blank">{{item.name}}</a></li>
         </ul>
       </div>
+      <title-box class="assets" title="web前端学习路线"></title-box>
+      <div>
+        <ul>
+          <li :key="index" v-for="(item,index) in learning"><router-link to="/LearningPath">{{item.name}}</router-link></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +52,9 @@ import titleBox from '../components/TitleBox/titleBox.vue'
         production:[
           {name:'niuniu音乐(线上)',url:'http://bao.lqjhome.cn:13008'},
           {name:'niuniu音乐(Gitee)',url:'https://gitee.com/huang-rijian/vue-net-ease-cloud-music'},
+        ],
+        learning:[
+          {name:'web前端学习路线'}
         ]
       }
     },

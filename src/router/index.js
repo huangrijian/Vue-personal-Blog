@@ -16,18 +16,19 @@ const timeLocus = () => import('@/views/timeLocus.vue')
 const aboutMe = () => import('@/views/aboutMe.vue')
 const recommend = () => import('@/views/recommend.vue')
 const LeaveWord = () => import('@/views/LeaveWord.vue')
+const LearningPath = () => import('@/views/LearningPath.vue')
+const silinsi = () => import('@/views/404.vue')
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'CommonLayout',
     component: CommonLayout,
     children:[
       {
-      path:'',
-      name:'home',
-      component:home
+        path:'',
+        name:'home',
+        component:home
       },
       {
         path:'/Lists',
@@ -57,6 +58,11 @@ const routes = [
         path:'/recommend',
         name:'recommend',
         component:recommend
+      },
+      {
+        path:'/LearningPath',
+        name:'LearningPath',
+        component:LearningPath
       },
       {
         path:'/timeLocus',
@@ -92,10 +98,22 @@ const routes = [
     path:'/login',
     name:'login',
     component:login
-  }
+  },
+  {
+    path:'/404',
+    name:'404',
+    component:silinsi
+  },
+  // 错误地址重定向
+  {
+    path: "*",
+    redirect: "/404"
+ }
 ]
 
 const router = new VueRouter({
+  // 修改路由地址拼接模式
+  // mode: 'history',
   routes
 })
 

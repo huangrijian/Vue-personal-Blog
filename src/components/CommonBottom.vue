@@ -15,7 +15,7 @@
       </div>
       <p>
         <span>
-          Copyright © www.zhangqingblog.com All Rights Reserved.
+          Copyright © www.hrjblog.top All Rights Reserved.
         </span>
       </p>
       <p class="login" @click="login">
@@ -23,7 +23,7 @@
       </p>
       <p>
         <span>
-          备案号：鄂ICP备18005731号-2
+          备案号：粤ICP备2021059936号-1
         </span>
       </p>
     </div>

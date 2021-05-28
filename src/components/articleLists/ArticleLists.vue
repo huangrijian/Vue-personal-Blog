@@ -9,7 +9,7 @@
           <div class="title">{{item.title}}</div>
           <div class="content">
             <div class="image">
-                <img :src="item.pic_url" alt="">
+                <img v-lazy="item.pic_url" alt="">
             </div>
             <div class="describe">
               <p>{{item.content}}</p>

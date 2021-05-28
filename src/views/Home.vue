@@ -2,7 +2,7 @@
   <div class="home"> 
     <div class="head">
       <!-- 轮播图 -->
-      <el-carousel trigger="click" height="260px" class="slideshow">
+    <el-carousel trigger="click" height="260px" class="slideshow">
       <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
         <div class="slideshowBox" @click="GotoDetail(item.id)">
           <img class="headImg" :src="item.pic_url" alt="">
@@ -52,12 +52,49 @@ export default {
     GotoDetail(id){
       this.$router.push({path:'detail/'+id})
     },
+  /*
+   * 
+   * 获取点赞排行的文章并按照降序排序
+   * @param {Array} 
+   */ 
+   ThumbRank(array) {
+    let number = []
+    array.forEach(item => {
+      number.push(item.like_count)
+    })
+      number.sort();
+      number.sort(function(x,y){
+          return x-y;
+      })
+      number.reverse()
+    console.log(number)
+
+    let newsArray = []
+     number.forEach(numberitem => {
+        array.forEach(item => {
+          if(item.like_count === numberitem){
+            newsArray.push({like_count:numberitem,title:item.title})
+          }
+      })
+    })
+    console.log(newsArray);
+
+  },
+    /**
+     * 
+     * 网络请求
+     * 
+     * **/ 
+
     // 获取全部文章
     GetAllArticle(){
      this.$http.get('/api/article/typeList').then(res => {
         if(res.data.code === 0){
-          // 获取前9篇文章
-          this.AllArticle = res.data.data.slice(0,9)
+
+          console.log("文章数据",res.data.data);
+          this.ThumbRank(res.data.data)
+          // 获取前18篇文章
+          this.AllArticle = res.data.data.slice(0,18)
           // 截取最新的6篇给轮播图展示  .concat() 先将文章数组复制出一个新数组再进行反转，如果使用.reverse(),则会改变文章数组，而不产生新数组
           this.LbtArticle = res.data.data.concat().reverse().slice(0,6)
             // 截取一部分给轮播图右边的盒子
@@ -89,6 +126,10 @@ export default {
       })
     },
   },
+
+  
+
+
   created(){
     this.GetAllArticleClassName();
   }

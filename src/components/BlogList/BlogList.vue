@@ -3,7 +3,7 @@
     <ul class="BlogUl">
       <li class="liItem" :key="index" v-for="(item,index) in AllArticle" @click="GotoArticleDetail(item.id)">
         <div class="img">
-          <img :src="item.pic_url" alt="">
+          <img v-lazy="item.pic_url" alt="">
         </div>
         <div class="title">{{item.title}}</div>
         <div class="brief">{{item.content}}</div>
