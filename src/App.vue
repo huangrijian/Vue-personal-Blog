@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
       <!-- 返回顶部 -->
       <back-top></back-top>
       <!-- 整个视图 -->
@@ -35,7 +34,8 @@ export default {
   },
   created(){
     setTimeout(() => {
-      document.body.removeChild(document.getElementById('Loading'))   // 加载页面完后移除加载动画
+      // 加载页面完后移除加载动画
+      document.body.removeChild(document.getElementById('Loading'))   
     },1000)
      
   }

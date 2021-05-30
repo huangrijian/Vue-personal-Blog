@@ -29,7 +29,6 @@
 
 <script>
 import WOW from 'wowjs';
-// 使用事件总线
 import BlogList from '../components/BlogList/BlogList.vue'
 import TitleBox from '../components/TitleBox/titleBox.vue'
 export default {
@@ -59,38 +58,38 @@ export default {
    * @param {Array} 
    */ 
    ThumbRank(array) {
+    //  过滤出点赞数量
     let number = []
     array.forEach(item => {
       number.push(item.like_count)
     })
+    // 排序
       number.sort();
       number.sort(function(x,y){
           return x-y;
       })
       number.reverse()
 
-    let newsArray = []
-     number.forEach(numberitem => {
-        array.forEach(item => {
-          if(item.like_count === numberitem){
-            newsArray.push({like_count:numberitem,title:item.title})
-          }
-      })
+    let nesArrayData = [];
+    number = Array.from(new Set(number))
+    number.forEach((numberItem) => {
+      array.some((arrayItem) => {
+      if(arrayItem.like_count === numberItem) {
+        nesArrayData.push({id:arrayItem.id,title:arrayItem.title});
+        return true
+      }
     })
-    console.log(newsArray);
+  })
 
+    this.$store.commit('setLikeArry',nesArrayData)
+    this.$EventBus.$emit('Render')
   },
-    /**
-     * 
-     * 网络请求
-     * 
-     * **/ 
+  
 
     // 获取全部文章
     GetAllArticle(){
      this.$http.get('/api/article/typeList').then(res => {
         if(res.data.code === 0){
-          console.log("文章数据",res.data.data);
           this.ThumbRank(res.data.data)
           // 获取前18篇文章
           this.AllArticle = res.data.data.slice(0,18)
@@ -98,21 +97,8 @@ export default {
           this.LbtArticle = res.data.data.concat().reverse().slice(0,6)
             // 截取一部分给轮播图右边的盒子
           this.headerArticle = res.data.data.slice(6,8)
-          // 标题数组
-          let titleArry = []
-          let titleidArry = []
-          // 获取文章id和标题
-          this.LbtArticle.forEach((item, index) => {
-         //item 就是当前按循环到的对象  //index是循环的索引，从0开始
-          titleArry.push(item.title)
-          titleidArry.push(item.id)
-        })
-          // 保存到Vuex
-          this.$store.commit('setTitArry',titleArry)
-          this.$store.commit('setTitleidArry',titleidArry)
-          //获取到最新推荐数据后向该组件发送事件
-          this.$EventBus.$emit('startRender')
-
+          // 保存最新推荐的文章数据
+          this.SaveLatestRecommen();
         }
       })
     },
@@ -126,6 +112,20 @@ export default {
         }
       })
     },
+    // 保存最新推荐的文章数据
+    SaveLatestRecommen() {
+         // 标题数组
+          let RecommendArry = []
+          // 获取最新推荐的文章id和标题
+          this.LbtArticle.forEach((item, index) => {
+         //item 就是当前按循环到的对象  //index是循环的索引，从0开始
+          RecommendArry.push({id:item.id,title:item.title})
+        })
+          // 保存最新推荐到Vuex
+          this.$store.commit('setRecommendArry',RecommendArry)
+          this.$EventBus.$emit('Render')
+    }
+
   },
   created(){
     this.GetAllArticleClassName();

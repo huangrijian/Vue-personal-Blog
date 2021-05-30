@@ -59,11 +59,7 @@ const routes = [
         name:'recommend',
         component:recommend
       },
-      {
-        path:'/LearningPath',
-        name:'LearningPath',
-        component:LearningPath
-      },
+     
       {
         path:'/timeLocus',
         name:'timeLocus',
@@ -82,17 +78,22 @@ const routes = [
           // 需要登录权限
           requireAuth:true
         }
-      },
-      {
-        path:'/article/editArticle/:id',
-        name:'editArticle',
-        component:editArticle,
-        meta:{
-          // 需要登录权限
-          requireAuth:true
-        }
       }
     ]
+  },
+  {
+    path:'/LearningPath',
+    name:'LearningPath',
+    component:LearningPath
+  },
+  {
+    path:'/article/editArticle/:id',
+    name:'editArticle',
+    component:editArticle,
+    meta:{
+      // 需要登录权限
+      requireAuth:true
+    }
   },
   {
     path:'/login',
@@ -112,8 +113,6 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  // 修改路由地址拼接模式
-  // mode: 'history',
   routes
 })
 
@@ -122,13 +121,9 @@ router.beforeEach((to,from,next) => {
    // 让页面回到顶部
   //  pc端直接返回
   window.pageYOffset = document.documentElement.scrollTop = 0;
-  // 移动端添加返回动画
-  let timer = setInterval(() => {
-      document.body.scrollTop-=50;
-      if(document.body.scrollTop <= 0) {
-        clearInterval(timer)
-      }
-  },1)
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
+  scrollTo(0,0);
+  document.documentElement.scrollTop = document.body.scrollTop =0;
 
   // 由于刷新会丢失登录状态，所以刷新后要从Cookie里获取token再次存放在vuex
    store.commit('setToken',Cookie.get('token'))

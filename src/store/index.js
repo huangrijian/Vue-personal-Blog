@@ -18,9 +18,10 @@ export default new Vuex.Store({
     // 所有文章标题
     articleTitle:[],
 
-    titArry : JSON.parse(sessionStorage.getItem('titleArry')),
-    titleidArry : JSON.parse(sessionStorage.getItem('titleidArry')),
-
+    // 推荐排行
+    RecommendArry:JSON.parse(sessionStorage.getItem('RecommendArry')),
+    // 点赞排行
+    LikeArry:JSON.parse(sessionStorage.getItem('LikeArry')),
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
@@ -30,18 +31,19 @@ export default new Vuex.Store({
     setToken(state,val) {
       state.token = val;
     },
-    // 最新推荐标题
-    setTitArry(state,val) {
-      state.titArry = val;
-      sessionStorage.setItem("titleArry", JSON.stringify(val));
+    // 推荐排行
+    setRecommendArry(state,val) {
+      state.RecommendArry = val;
+      sessionStorage.setItem("RecommendArry", JSON.stringify(val));
     },
-    // 最新推荐标题id
-    setTitleidArry(state,val) {
-      state.titleidArry = val;
-      sessionStorage.setItem("titleidArry", JSON.stringify(val));
-    },
+    // 改变时间轴状态
     changeTimeLocus(state,val){
       state.timeLocus = val;
+    },
+    // 点赞排行
+    setLikeArry(state,val){
+      state.LikeArry = val;
+      sessionStorage.setItem("LikeArry", JSON.stringify(val));
     }
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 

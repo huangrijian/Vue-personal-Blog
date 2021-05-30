@@ -7,6 +7,7 @@
       layout="prev, pager, next"
       :total="count"
       @current-change="change"
+      class="wow slideInLeft"
       >
     </el-pagination>      
   </div>

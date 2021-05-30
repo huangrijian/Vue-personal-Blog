@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="404">
     <main>
       <section>404!找不到页面</section>
       <section>UH OH! 页面丢失</section>
@@ -24,16 +24,18 @@
 
 <style lang="scss" scoped>
 main {
-  width: 500px;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
   color: white;
-  margin: 250px auto;
   section {
     font-size: 50px;
     margin: 10px;
   }
   #frozen-btn {
     margin-top: 10px;
-    width: 85%;
+    width: 100%;
   }
 }
 </style>

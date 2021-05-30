@@ -83,6 +83,8 @@ li {
     margin-left: 10px;
     flex:5;
     position: relative;
+    overflow: hidden;
+    height: 150px;
     .tag {
       margin: 5px 0;
       .el-tag {
