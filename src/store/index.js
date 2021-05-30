@@ -16,7 +16,11 @@ export default new Vuex.Store({
     timeLocus:0,
 
     // 所有文章标题
-    articleTitle:[]
+    articleTitle:[],
+
+    titArry : JSON.parse(sessionStorage.getItem('titleArry')),
+    titleidArry : JSON.parse(sessionStorage.getItem('titleidArry')),
+
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
@@ -26,7 +30,16 @@ export default new Vuex.Store({
     setToken(state,val) {
       state.token = val;
     },
-
+    // 最新推荐标题
+    setTitArry(state,val) {
+      state.titArry = val;
+      sessionStorage.setItem("titleArry", JSON.stringify(val));
+    },
+    // 最新推荐标题id
+    setTitleidArry(state,val) {
+      state.titleidArry = val;
+      sessionStorage.setItem("titleidArry", JSON.stringify(val));
+    },
     changeTimeLocus(state,val){
       state.timeLocus = val;
     }

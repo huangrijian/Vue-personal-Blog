@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper marginTop">
+    <div class="wrapper marginTop wow slideInLeft">
      <div class="block aboutMe">
        <div class="avatar">
          <img src="https://portrait.gitee.com/uploads/avatars/user/2763/8289321_huang-rijian_1614261509.png!avatar100" alt="">
@@ -23,8 +23,19 @@
 </template>
 
 <script>
+import WOW from 'wowjs';
   export default {
-    name:'aboutMe'
+    name:'aboutMe',
+    mounted(){
+      	let wow = new WOW.WOW({
+          boxClass: 'wow',
+          animateClass: 'animated',
+          offset: 0,
+          mobile: true,
+          live: true
+        });
+        wow.init();
+    }
   }
 </script>
 

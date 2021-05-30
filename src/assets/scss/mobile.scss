@@ -9,6 +9,15 @@
     font-size: 13px!important;
   }
 
+  // 个人介绍、音乐组件、分类标签
+
+  #introduction,
+  #music,
+  #tally {
+    visibility: visible!important;
+  }
+
+
   html,body {
     overflow-x: hidden;
     background-color: #fdfcf8;

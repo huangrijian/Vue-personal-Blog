@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 文章分类标签 -->
-    <div class="block">
+    <div class="block" id="tally">
       <h4 style="margin-bottom:15px">文章分类</h4>
       <el-tag v-show="(item.classname)" :key="index" v-for="(item,index) in AllArticleClassName" @click="GotoList(item.classname)">{{item.classname}}</el-tag>
     </div>

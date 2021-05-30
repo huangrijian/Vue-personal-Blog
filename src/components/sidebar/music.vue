@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="music">
     <!-- 搜索框 -->
      <div class="search bar7">
         <div>

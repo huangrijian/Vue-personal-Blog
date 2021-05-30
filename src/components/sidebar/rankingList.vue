@@ -24,18 +24,11 @@
       }
     },
     created(){
-      setTimeout(() => {
-      // 将sessionStorage上的文章标题列表和id取出 
-      //需要等待500毫秒,等着home.vue发起请求,把标题数据设置到sessionStorage
-        switch(this.title){
-          case "最新推荐" :
-            this.titArry = JSON.parse(sessionStorage.getItem('titleArry'));
-            this.titleidArry = JSON.parse(sessionStorage.getItem('titleidArry'));
-            break
-          case "点赞排行" :
-            break
-        }
-      },800)
+      this.$EventBus.$on('startRender',() => {
+        this.titArry = this.$store.state.titArry;
+        this.titleidArry = this.$store.state.titleidArry;
+      })
+
     }
   }
 </script>

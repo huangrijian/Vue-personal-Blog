@@ -2,7 +2,7 @@
   <div class="home"> 
     <div class="head">
       <!-- 轮播图 -->
-    <el-carousel trigger="click" height="260px" class="slideshow">
+    <el-carousel trigger="click" height="260px" class="slideshow  wow slideInLeft">
       <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
         <div class="slideshowBox" @click="GotoDetail(item.id)">
           <img class="headImg" :src="item.pic_url" alt="">
@@ -11,16 +11,16 @@
       </el-carousel-item>
     </el-carousel>
     <!-- 轮播图旁边的盒子 -->
-    <div class="block">
+    <div class="block wow slideInLeft">
       <div class="img1" :key="index" v-for="(item,index) in headerArticle">
         <img :src="item.pic_url" @click="GotoDetail(item.id)" alt="">
         <div class="tit">{{item.title}}</div>
       </div>
     </div>
     </div>
-    <div class="block main marginTop">
+    <div class="block main marginTop wow slideInLeft">
       <!-- 小标题组件 -->
-      <title-box title="技术博文" class="title-box"></title-box>
+      <title-box title="技术博文" class="title-box wow slideInLeft" data-wow-delay="0.4s"></title-box>
       <!-- 文章列表组件 -->
       <blog-list :AllArticle="AllArticle" :AllArticleClassName="AllArticleClassName"></blog-list>
     </div>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import WOW from 'wowjs';
 // 使用事件总线
 import BlogList from '../components/BlogList/BlogList.vue'
 import TitleBox from '../components/TitleBox/titleBox.vue'
@@ -67,7 +68,6 @@ export default {
           return x-y;
       })
       number.reverse()
-    console.log(number)
 
     let newsArray = []
      number.forEach(numberitem => {
@@ -90,7 +90,6 @@ export default {
     GetAllArticle(){
      this.$http.get('/api/article/typeList').then(res => {
         if(res.data.code === 0){
-
           console.log("文章数据",res.data.data);
           this.ThumbRank(res.data.data)
           // 获取前18篇文章
@@ -108,9 +107,12 @@ export default {
           titleArry.push(item.title)
           titleidArry.push(item.id)
         })
-          // 保存到本地
-          sessionStorage.setItem("titleArry", JSON.stringify(titleArry));
-          sessionStorage.setItem("titleidArry", JSON.stringify(titleidArry));
+          // 保存到Vuex
+          this.$store.commit('setTitArry',titleArry)
+          this.$store.commit('setTitleidArry',titleidArry)
+          //获取到最新推荐数据后向该组件发送事件
+          this.$EventBus.$emit('startRender')
+
         }
       })
     },
@@ -118,21 +120,27 @@ export default {
     GetAllArticleClassName(){
       this.$http.get('/api/article/classify').then(res => {
         if(res.data.code === 0){
-          console.log(res.data);
-          this.AllArticleClassName = res.data.data
-          // 获取文章分类后，获取文章数据
-          this.GetAllArticle();
+          this.AllArticleClassName = res.data.data;
+          // 获取全部文章
+           this.GetAllArticle();
         }
       })
     },
   },
-
-  
-
-
   created(){
     this.GetAllArticleClassName();
-  }
+   
+  },
+  mounted(){
+      	let wow = new WOW.WOW({
+          boxClass: 'wow',
+          animateClass: 'animated',
+          offset: 0,
+          mobile: true,
+          live: true
+        });
+        wow.init();
+    }
 }
 </script>
 

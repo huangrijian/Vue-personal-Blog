@@ -2,7 +2,7 @@
   <div class="commonLayout">
     <!-- 导航条 -->
     <nav>
-      <common-header class="common-header" style="top:0px"></common-header>
+      <common-header class="wow slideInRight common-header" style="top:0px"></common-header>
     </nav>
 
       <!-- 中心 -->
@@ -13,7 +13,7 @@
                 <div class="grid-content bg-purple slideshowBox">
                       <!-- 视图切换 -->
                         <article>
-                          <keep-alive include="recommend,aboutMe,timeLocus">
+                          <keep-alive include="timeLocus">
                             <router-view></router-view>
                           </keep-alive>
                         </article>
@@ -22,21 +22,25 @@
               <el-col :lg="6" :xl="6">
                 <div class="grid-content bg-purple-light synopsis">
                   <!-- 侧边栏 -->
-                    <aside>
-                    <personal-details ></personal-details>
-                    <music class="maginbot"></music>
-                    <tally class="maginbot"></tally>
-                    <!-- 最新推荐 -->
-                    <div class="block maginbot">
-                      <title-boxs title="最新推荐"></title-boxs>
-                      <ranking-list title="最新推荐"></ranking-list>       
-                    </div> 
-                    <!-- 点击排行 -->
-                    <div class="block">
-                      <title-boxs title="点赞排行"></title-boxs>
-                      <ranking-list title="点赞排行"></ranking-list>       
-                    </div>
+                    <aside class="wow slideInRight">
+                      <personal-details class="wow slideInRight"></personal-details>
+                      <music class="maginbot wow slideInLeft" data-wow-delay="0.2s"></music>
+                      <tally class="maginbot"></tally>
+                      <div class="block maginbot">
+                        <title-boxs title="最新推荐"></title-boxs>
+                        <ranking-list title="点赞排行"></ranking-list>
+                      </div>
 
+                      <!-- 最新推荐 -->
+                      <!-- <div class="block maginbot wow slideInLeft">
+                        <title-boxs title="最新推荐"></title-boxs>
+                        <ranking-list title="最新推荐"></ranking-list>       
+                      </div>  -->
+                      <!-- 点击排行 -->
+                      <!-- <div class="block wow slideInRight">
+                        <title-boxs title="点赞排行"></title-boxs>
+                        <ranking-list title="点赞排行"></ranking-list>       
+                      </div> -->
                     </aside>
                 </div>
                 </el-col>
@@ -69,14 +73,15 @@ export default {
     Tally,
     TitleBoxs,
     RankingList,
-  }
+  },
+ 
 }
 </script>
 
 <style scoped lang="scss">
 .commonLayout {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
   // 导航条
     .common-header {
     position: fixed;

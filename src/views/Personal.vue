@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper wow slideInLeft">
     <div class="content">
       <el-form ref="form" :rules="rules" label-width="80px" :inline="false" size="normal">
         <el-form-item label="昵称">
@@ -29,8 +29,9 @@
 </template>
 
 <script>
-  import Cookie from 'js-cookie'
-  export default {
+import WOW from 'wowjs';
+import Cookie from 'js-cookie'
+export default {
     data() {
       return {
         form:{
@@ -93,6 +94,16 @@
     created(){
       this.GetInfo();
       console.log(this.defaultAvatar);
+    },
+    mounted(){
+      	let wow = new WOW.WOW({
+          boxClass: 'wow',
+          animateClass: 'animated',
+          offset: 0,
+          mobile: true,
+          live: true
+        });
+        wow.init();
     }
   }
 </script>

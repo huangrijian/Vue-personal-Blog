@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="jishubowen">
     <ul class="BlogUl">
       <li class="liItem" :key="index" v-for="(item,index) in AllArticle" @click="GotoArticleDetail(item.id)">
         <div class="img">
@@ -40,7 +40,7 @@
       GotoArticleDetail(id){
         this.$router.push({name:'detail',params: {id:id}})
       }
-    }
+    },
   }
 </script>
 

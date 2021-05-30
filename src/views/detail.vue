@@ -1,10 +1,10 @@
 <template>
 <div>
-    <div class="block">
+    <div class="block wow slideInLeft">
       <!-- 您的位置 -->
-      <location Tit1="首页" Tit2="技术博文"></location>
+      <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
       <!-- 具体文章 -->
-      <article-contents :data="data"></article-contents>
+      <article-contents :data="data" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
           <el-button type="primary" round @click="isClick&&like()"><i class="iconfont  My-new-icondianzan"></i>点赞（{{likeCount}}）</el-button>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import WOW from 'wowjs';
 import comment from '@/components/Comment.vue'
 import location from '../components/Location/location.vue'
 import ArticleContents from '../components/ArticleContents/ArticleContents.vue'
@@ -87,6 +88,16 @@ import Cookie from 'js-cookie'
     created(){
       this.GetArticleDetail()
 
+    },
+    mounted(){
+      	let wow = new WOW.WOW({
+          boxClass: 'wow',
+          animateClass: 'animated',
+          offset: 0,
+          mobile: true,
+          live: true
+        });
+        wow.init();
     }
   }
 </script>

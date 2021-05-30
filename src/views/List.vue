@@ -1,6 +1,6 @@
 <template>
   <div>
-    <article-lists :AllArticle="AllArticle"></article-lists>
+    <article-lists class="wow slideInRight" data-wow-delay="0.2s" :AllArticle="AllArticle"></article-lists>
            <!-- 分页 -->
     <el-pagination
       background
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import WOW from 'wowjs';
 import ArticleLists from '../components/articleLists/ArticleLists.vue'
   export default {
   inject: ['reload'],
@@ -69,6 +70,16 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
   created(){
     // 分页请求
     this.GetAllArticle(this.curPage,this.pageSize);
+  },
+  mounted(){
+    let wow = new WOW.WOW({
+          boxClass: 'wow',
+          animateClass: 'animated',
+          offset: 0,
+          mobile: true,
+          live: true
+        });
+        wow.init();
   }
   }
 </script>
