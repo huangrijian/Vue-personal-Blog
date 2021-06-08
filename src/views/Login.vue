@@ -216,4 +216,24 @@
     margin-right: 15px;
   }
 }
+
+.el-input--normal {
+  position: relative;
+  overflow: hidden;
+}
+.el-input--normal::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    height: 3px;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to right,white,#3498db,#1abc9c,
+    #8e44ad,#e67e22,#e74c,white);
+    transform: translateX(-100%);
+    transition: 1s;
+  }
+  .el-input--normal:hover::before {
+    transform: translateX(100%);
+  }
 </style>

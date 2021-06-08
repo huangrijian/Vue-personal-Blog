@@ -18,6 +18,7 @@ const recommend = () => import('@/views/recommend.vue')
 const LeaveWord = () => import('@/views/LeaveWord.vue')
 const LearningPath = () => import('@/views/LearningPath.vue')
 const silinsi = () => import('@/views/404.vue')
+const animation = () => import('@/views/animation.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -99,6 +100,11 @@ const routes = [
     path:'/login',
     name:'login',
     component:login
+  },
+  {
+    path:'/animation',
+    name:'animation',
+    component:animation
   },
   {
     path:'/404',

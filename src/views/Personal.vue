@@ -8,13 +8,13 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="http://127.0.0.1.188:3000/api/article/upload"
+            action="http://127.0.0.1:3000/api/article/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
             name="head_img"
             >
-            <img :src="imageUrl?imageUrl:defaultAvatar" class="avatar">
+            <img :src="imageUrl" class="avatar">
             <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
           </el-upload>
         </el-form-item>
@@ -38,7 +38,6 @@ export default {
           nickname:''
         },
         imageUrl:'',
-        defaultAvatar:require("@/assets/img/avatar.jpg"),
         nickname:''
       }
     },
@@ -69,25 +68,22 @@ export default {
       // 获取用户信息
       GetInfo(){
          this.$http.get('/api/users/info').then( (res) => {
-           console.log(res);
           //  获取用户头像地址
            this.nickname = res.data.data.nickname
-           if(res.data.data.head_img === '' || res.data.data.head_img === null){
-             this.imageUrl = ''
-           }else {
-             this.imageUrl = res.data.data.head_img
-           }
+           this.imageUrl = res.data.data.head_img
          })
       },
       // 更新用户信息
-      onSubmit(){
-        this.$http.post('/api/users/updateUser',{
+      async onSubmit(){
+        if(this.nickname === '怪蜀黍'){
+          return this.$message.error('昵称已经被占用了，请换一个昵称吧~');
+        }
+        await this.$http.post('/api/users/updateUser',{
           nickname:this.nickname,
           head_img:this.imageUrl
-        }).then(res => {
-          console.log(res);
-          location.reload();
         })
+        // 刷新页面
+        location.reload();
       }
 
     },

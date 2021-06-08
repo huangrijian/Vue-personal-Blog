@@ -14,9 +14,9 @@
    
     <!-- maxNum 雨点最大数量 -->
    <script>
-     
-     if(document.body.clientWidth >= 1200){
-      Rain({speed:[2,40],hasBounce:true,wind_direction:340,gravity:0.05,maxNum:25,numLevel:5,drop_chance:0.4,cloud:false});
+     var rain = true;
+     if(document.body.clientWidth >= 1200 && window.rain){
+       Rain({speed:[2,40],hasBounce:true,wind_direction:340,gravity:0.05,maxNum:25,numLevel:5,drop_chance:0.4,cloud:false});
      }
    </script>
     <noscript>

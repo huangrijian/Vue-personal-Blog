@@ -22,16 +22,14 @@
 <script>
   export default {
     props:['data'],
-    data() {
-      return {
-        
-      }
-    },
     filters:{
       timer(str){
         return str.substring(0,9);
       },
     },
+    created(){
+      console.log(this.data);
+    }
   }
 </script>
 

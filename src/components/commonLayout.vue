@@ -2,17 +2,20 @@
   <div class="commonLayout">
     <!-- 导航条 -->
     <nav>
-      <common-header class="wow slideInRight common-header" style="top:0px"></common-header>
+      <common-header @goTo="goTo()" class="wow slideInRight common-header" style="top:0px"></common-header>
     </nav>
+
+    <!-- 切换大屏阅读模式按钮 -->
+    <check-box isname="read"></check-box>
 
       <!-- 中心 -->
       <section>
         <div class="wrapper marginTop">
-            <el-row :gutter="10" class="head">
+            <el-row :gutter="10" class="head" v-show="!isShowDiv">
               <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="18">
                 <div class="grid-content bg-purple slideshowBox">
                   <!-- 视图切换 -->
-                    <article>
+                    <article ref="article">
                       <keep-alive include="timeLocus">
                         <router-view></router-view>
                       </keep-alive>
@@ -20,12 +23,13 @@
                 </div>
                 </el-col>
               <el-col :lg="6" :xl="6">
-                <div class="grid-content bg-purple-light synopsis">
+                <div class="grid-content bg-purple-light synopsis" ref="sidebar">
                   <!-- 侧边栏 -->
                     <aside class="wow slideInRight">
                       <personal-details class="wow slideInRight"></personal-details>
                       <music class="maginbot wow slideInLeft" data-wow-delay="0.2s"></music>
                       <tally class="maginbot"></tally>
+                      <div class="block maginbot showTransition" @click="showTransition">css动画效果展示</div>
                       <div class="block maginbot">
                         <title-boxs title="最新推荐"></title-boxs>
                         <ranking-list title="最新推荐"></ranking-list>
@@ -38,7 +42,10 @@
                 </div>
                 </el-col>
             </el-row>
+            <!-- 动画效果展示  -->
+            <animation  v-if="isShowDiv"></animation>
         </div>
+        
       </section>
 
     <!-- 底部 -->
@@ -56,6 +63,8 @@ import Music from './sidebar/music.vue'
 import Tally from './sidebar/tally.vue'
 import TitleBoxs from '@/components/TitleBox/titleBoxs.vue'
 import RankingList from './sidebar/rankingList.vue'
+import CheckBox from '@/components/checkbox/checkbox.vue'
+import Animation from '../views/animation.vue'
 export default {
   name: 'commonLayout',
   components:{
@@ -66,6 +75,22 @@ export default {
     Tally,
     TitleBoxs,
     RankingList,
+    CheckBox,
+    Animation
+  },
+  data() {
+    return {
+      isShowDiv:false
+    }
+  },
+  methods: {
+    goTo(){
+      this.isShowDiv = false
+    },
+    showTransition(){
+      this.isShowDiv = true;
+      window.pageYOffset = document.documentElement.scrollTop = 0;
+    }
   }
  
 }
@@ -100,7 +125,11 @@ export default {
   }
 }
 
-
+.showTransition {
+  cursor:pointer;
+  text-align: center;
+  font-weight: 600;
+}
 
 
 

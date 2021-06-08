@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <article-lists class="wow slideInRight" data-wow-delay="0.2s" :AllArticle="AllArticle"></article-lists>
+  <div class="wow slideInLeft">
+    <article-lists  :AllArticle="AllArticle"></article-lists>
            <!-- 分页 -->
     <el-pagination
       background
       layout="prev, pager, next"
       :total="count"
       @current-change="change"
-      class="wow slideInLeft"
       >
     </el-pagination>      
   </div>
