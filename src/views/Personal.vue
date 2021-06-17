@@ -8,7 +8,7 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="http://127.0.0.1:3000/api/article/upload"
+            action="http://112.124.52.188:3000/api/article/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -75,9 +75,9 @@ export default {
       },
       // 更新用户信息
       async onSubmit(){
-        if(this.nickname === '怪蜀黍'){
-          return this.$message.error('昵称已经被占用了，请换一个昵称吧~');
-        }
+        // if(this.nickname === '怪蜀黍' && this.imageUrl === this.imageUrl){
+        //   return this.$message.error('昵称已经被占用了，请换一个昵称吧~');
+        // }
         await this.$http.post('/api/users/updateUser',{
           nickname:this.nickname,
           head_img:this.imageUrl

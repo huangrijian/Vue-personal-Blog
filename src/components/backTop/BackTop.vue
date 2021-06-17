@@ -59,12 +59,11 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
  .backTop {
    position: fixed;
    right: 50px;
    bottom: 100px;
-   // 鼠标小手
    cursor:pointer;
    width: 50px;
    height: 50px;
