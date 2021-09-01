@@ -147,8 +147,6 @@ import Cookie from 'js-cookie'
       isSignIn(){
         return this.$store.state.isSignIn;
       },
-
-
     },
     created(){
       this.GetArticleComment();

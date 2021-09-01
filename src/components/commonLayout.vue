@@ -26,9 +26,19 @@
                 <div class="grid-content bg-purple-light synopsis" ref="sidebar">
                   <!-- 侧边栏 -->
                     <aside class="wow slideInRight">
-                      <personal-details class="wow slideInRight"></personal-details>
+                      <personal-details class="wow slideInRight maginbot"></personal-details>
+                       <div class="block celebrity">
+                         <div class="block maginbot item">
+                           “时间就像海绵里的水,只要愿挤,总还是有的”
+                         </div>
+                         <div class="block item">
+                           “人类的悲欢并不相通，我只觉得他们吵闹。”
+                         </div>
+                         
+                       </div>
                       <music class="maginbot wow slideInLeft" data-wow-delay="0.2s"></music>
                       <tally class="maginbot"></tally>
+
                       <div class="block maginbot showTransition" @click="showTransition">css动画效果展示</div>
                       <div class="block maginbot">
                         <title-boxs title="最新推荐"></title-boxs>
@@ -121,6 +131,32 @@ export default {
     .maginbot {
       margin-bottom: 20px;
       width: 100%;
+    }
+    .celebrity {
+      
+      height: 255px;
+      background: url("~@/assets/img/lx.jpg");
+      background-position: center;
+      background-size: 100%;
+      z-index: 3;
+      .item {
+        position: relative;
+        background:hsla(0, 0%, 100%, .5);
+        box-shadow: 0 0 15px rgb(44, 44, 44);
+        z-index: 99;
+        // background:hsla(hue, saturation, lightness, alpha);
+      }
+      .item::before {
+        position: absolute;
+        content: '';
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 4;
+        filter: blur(20px);
+        
+      }
     }
   }
 }

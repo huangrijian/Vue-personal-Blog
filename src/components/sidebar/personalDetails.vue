@@ -2,7 +2,7 @@
   <div class="personalDetails" id="introduction">
      <!-- 个人简介 -->
              <div class="block">
-              <h2>黄先森个人简介</h2>
+              <h2>黄先森·简介</h2>
               <div>
                 <p><i class="iconfont My-new-iconzhiye"></i>职业：大三学生、前端学习者</p>
                 <p><i class="iconfont My-new-icondingwei1"></i>现居：广东省广州市</p>

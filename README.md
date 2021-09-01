@@ -33,6 +33,7 @@ $ npm run serve
 - vuex
   - 状态管理
 
-
+- vue-aplayer
+  - 第三方音乐组件
 
 
