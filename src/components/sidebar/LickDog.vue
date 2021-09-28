@@ -34,12 +34,19 @@ export default {
    async getData(){
      const url = 'http://api.tianapi.com/txapi/tiangou/index';
      const key = 'f5a89e80e1b532e8966c393f22320dea'
-     let res = await axios.get(url, {
+     try {
+       let res = await axios.get(url, {
         params: {
           key
         }
       })
-      this.context = res.data.newslist[0].content
+      this.context = res ? res.data.newslist[0].content : str
+     } catch (error) {
+       console.log(error);
+        let str = '你说你想买AJ，今天我去了叔叔的口罩厂做了一天的打包。拿到了两百块钱，加上我这几天省下的钱刚好能给你买一个鞋盒。即没有给我自己剩下一分钱，但你不用担心，因为厂里包吃包住。对了打包的时候，满脑子都是你，想着你哪天突然就接受我的橄榄枝了呢。而且今天我很棒呢，主管表扬我很能干，其实也有你的功劳啦，是你给了我无穷的力量。今天我比昨天多想你一点，比明天少想你一点。'
+        this.context = this.context ? this.context : str
+     }
+      
     },
 
     getContext(){
