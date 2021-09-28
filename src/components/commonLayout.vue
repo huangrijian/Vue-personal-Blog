@@ -27,19 +27,18 @@
                   <!-- 侧边栏 -->
                     <aside class="wow slideInRight">
                       <personal-details class="wow slideInRight maginbot"></personal-details>
-                       <div class="block celebrity">
+                       <!-- <div class="block celebrity">
                          <div class="block maginbot item">
                            “时间就像海绵里的水,只要愿挤,总还是有的”
                          </div>
                          <div class="block item">
                            “人类的悲欢并不相通，我只觉得他们吵闹。”
                          </div>
-                         
-                       </div>
-                      <music class="maginbot wow slideInLeft" data-wow-delay="0.2s"></music>
+                       </div> -->
+                      <music class="maginbot wow slideInLeft" data-wow-delay="0.2s" />
                       <tally class="maginbot"></tally>
 
-                      <div class="block maginbot showTransition" @click="showTransition">css动画效果展示</div>
+                      <!-- <div class="block maginbot showTransition" @click="showTransition">css动画效果展示</div>
                       <div class="block maginbot">
                         <title-boxs title="最新推荐"></title-boxs>
                         <ranking-list title="最新推荐"></ranking-list>
@@ -47,7 +46,8 @@
                       <div class="block maginbot">
                         <title-boxs title="点赞排行"></title-boxs>
                         <ranking-list title="点赞排行"></ranking-list>
-                      </div>
+                      </div> -->
+                      <LickDog/>
                     </aside>
                 </div>
                 </el-col>
@@ -75,6 +75,8 @@ import TitleBoxs from '@/components/TitleBox/titleBoxs.vue'
 import RankingList from './sidebar/rankingList.vue'
 import CheckBox from '@/components/checkbox/checkbox.vue'
 import Animation from '../views/animation.vue'
+import LickDog from './sidebar/LickDog.vue'
+
 export default {
   name: 'commonLayout',
   components:{
@@ -86,7 +88,8 @@ export default {
     TitleBoxs,
     RankingList,
     CheckBox,
-    Animation
+    Animation,
+    LickDog
   },
   data() {
     return {

@@ -7,7 +7,8 @@
           <el-col :span="4">
             <div class="logo threed">黄先森个人博客站</div>
           </el-col>
-          <el-col :span="20">
+          
+          <el-col :span="14">
             <!-- 导航菜单 -->
             <el-menu mode="horizontal" 
             :default-active="activeIndex" 
@@ -26,25 +27,28 @@
               <el-menu-item index="3" @click="goToto">
                   <router-link to="/timeLocus" ><i class="iconfont My-new-icondaojishi"></i>时间轨迹</router-link>
               </el-menu-item>
-              <el-menu-item index="4" @click="goToto">
+              <!-- <el-menu-item index="4" @click="goToto">
                  <router-link to="/recommend" ><i class="iconfont My-new-icondianzan"></i>博客推荐</router-link>
-              </el-menu-item>
+              </el-menu-item> -->
               <el-menu-item index="5" @click="goToto">
                  <router-link to="/aboutMe" ><i class="iconfont My-new-iconwode1"></i>关于我</router-link>
               </el-menu-item>
               <el-menu-item index="6" @click="goToto">
                  <router-link to="/LeaveWord"><i class="iconfont My-new-iconbianji"></i>留言</router-link>
               </el-menu-item>
-              <el-menu-item index="7"  @click="goToto">
+              <el-menu-item index="8"  @click="goToto">
                  <router-link to="/article" v-if="isSignIn === 1 && nickname === '怪蜀黍'">我的博客</router-link>
               </el-menu-item>
-              <el-menu-item index="8" @click="goToto">
+              <!-- <el-menu-item index="9" @click="goToto">
                  <router-link to="/login"  v-if="isSignIn === 0" class="login"><i class="iconfont My-new-iconxuanzhonghaoyou"></i>登录</router-link>
-              </el-menu-item>
-               <el-menu-item index="9"  @click="goToto">
+              </el-menu-item> -->
+               <el-menu-item index="10"  @click="goToto">
                  <router-link to="/personal"  v-if="isSignIn === 1 "  class="login">{{UserInfo.nickname === '怪蜀黍' ? '尊敬的管理员：' + UserInfo.nickname : '尊敬的游客：'+ UserInfo.nickname}},欢迎您</router-link>
               </el-menu-item>
             </el-menu>
+          </el-col>
+          <el-col :span="6">
+            <Search/>
           </el-col>
         </el-row>
       </div>
@@ -87,6 +91,7 @@
 </template>
 
 <script>
+import Search from './search/index.vue'
   export default {
     data() {
       return {
@@ -95,6 +100,9 @@
 
         nickname:''
       }
+    },
+    components:{
+      Search
     },
     methods: {
       // 修改当前活跃
@@ -149,7 +157,9 @@
 
 <style lang="scss" scoped>
 .el-row {
-  background-color:#2d2d2d
+  background-color:#2d2d2d;
+  display: flex;
+  align-items: center;
 }
 header {
   background-color:#2d2d2d;
