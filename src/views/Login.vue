@@ -25,7 +25,7 @@
     <div class="registerBox">
       <el-form :model="regform" ref="regform" :rules="regrules" label-width="0" :inline="false" size="normal" key="2">
       <el-form-item prop="regname">
-        <el-input v-model="regform.regname"  placeholder="请输入用户名"></el-input>
+        <el-input v-model="regform.regname"  placeholder="请输入用户名" ></el-input>
       </el-form-item>
       <el-form-item prop="nickname">
         <el-input v-model="regform.nickname" placeholder="请输入昵称"></el-input>
@@ -55,6 +55,7 @@
 
 <script>
   import Cookie from 'js-cookie'
+  import axios from 'axios'
   export default {
     data() {
      // 确认密码的规则
@@ -78,6 +79,23 @@
         }
       };
 
+      var validateUser = async (rule, value, callback) => {
+
+       let res = await axios({
+          method: 'post',
+          url: 'http://127.0.0.1:3000/',
+          data: {
+            value
+          }
+        });
+        console.log("res",res);
+        if (res.data.code === 200) {
+            callback();
+        } else {
+          callback(new Error('用户名已被占用~请重新输入'));
+        }
+      };
+
       return {
         loading:false,
         form:{
@@ -92,22 +110,24 @@
         },
 
         status:1,
-
+        // 登录规则
          rules: {
           name: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+            { min: 3, max: 15, message: '长度在 3个 到 15 个字符', trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
           ],
         },
-
+        // 注册规则
          regrules: {
           regname: [
             { required: true, message: '请输入您的用户名', trigger: 'blur' },
-            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' },
+            { validator: validateUser, trigger: 'blur' }
+
           ],
           nickname:[
              { required: true, message: '请输入您的昵称', trigger: 'blur' },
