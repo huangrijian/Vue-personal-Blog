@@ -35,8 +35,14 @@ import SearchItem from  './searchItem.vue'
       SearchItem
     },
     methods:{
-      SearchWord(){
-        console.log("inputVal",this.inputVal)
+      async SearchWord(){
+        console.log("inputVal",this.inputVal);
+        let {data:{result}}  = await this.$http.post('/api/article/search',{keyWord:this.inputVal});
+        // 将结果存储至vuex
+        this.$store.commit("setSearchRes",result);
+
+        console.log("搜索结果",result);
+        this.$router.push({name:'Lists',query: {keyword:this.inputVal}});
       },
       onFocus(){
         console.log("获取焦点");

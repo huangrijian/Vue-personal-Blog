@@ -8,9 +8,7 @@
         <div class="title">{{item.title}}</div>
         <div class="brief">{{item.content}}</div>
         <div class="tag">
-          <el-tag v-if="item.class_name01">{{ item.class_name01 }}</el-tag>
-          <el-tag v-if="item.class_name02" type="success">{{item.class_name02 }}</el-tag>
-          <el-tag v-if="item.class_name03" type="info">{{ item.class_name03}}</el-tag>
+         <el-tag :key="index" v-for="(items,index) in item.classify" size="small">{{items}}</el-tag>
         </div>
         <div class="Item-end">
           <span>+文章阅读</span>
@@ -38,7 +36,8 @@
     methods:{
           // 去文章详情
       GotoArticleDetail(id){
-        this.$router.push({name:'detail',params: {id:id}})
+        this.$router.push({name:'detail',params: {id}});
+        this.$store.commit('setArticleId',id);
       }
     },
   }

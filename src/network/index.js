@@ -1,6 +1,8 @@
 import axios from 'axios'
 import store from '../store/index'
-axios.defaults.baseURL = 'http://112.124.52.188:3000/';
+import { baseUrl } from '@/config/config'
+axios.defaults.baseURL = baseUrl;
+
 export default function setAxios() {
   //请求拦截
   axios.interceptors.request.use(

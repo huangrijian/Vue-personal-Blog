@@ -12,6 +12,8 @@ export default new Vuex.Store({
     isSignIn:0,
     token:'',
 
+    isPure:false,
+
     // 时间轴状态，默认0为缓存状态，1为活跃状态
     timeLocus:0,
 
@@ -22,6 +24,13 @@ export default new Vuex.Store({
     RecommendArry:JSON.parse(sessionStorage.getItem('RecommendArry')),
     // 点赞排行
     LikeArry:JSON.parse(sessionStorage.getItem('LikeArry')),
+
+    // 搜索结果
+    searchRes:[],
+
+    bgimgUrl:sessionStorage.getItem('bgimgUrl') || require('../assets/img/bgdm04.jpg'),
+
+    articleId:sessionStorage.getItem('articleId')
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
@@ -44,7 +53,25 @@ export default new Vuex.Store({
     setLikeArry(state,val){
       state.LikeArry = val;
       sessionStorage.setItem("LikeArry", JSON.stringify(val));
-    }
+    },
+    // 搜索结果
+    setSearchRes(state,val){
+      state.searchRes = val;
+    },
+
+    setIsPure(state,val){
+      state.isPure = val;
+    },
+
+    setBgimgUrl(state,val){
+      state.bgimgUrl = val;
+      sessionStorage.setItem("bgimgUrl", val);
+    },
+
+    setArticleId(state,val) {
+      state.articleId = val;
+      sessionStorage.setItem("articleId", val);
+    },
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 
   actions: {

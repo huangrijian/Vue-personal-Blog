@@ -54,6 +54,7 @@
 </template>
 
 <script>
+  import { baseUrl } from '@/config/config'
   import Cookie from 'js-cookie'
   import axios from 'axios'
   export default {
@@ -83,7 +84,7 @@
 
        let res = await axios({
           method: 'post',
-          url: 'http://127.0.0.1:3000/',
+          url: baseUrl,
           data: {
             value
           }

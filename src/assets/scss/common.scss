@@ -1,7 +1,7 @@
 @import url("./checkbox.css");
 
 .wrapper {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -74,7 +74,7 @@ textarea {
 
 // 改变编辑器字体大小
 .markdown-body pre code {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 // mobileNav pc端默认隐藏
@@ -131,4 +131,30 @@ textarea {
 
 #frozen-btn .green:hover:before {
   background-position: left bottom;
+}
+
+.el-upload-list__item {
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 300px!important;
+  height: 300px!important;
+  display: inline-block;
+  margin: 10px!important;
+}
+
+.hrj-dialog .el-dialog {
+  background-color: unset !important;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.el-tabs__nav-scroll {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.markdown-body p {
+  font-size: 15px;
+  line-height: 2;
 }

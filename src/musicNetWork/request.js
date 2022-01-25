@@ -3,7 +3,7 @@ import axios from 'axios'
 export function request(config) {
   // 1.创建axios的实例
   const instance = axios.create({
-    baseURL: 'http://bao.lqjhome.cn:3000',
+    baseURL: 'https://cloud-music-api-f494k233x-mgod-monkey.vercel.app',
     timeout: 5000
   })
 

@@ -7,6 +7,7 @@
       layout="prev, pager, next"
       :total="count"
       @current-change="change"
+      :class="{ active: keyword }"
       >
     </el-pagination>      
   </div>
@@ -21,6 +22,7 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
   data() {
     return {
       AllArticle:[],
+      keyword:this.$route.query.keyword,
       key:this.$route.query.key,
       // 当前的页，默认为第一页
       curPage:1,
@@ -31,6 +33,7 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
     }
   },
    beforeRouteUpdate (to, from, next) {
+     console.log("beforeRouteUpdate")
      this.reload()
      next()
   },
@@ -41,8 +44,8 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
   },
   methods:{
     change(val){
+      console.log("change");
       this.GetAllArticle(val,this.pageSize);
-
     },
     GetAllArticle(curPage,pageSize){
       if(this.key){
@@ -51,7 +54,6 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
         if(res.data.code === 0){
           // 获取文章数组
           this.AllArticle = res.data.data.list;
-          console.log("获取分类文章信息",this.AllArticle);
         }
       })
       }else {
@@ -68,8 +70,12 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
     },
   },
   created(){
-    // 分页请求
-    this.GetAllArticle(this.curPage,this.pageSize);
+    let keyword = this.$route.query.keyword;
+    if(!keyword) {
+      this.GetAllArticle(this.curPage,this.pageSize);
+    }else {
+      this.AllArticle = this.$store.state.searchRes
+    }
   },
   mounted(){
     let wow = new WOW.WOW({
@@ -89,5 +95,8 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue'
   margin-top: 15px;
   display: flex;
   justify-content: center;
+}
+.active {
+  display: none;
 }
 </style>

@@ -5,7 +5,7 @@
       <div class="wrapper">
         <el-row>
           <el-col :span="4">
-            <div class="logo threed">黄先森个人博客站</div>
+            <div class="logo threed">黄先森博客站</div>
           </el-col>
           
           <el-col :span="14">
@@ -17,33 +17,37 @@
             text-color="#9d9d9d"
             active-text-color="#fff"
             class="nav"
+            :router="true"
             >
-              <el-menu-item index="1" @click="goToto">
+              <el-menu-item index="/" >
                  <router-link to="/" ><i class="iconfont My-new-iconshouye"></i>博客首页</router-link>
               </el-menu-item>
-              <el-menu-item index="2" @click="goToto">
+              <el-menu-item index="/Lists" >
                  <router-link to="/Lists"><i class="iconfont My-new-iconzixun"></i>技术博文</router-link>
               </el-menu-item>
-              <el-menu-item index="3" @click="goToto">
+              <el-menu-item index="/timeLocus" >
                   <router-link to="/timeLocus" ><i class="iconfont My-new-icondaojishi"></i>时间轨迹</router-link>
               </el-menu-item>
-              <!-- <el-menu-item index="4" @click="goToto">
-                 <router-link to="/recommend" ><i class="iconfont My-new-icondianzan"></i>博客推荐</router-link>
-              </el-menu-item> -->
-              <el-menu-item index="5" @click="goToto">
-                 <router-link to="/aboutMe" ><i class="iconfont My-new-iconwode1"></i>关于我</router-link>
+              <el-submenu>
+                <template slot="title">更多</template>
+                <el-menu-item index="/recommend">
+                  <router-link to="/recommend" ><i class="iconfont My-new-icondianzan"></i>博客推荐</router-link>
+                </el-menu-item>
+                <el-menu-item index="/aboutMe">
+                  <router-link to="/aboutMe" ><i class="iconfont My-new-iconwode1"></i>关于我</router-link>
+                </el-menu-item>
+                <el-menu-item index="/article" v-if="isSignIn === 1 && grade <= 2 ">
+                  <router-link to="/article">后台管理</router-link>
+                </el-menu-item>
+              </el-submenu>
+              <el-menu-item index="/photoWall" >
+                 <router-link to="/photoWall"><i class="iconfont My-new-iconbianji"></i>图片墙</router-link>
               </el-menu-item>
-              <el-menu-item index="6" @click="goToto">
+              <el-menu-item index="/LeaveWord" >
                  <router-link to="/LeaveWord"><i class="iconfont My-new-iconbianji"></i>留言</router-link>
               </el-menu-item>
-              <el-menu-item index="8"  @click="goToto">
-                 <router-link to="/article" v-if="isSignIn === 1 && nickname === '怪蜀黍'">我的博客</router-link>
-              </el-menu-item>
-              <!-- <el-menu-item index="9" @click="goToto">
-                 <router-link to="/login"  v-if="isSignIn === 0" class="login"><i class="iconfont My-new-iconxuanzhonghaoyou"></i>登录</router-link>
-              </el-menu-item> -->
-               <el-menu-item index="10"  @click="goToto">
-                 <router-link to="/personal"  v-if="isSignIn === 1 "  class="login">{{UserInfo.nickname === '怪蜀黍' ? '尊敬的管理员：' + UserInfo.nickname : '尊敬的游客：'+ UserInfo.nickname}},欢迎您</router-link>
+               <el-menu-item index="/personal"  >
+                 <router-link to="/personal"  v-if="isSignIn === 1 "><span class="nickname">{{UserInfo.nickname}}</span>,欢迎您</router-link>
               </el-menu-item>
             </el-menu>
           </el-col>
@@ -97,7 +101,7 @@ import Search from './search/index.vue'
       return {
         activeIndex:'1',
         UserInfo:{},
-
+        grade:3,
         nickname:''
       }
     },
@@ -109,23 +113,17 @@ import Search from './search/index.vue'
         handleSelect(index) {
           this.activeIndex = index + ''
         },
-
-      goToto(){
-        console.log(11);
-        this.$emit('goTo')
-      },
-      
       // 获取用户信息
       GetInfo(){
-         this.$http.get('/api/users/info').then( (res) => {
-           console.log(res);
-           this.UserInfo = res.data.data
-           this.nickname = res.data.data.nickname
-           let avatar = res.data.data.head_img
+         this.$http.get('/api/users/info').then( ({data:{data}}) => {
+           this.UserInfo = data
+           this.nickname = data.nickname
+           this.grade = data.grade
+           let avatar = data.head_img
           //  获取用户昵称保存在 sessionStorage
           sessionStorage.setItem("avatar", avatar);
-
-           sessionStorage.setItem("nickname", this.nickname);
+          sessionStorage.setItem("grade", this.grade);
+          sessionStorage.setItem("nickname", this.nickname);
           //  console.log(this.UserInfo);
          })
       },
@@ -188,6 +186,14 @@ header {
       background: rgb(19, 167, 226);
       color: #fff;
     }
+  }
+  .nickname {
+    display: inline-block;
+    max-width: 45px;
+    white-space:nowrap; /*文本不换行*/
+    text-overflow:ellipsis;/*设置超出部分显示...*/
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
   }
 }
 

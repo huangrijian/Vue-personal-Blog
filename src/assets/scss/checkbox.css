@@ -2,6 +2,8 @@
   position: fixed;
   z-index: 9999;
   margin-left: 20px;
+  right: 5px;
+  bottom: 70px;
 }
 .switch-wrap input[type=checkbox]{
   height: 0px;

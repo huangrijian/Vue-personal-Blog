@@ -6,14 +6,18 @@
       <router-view v-if="isRouterShow"></router-view>
       <!-- 背景 -->
       <div id="bgvid" >
-          <img src="~@/assets/img/bgbg.jpg" alt="">
+          <!-- <img src="~@/assets/img/bgbg.jpg" alt=""> -->
+          <img :src="bgimgUrl" alt="">
       </div>
+      <!-- 切换背景等操作 -->
+      <action-bar/>
   </div>
 </template>
 <script>
-import BackTop from './components/backTop/BackTop.vue'
+import BackTop from '@/components/backTop/BackTop.vue'
+import ActionBar from '@/components/actionBar/ActionBar.vue'
 export default {
-  components: { BackTop },
+  components: { BackTop, ActionBar},
   provide () {
     return {
       reload: this.reload
@@ -21,7 +25,8 @@ export default {
   },
   data () {
     return {
-      isRouterShow: true
+      isRouterShow: true,
+     
     }
   },
   methods: {
@@ -31,6 +36,11 @@ export default {
       await this.$nextTick()
       this.isRouterShow = true
     }
+  },
+  computed:{
+     bgimgUrl(){
+       return this.$store.state.bgimgUrl
+     }
   },
   created(){
     setTimeout(() => {

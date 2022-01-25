@@ -2,7 +2,7 @@
 
   <div class="block wow slideInRight"> 
     <!-- 留言 -->
-    <comment></comment>
+    <Comment></Comment>
   </div>
 
 </template>

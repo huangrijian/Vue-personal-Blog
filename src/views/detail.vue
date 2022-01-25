@@ -1,14 +1,21 @@
 <template>
-<div>
-    <div class="block wow slideInLeft">
+  <div>
+    <div class="block wow slideInLeft"  v-loading="loading">
+      <span v-show="false">{{ids}}</span>
       <!-- 您的位置 -->
       <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
       <!-- 具体文章 -->
       <article-contents :data="data" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
-          <el-button type="primary" round @click="isClick&&like()"><i class="iconfont  My-new-icondianzan"></i>点赞（{{likeCount}}）</el-button>
-          <el-button type="success" round @click="dialogVisible = true"><i class="iconfont My-new-icondashang"></i>打赏</el-button>
+        <el-button type="primary" round @click="isClick && like()"
+          ><i class="iconfont  My-new-icondianzan"></i>点赞（{{
+            likeCount
+          }}）</el-button
+        >
+        <el-button type="success" round @click="dialogVisible = true"
+          ><i class="iconfont My-new-icondashang"></i>打赏</el-button
+        >
       </div>
       <!-- 弹框 -->
       <el-dialog
@@ -16,95 +23,118 @@
         width="30%"
         :before-close="handleClose"
         custom-class="tankuang"
-        >
+      >
       </el-dialog>
 
       <!-- 评论 -->
       <comment :articleId="id"></comment>
     </div>
-   </div>
+  </div>
 </template>
 
 <script>
-import WOW from 'wowjs';
-import comment from '@/components/Comment.vue'
-import location from '../components/Location/location.vue'
-import ArticleContents from '../components/ArticleContents/ArticleContents.vue'
-import Cookie from 'js-cookie'
-  export default {
-    components:{
-      comment,
-      location,
-      ArticleContents,
-     
-    },
-    data() {
-      return {
-        id:this.$route.params.id,
-        data:{},
+import WOW from "wowjs";
+import comment from "@/components/Comment.vue";
+import location from "../components/Location/location.vue";
+import ArticleContents from "../components/ArticleContents/ArticleContents.vue";
+import Cookie from "js-cookie";
+export default {
+  components: {
+    comment,
+    location,
+    ArticleContents,
+  },
+  watch: {
+    id: function () {
+      console.log('id');
+      this.GetArticleDetail();
+    }
+  },
+  computed:{
+    ids:function(){
+      console.log('ids');
+      this.loading = true
+      return this.$store.state.articleId
+    }
+  },
+  data() {
+    return {
+      loading:true,
+      id: this.$route.params.id,
+      data: {},
 
-        likeCount:'',
+      likeCount: "",
 
-        isClick:true,
+      isClick: true,
 
-        dialogVisible: false
-      }
-    },
-    methods:{
-      GetArticleDetail(){
-        this.$http.get('/api/article/detail',{
-          params:{
-            article_id:this.id
-          }
-        }).then(res => {
+      dialogVisible: false,
+
+      nickname: "",
+    };
+  },
+  methods: {
+    GetArticleDetail() {
+      this.$http
+        .get("/api/article/detail", {
+          params: {
+            article_id: this.id,
+          },
+        })
+        .then((res) => {
           console.log(res);
-          if(res.data.code === 0 ){
+          if (res.data.code === 0) {
             this.data = res.data.data;
             this.likeCount = res.data.data.like_count;
+            this.loading = false
           }
-        })
-      },
-      // 点赞
-      like(){
-        // 判断是否登录了
-         if(Cookie.get('token')){
-           this.$http.post('/api/article/like',{
-            article_id:this.$route.params.id
-          }).then(res => {
-            console.log(res.data.data[0]);
-            this.likeCount = res.data.data[0].like_count
-            this.isClick = false
+        });
+    },
+    // 点赞
+    like() {
+      // 判断是否登录了
+      if (Cookie.get("token")) {
+        this.$http
+          .post("/api/article/like", {
+            article_id: this.$route.params.id,
           })
-        }else {
-          this.$message({
-            message: '请登录后进行操作',
-            type: 'warning'
+          .then((res) => {
+            console.log(res.data.data[0]);
+            this.likeCount = res.data.data[0].like_count;
+            this.isClick = false;
           });
-          this.$router.push({name:'login'})
-        }
-        
+      } else {
+        this.$message({
+          message: "请登录后进行操作",
+          type: "warning",
+        });
+        this.$router.push({ name: "login" });
       }
     },
-    created(){
-      this.GetArticleDetail()
-
-    },
-    mounted(){
-      	let wow = new WOW.WOW({
-          boxClass: 'wow',
-          animateClass: 'animated',
-          offset: 0,
-          mobile: true,
-          live: true
-        });
-        wow.init();
-    }
-  }
+  },
+  created() {
+    this.GetArticleDetail();
+  },
+  beforeUpdate() {
+   // this.GetArticleDetail();
+   this.id = this.$store.state.articleId;
+   console.log("细节",this.id);
+  },
+  mounted() {
+    let wow = new WOW.WOW({
+      boxClass: "wow",
+      animateClass: "animated",
+      offset: 0,
+      mobile: true,
+      live: true,
+    });
+    wow.init();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .head {
-   margin-top: 20px;
+  margin-top: 20px;
 }
 .likeBox {
   display: flex;
