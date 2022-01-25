@@ -1,7 +1,7 @@
 <template>
   <div class="block">
     <el-timeline reverse="true">
-      <el-timeline-item v-show="item.type == 1" :timestamp="item.create_time" placement="top" :key="index" v-for="(item,index) in AllArticle">
+      <el-timeline-item :timestamp="item.create_time" placement="top" :key="index" v-for="(item,index) in AllArticle">
         <el-card>
           <span class="title">{{item.title}}</span>
             <mavon-editor v-model="item.content"
@@ -32,7 +32,15 @@
     methods:{
         // 获取所有文章
       GetAllArticle(){
-      this.$http.get('/api/article/typeList',{params:{type:1}}).then(res => {
+      // this.$http.get('/api/article/typeList',{params:{type:1}}).then(res => {
+      //     if(res.data.code === 0){
+      //       // 获取文章数组
+      //       this.AllArticle = res.data.data
+      //       console.log(this.AllArticle);
+      //     }
+      // })
+
+      this.$http.get('/api/speech/getSpeech').then(res => {
           if(res.data.code === 0){
             // 获取文章数组
             this.AllArticle = res.data.data
