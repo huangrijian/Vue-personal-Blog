@@ -44,7 +44,7 @@
     <!-- 文章内容 -->
     <div class="edit_title">文章内容 (Markdown编辑器)</div>
     <div class="markdown">
-      <mavon-editor v-model="content" />
+      <mavon-editor v-model="content" ref="md" @imgAdd="$imgAdd" />
     </div>
     <div class="save_btn">
       <el-button type="primary" @click="save">保存</el-button>
@@ -108,7 +108,7 @@ export default {
       this.$router.go(-1);
     },
     save() {
-      console.log(this.$route.params)
+      console.log(this.$route.params);
       if (this.$route.params.id) {
         //  如果是编辑保存，则发起更新请求
         let data = {
@@ -185,6 +185,22 @@ export default {
       }
       this.inputVisible = false;
       this.inputValue = "";
+    },
+
+    // 绑定@imgAdd event
+    $imgAdd(pos, $file) {
+      // 第一步.将图片上传到服务器.
+      var formdata = new FormData();
+      formdata.append("head_img", $file);
+      this.$http({
+        url: `${this.baseUrl}api/article/upload`,
+        method: "post",
+        data: formdata,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data:{data}}) => {
+        data = data.replace(/\\/g,"/");
+        this.$refs.md.$img2Url(pos, data);//将url进行替换
+      });
     },
   },
   created() {
