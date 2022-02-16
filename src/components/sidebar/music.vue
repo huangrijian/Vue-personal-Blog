@@ -16,6 +16,7 @@
 import aplayer from "vue-aplayer"; 
 import {GetSong,GetPlayMisicUrl,GetPlayMisicLyric} from "@/musicNetWork/music.js"; 
   export default {
+    name: 'music',
     data() {
       return {
         songName:'cmj',

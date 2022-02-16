@@ -14,14 +14,14 @@
     <!-- 中心 -->
     <section>
        <div v-if="isPure">
-        {{ isPure }}
+         <!-- 图片墙专有出口 -->
         <router-view></router-view>
       </div>
       <div class="wrapper marginTop" v-else>
         <el-row :gutter="10" class="head">
            <el-col :lg="5" :xl="5">
             <div class="grid-content bg-purple-light synopsis" ref="sidebar">
-              <!-- 侧边栏 -->
+              <!-- 左侧边栏 -->
               <aside class="wow slideInRight">
                 <!-- 文章时间轴 -->
                 <TimerShaft/>
@@ -30,7 +30,7 @@
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
             <div class="grid-content bg-purple slideshowBox">
-              <!-- 视图切换 -->
+              <!-- 中间视图切换 -->
               <article ref="article">
                 <keep-alive include="timeLocus">
                   <router-view></router-view>
@@ -40,7 +40,7 @@
           </el-col>
           <el-col :lg="5" :xl="5">
             <div class="grid-content bg-purple-light synopsis" ref="sidebar">
-              <!-- 侧边栏 -->
+              <!-- 右侧边栏 -->
               <aside class="wow slideInRight">
                 <personal-details
                   class="wow slideInRight maginbot"

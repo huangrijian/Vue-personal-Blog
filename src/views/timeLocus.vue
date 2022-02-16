@@ -8,8 +8,9 @@
                 defaultOpen="preview"
               :toolbarsFlag="false"
               :subfield="false"
-              codeStyle="atom-one-dark"
+              codeStyle="monokai"
               :boxShadow="false"
+              :ishljs="true"
               >
             </mavon-editor>
           <p v-if="item.create_time">黄先森  {{item.create_time}}</p>

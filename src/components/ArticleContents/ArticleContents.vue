@@ -12,10 +12,11 @@
           defaultOpen="preview"
           :toolbarsFlag="false"
           :subfield="false"
-          codeStyle="atom-one-dark"
+          
           :boxShadow="false"
           >
         </mavon-editor>
+        <!-- :ishljs="true"  :codeStyle="codeStyle"-->
       </div>
   </div>
 </template>
@@ -30,6 +31,11 @@
     },
     created(){
       console.log(this.data);
+    },
+    computed:{
+      codeStyle(){
+        return this.$store.state.codeStyle;
+      }
     }
   }
 </script>

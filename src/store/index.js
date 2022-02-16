@@ -30,7 +30,9 @@ export default new Vuex.Store({
 
     bgimgUrl:sessionStorage.getItem('bgimgUrl') || require('../assets/img/bgdm04.jpg'),
 
-    articleId:sessionStorage.getItem('articleId')
+    articleId:sessionStorage.getItem('articleId'),
+
+    codeStyle:sessionStorage.getItem('codeStyle')
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
@@ -71,6 +73,11 @@ export default new Vuex.Store({
     setArticleId(state,val) {
       state.articleId = val;
       sessionStorage.setItem("articleId", val);
+    },
+
+    setCodeStyle(state,val) {
+      state.codeStyle = val;
+      sessionStorage.setItem("codeStyle", val);
     },
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 

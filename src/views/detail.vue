@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="block wow slideInLeft"  v-loading="loading">
-      <span v-show="false">{{ids}}</span>
+    <div class="block wow slideInLeft" v-loading="loading">
+      <span v-show="false">{{ ids }}</span>
       <!-- 您的位置 -->
       <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
+      <SwitchStyle/>
       <!-- 具体文章 -->
       <article-contents :data="data" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
@@ -34,32 +35,34 @@
 
 <script>
 import WOW from "wowjs";
-import comment from "@/components/Comment.vue";
+import comment from "@/components/comment/Comment.vue";
 import location from "../components/Location/location.vue";
 import ArticleContents from "../components/ArticleContents/ArticleContents.vue";
 import Cookie from "js-cookie";
+import SwitchStyle from '@/components/switchStyle/SwitchStyle.vue'
 export default {
   components: {
     comment,
     location,
     ArticleContents,
+    SwitchStyle
   },
   watch: {
-    id: function () {
-      console.log('id');
+    id: function() {
+      console.log("id");
       this.GetArticleDetail();
-    }
+    },
   },
-  computed:{
-    ids:function(){
-      console.log('ids');
-      this.loading = true
-      return this.$store.state.articleId
-    }
+  computed: {
+    ids: function() {
+      console.log("ids");
+      this.loading = true;
+      return this.$store.state.articleId;
+    },
   },
   data() {
     return {
-      loading:true,
+      loading: true,
       id: this.$route.params.id,
       data: {},
 
@@ -85,7 +88,7 @@ export default {
           if (res.data.code === 0) {
             this.data = res.data.data;
             this.likeCount = res.data.data.like_count;
-            this.loading = false
+            this.loading = false;
           }
         });
     },
@@ -115,9 +118,9 @@ export default {
     this.GetArticleDetail();
   },
   beforeUpdate() {
-   // this.GetArticleDetail();
-   this.id = this.$store.state.articleId;
-   console.log("细节",this.id);
+    // this.GetArticleDetail();
+    this.id = this.$store.state.articleId;
+    console.log("细节", this.id);
   },
   mounted() {
     let wow = new WOW.WOW({
@@ -151,4 +154,6 @@ export default {
 .wx {
   width: 150px;
 }
+
+ 
 </style>

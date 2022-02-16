@@ -36,7 +36,7 @@
           </span>
           <div class="title">
             <p @click="editDescribe(file.title, file.uid)">
-              {{ file.title }}
+              {{ file.title || '添加描述'}}
             </p>
           </div>
         </span>
