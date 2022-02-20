@@ -2,11 +2,11 @@
 
 ## 后端项目地址 
 
-[node+expree+mysql实现的个人博客系统](https://gitee.com/huang-rijian/node-blog-system)
+[node+expree+mysql实现的个人博客系统](https://gitee.com/huang-rijian/node-personal-blog-system)
 
 ## 线上地址 
 
-[黄先森个人博客](http://112.124.52.188)
+[黄先森个人博客](http://www.hrjblog.top/)
 
 
 ## 安装运行
