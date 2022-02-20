@@ -112,6 +112,11 @@ export default {
   components: {
     ReplyItem,
   },
+  watch:{
+    articleId(){
+      this.GetArticleComment();
+    }
+  },
   data() {
     return {
       commentArray: [],
