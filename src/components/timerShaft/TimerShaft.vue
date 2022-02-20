@@ -42,7 +42,6 @@ export default {
     },
     gotoTodetail(id) {
       this.$router.push({ name: "detail", params: { id } });
-      this.$store.commit("setArticleId", id);
     },
   },
 };
