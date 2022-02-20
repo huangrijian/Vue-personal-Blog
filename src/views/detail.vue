@@ -1,10 +1,9 @@
 <template>
   <div>
     <div class="block wow slideInLeft" v-loading="loading">
-      <span v-show="false">{{ ids }}</span>
       <!-- 您的位置 -->
       <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
-      <SwitchStyle/>
+      <!-- <SwitchStyle/> -->
       <!-- 具体文章 -->
       <article-contents :data="data" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
@@ -26,7 +25,6 @@
         custom-class="tankuang"
       >
       </el-dialog>
-
       <!-- 评论 -->
       <comment :articleId="id"></comment>
     </div>
@@ -39,26 +37,20 @@ import comment from "@/components/comment/Comment.vue";
 import location from "../components/Location/location.vue";
 import ArticleContents from "../components/ArticleContents/ArticleContents.vue";
 import Cookie from "js-cookie";
-import SwitchStyle from '@/components/switchStyle/SwitchStyle.vue'
+import SwitchStyle from "@/components/switchStyle/SwitchStyle.vue";
 export default {
   components: {
     comment,
     location,
     ArticleContents,
-    SwitchStyle
+    SwitchStyle,
   },
-  watch: {
-    id: function() {
-      console.log("id");
-      this.GetArticleDetail();
-    },
-  },
-  computed: {
-    ids: function() {
-      console.log("ids");
-      this.loading = true;
-      return this.$store.state.articleId;
-    },
+  // 同一组件路由动态变化时被调用 /detail/168 -> /detail/204
+  beforeRouteUpdate(to, from, next) {
+    this.loading = true;
+    this.id = to.params.id;
+    this.GetArticleDetail(to.params.id);
+    next();
   },
   data() {
     return {
@@ -76,11 +68,11 @@ export default {
     };
   },
   methods: {
-    GetArticleDetail() {
+    GetArticleDetail(id) {
       this.$http
         .get("/api/article/detail", {
           params: {
-            article_id: this.id,
+            article_id: id,
           },
         })
         .then((res) => {
@@ -115,12 +107,7 @@ export default {
     },
   },
   created() {
-    this.GetArticleDetail();
-  },
-  beforeUpdate() {
-    // this.GetArticleDetail();
-    this.id = this.$store.state.articleId;
-    console.log("细节", this.id);
+    this.GetArticleDetail(this.id);
   },
   mounted() {
     let wow = new WOW.WOW({
@@ -154,6 +141,4 @@ export default {
 .wx {
   width: 150px;
 }
-
- 
 </style>
