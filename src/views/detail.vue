@@ -21,7 +21,6 @@
       <el-dialog
         :visible.sync="dialogVisible"
         width="30%"
-        :before-close="handleClose"
         custom-class="tankuang"
       >
       </el-dialog>
