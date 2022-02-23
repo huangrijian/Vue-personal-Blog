@@ -22,15 +22,19 @@
       <!-- 小标题组件 -->
       <title-box title="技术博文" class="title-box wow slideInLeft" data-wow-delay="0.4s"></title-box>
       <!-- 文章列表组件 -->
-      <blog-list :AllArticle="AllArticle" :AllArticleClassName="AllArticleClassName"></blog-list>
+      <blog-list :AllArticle="AllArticle"></blog-list>
     </div>
   </div>
 </template>
 
 <script>
-import WOW from 'wowjs';
+
 import BlogList from '../components/BlogList/BlogList.vue'
 import TitleBox from '../components/TitleBox/titleBox.vue'
+import { 
+  getAllArticle,
+} from '@/network/home.js'
+
 export default {
   name: 'Home',
   components: {
@@ -40,7 +44,6 @@ export default {
   data() {
     return {
       AllArticle:[],
-      AllArticleClassName:[],
       // 轮播图数据
       LbtArticle:[],
       // 头部文章数据
@@ -52,95 +55,19 @@ export default {
     GotoDetail(id){
       this.$router.push({path:'detail/'+id})
     },
-  /*
-   * 
-   * 获取点赞排行的文章并按照降序排序
-   * @param {Array} 
-   */ 
-   ThumbRank(array) {
-    //  过滤出点赞数量
-    let number = []
-    array.forEach(item => {
-      number.push(item.like_count)
-    })
-    // 排序
-      number.sort();
-      number.sort(function(x,y){
-          return x-y;
-      })
-      number.reverse()
-
-    let nesArrayData = [];
-    number = Array.from(new Set(number))
-    number.forEach((numberItem) => {
-      array.some((arrayItem) => {
-      if(arrayItem.like_count === numberItem) {
-        nesArrayData.push({id:arrayItem.id,title:arrayItem.title});
-        return true
-      }
-    })
-  })
-
-    this.$store.commit('setLikeArry',nesArrayData)
-    this.$EventBus.$emit('Render')
-  },
-  
-
-    // 获取全部文章
-    GetAllArticle(){
-     this.$http.get('/api/article/typeList').then(res => {
-        if(res.data.code === 0){
-          this.ThumbRank(res.data.data)
-          // 获取前18篇文章
-          this.AllArticle = res.data.data.slice(0,18)
-          // 截取最新的6篇给轮播图展示  .concat() 先将文章数组复制出一个新数组再进行反转，如果使用.reverse(),则会改变文章数组，而不产生新数组
-          this.LbtArticle = res.data.data.concat().reverse().slice(0,6)
-            // 截取一部分给轮播图右边的盒子
-          this.headerArticle = res.data.data.slice(6,8)
-          // 保存最新推荐的文章数据
-          this.SaveLatestRecommen();
-        }
-      })
-    },
-    // 获取所有文章分类
-    GetAllArticleClassName(){
-      this.$http.get('/api/article/classify').then(res => {
-        if(res.data.code === 0){
-          this.AllArticleClassName = res.data.data;
-          // 获取全部文章
-           this.GetAllArticle();
-        }
-      })
-    },
-    // 保存最新推荐的文章数据
-    SaveLatestRecommen() {
-         // 标题数组
-          let RecommendArry = []
-          // 获取最新推荐的文章id和标题
-          this.LbtArticle.forEach((item, index) => {
-         //item 就是当前按循环到的对象  //index是循环的索引，从0开始
-          RecommendArry.push({id:item.id,title:item.title})
-        })
-          // 保存最新推荐到Vuex
-          this.$store.commit('setRecommendArry',RecommendArry)
-          this.$EventBus.$emit('Render')
-    }
-
   },
   created(){
-    this.GetAllArticleClassName();
-   
+    getAllArticle().then(({code, data})=> {
+      if(code === 0){
+          this.AllArticle = data.concat().reverse().slice(0,18)
+          this.LbtArticle = data.concat().reverse().slice(0,6)
+          this.headerArticle = data.slice(6,8)
+        }
+    })
   },
   mounted(){
-      	let wow = new WOW.WOW({
-          boxClass: 'wow',
-          animateClass: 'animated',
-          offset: 0,
-          mobile: true,
-          live: true
-        });
-        wow.init();
-    }
+    this.$animation();
+  }
 }
 </script>
 
