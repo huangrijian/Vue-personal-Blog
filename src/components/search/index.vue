@@ -4,9 +4,6 @@
     <button type="submit" class="submit" @click="SearchWord">搜索</button>
     <transition name="el-fade-in-linear">
         <div v-show="show" class="transition-box">
-          <!-- <ul>
-            <li @click="handle(item.id)" :key="index" v-for="(item,index) in dataArr">{{item.title}}</li>
-          </ul> -->
           <SearchItem  
             :key="index" 
             v-for="(item,index) in dataArr"
@@ -53,8 +50,7 @@ import SearchItem from  './searchItem.vue'
         this.show = !this.show
       },
       handle(id){
-      console.log("id",id);
-      this.$router.push({path:'detail/'+id})
+        this.$router.push({name:'detail',params:{id}})
       },
       handleDataType(arr){
 
@@ -84,17 +80,19 @@ import SearchItem from  './searchItem.vue'
 </script>
 
 <style lang="scss" scoped>
-
-.search .input {
-  width: 170px;
-  height: 34px;
-  border-radius: 17px 0 0 17px;
-  padding-left: 15px;
-  outline:none;
-  background: rgb(235, 233, 233);
-  border-right: none;
-  border:1px solid transparent;
+.search {
   position: relative;
+  .input {
+    width: 170px;
+    height: 34px;
+    border-radius: 17px 0 0 17px;
+    padding-left: 15px;
+    outline:none;
+    background: rgb(235, 233, 233);
+    border-right: none;
+    border:1px solid transparent;
+    position: relative;
+  }
 }
 .input:focus {
   background:rgb(255, 255, 255);
@@ -123,8 +121,7 @@ button {
   box-sizing: border-box;
   margin-right: 20px;
   position: absolute;
-  top: 60px;
-  right: 45px;
+  top: 50px;
   }
 
 </style>
