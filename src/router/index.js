@@ -33,9 +33,10 @@ const routes = [
   {
     path: '/',
     component: CommonLayout,
+    redirect: '/home',
     children:[
       {
-        path:'',
+        path:'/home',
         name:'home',
         component:home
       },

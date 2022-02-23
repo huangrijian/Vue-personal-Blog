@@ -12,6 +12,9 @@ import '@/assets/scss/common.scss'
 import '@/assets/scss/loadding.scss'
 // 引入移动端样式
 import '@/assets/scss/mobile.scss'
+// 引入动画函数
+import animation from '@/tool/animation.js'
+Vue.prototype.$animation = animation;
 
 // 引入文本编辑器
 import mavonEditor from 'mavon-editor'

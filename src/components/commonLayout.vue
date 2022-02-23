@@ -89,12 +89,6 @@ export default {
     LickDog,
     TimerShaft
   },
-  created() {
-    console.log(this.$router);
-  },
-  beforeUpdate() {
-    console.log(this.$router);
-  },
   computed: {
     isPure() {
       return this.$store.state.isPure;

@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import WOW from 'wowjs';
 import titleBox from '../components/TitleBox/titleBox.vue'
   export default {
     name:'recommend',
@@ -60,14 +59,7 @@ import titleBox from '../components/TitleBox/titleBox.vue'
       }
     },
     mounted(){
-      let wow = new WOW.WOW({
-          boxClass: 'wow',
-          animateClass: 'animated',
-          offset: 0,
-          mobile: true,
-          live: true
-      });
-        wow.init();
+      this.$animation();
     }
 
   }

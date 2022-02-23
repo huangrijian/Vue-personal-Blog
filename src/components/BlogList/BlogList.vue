@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    props:['AllArticle','AllArticleClassName'],
+    props:['AllArticle'],
     filters:{
       timer(val){
         return val.slice(0,10)
