@@ -31,9 +31,7 @@
 
 import BlogList from '../components/BlogList/BlogList.vue'
 import TitleBox from '../components/TitleBox/titleBox.vue'
-import { 
-  getAllArticle,
-} from '@/network/home.js'
+import { getAllArticle } from '@/network/home.js'
 
 export default {
   name: 'Home',
@@ -57,13 +55,13 @@ export default {
     },
   },
   created(){
-    getAllArticle().then(({code, data})=> {
-      if(code === 0){
-          this.AllArticle = data.concat().reverse().slice(0,18)
-          this.LbtArticle = data.concat().reverse().slice(0,6)
-          this.headerArticle = data.slice(6,8)
-        }
+    getAllArticle().then(({data})=> {
+      let copyData = data.concat().reverse()
+      this.AllArticle = copyData.slice(0,18)
+      this.LbtArticle = copyData.slice(0,6)
+      this.headerArticle = data.slice(6,8)
     })
+    
   },
   mounted(){
     this.$animation();

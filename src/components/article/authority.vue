@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import WOW from "wowjs";
+
 export default {
   data() {
     return {
@@ -84,14 +84,7 @@ export default {
     this.GetInfoList();
   },
   mounted() {
-    let wow = new WOW.WOW({
-      boxClass: "wow",
-      animateClass: "animated",
-      offset: 0,
-      mobile: true,
-      live: true,
-    });
-    wow.init();
+    this.$animation();
   },
   beforeDestroy() {
     console.log("beforeDestroy");

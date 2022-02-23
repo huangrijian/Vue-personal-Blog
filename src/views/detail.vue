@@ -5,7 +5,7 @@
       <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
       <!-- <SwitchStyle/> -->
       <!-- 具体文章 -->
-      <article-contents :data="data" class="wow slideInLeft"></article-contents>
+      <article-contents :data="articleData" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
         <el-button type="primary" round @click="isClick && like()"
@@ -31,12 +31,13 @@
 </template>
 
 <script>
-import WOW from "wowjs";
+
 import comment from "@/components/comment/Comment.vue";
 import location from "../components/Location/location.vue";
 import ArticleContents from "../components/ArticleContents/ArticleContents.vue";
 import Cookie from "js-cookie";
 import SwitchStyle from "@/components/switchStyle/SwitchStyle.vue";
+import { getArticleDetail } from '@/network/detail.js'
 export default {
   components: {
     comment,
@@ -55,7 +56,7 @@ export default {
     return {
       loading: true,
       id: this.$route.params.id,
-      data: {},
+      articleData: {},
 
       likeCount: "",
 
@@ -68,20 +69,11 @@ export default {
   },
   methods: {
     GetArticleDetail(id) {
-      this.$http
-        .get("/api/article/detail", {
-          params: {
-            article_id: id,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.data.code === 0) {
-            this.data = res.data.data;
-            this.likeCount = res.data.data.like_count;
-            this.loading = false;
-          }
-        });
+      getArticleDetail({article_id: id}).then(({data}) => {
+        this.articleData = data;
+        this.likeCount = data.like_count;
+        this.loading = false;
+      });
     },
     // 点赞
     like() {
@@ -109,14 +101,7 @@ export default {
     this.GetArticleDetail(this.id);
   },
   mounted() {
-    let wow = new WOW.WOW({
-      boxClass: "wow",
-      animateClass: "animated",
-      offset: 0,
-      mobile: true,
-      live: true,
-    });
-    wow.init();
+this.$animation();
   },
 };
 </script>

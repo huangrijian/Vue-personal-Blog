@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import WOW from "wowjs";
+
 import Cookie from "js-cookie";
 import { baseUrl } from '@/config/config'
 export default {
