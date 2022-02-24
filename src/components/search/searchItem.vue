@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  props:['id','title','like_count','index'],
+  props: ['id', 'title', 'like_count', 'index'],
   data() {
     return {};
   }
@@ -24,24 +24,24 @@ export default {
 }
 .searchItem {
   display: flex;
-  cursor:pointer;
+  cursor: pointer;
   width: 90%;
   align-items: center;
   height: 30px;
   font-size: 12px;
   .text {
     width: 60%;
-    word-break:keep-all;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis; 
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .sort {
     display: block;
     padding: 3px;
     margin-right: 10px;
     background: red;
-    color:#fff;
+    color: #fff;
   }
   .like {
     margin-left: 5px;
