@@ -56,8 +56,10 @@
           </li>
         </ul>
         <!-- 分页 -->
-        <el-pagination background :page-size="pageSize" layout="prev, pager, next" :total="commentArrayCount" :current-page="currentPage" @current-change="GetNewComment" />
-        {{offset}}
+        <div class="pagination">
+          <el-pagination background :page-size="pageSize" layout="prev, pager, next" :total="commentArrayCount" :current-page="currentPage" @current-change="GetNewComment" />
+        </div>
+
       </div>
     </div>
   </div>
@@ -308,6 +310,10 @@ export default {
       margin: 0 15px;
       border-radius: 5px;
     }
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
   }
 }
 
