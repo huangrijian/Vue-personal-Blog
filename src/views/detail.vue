@@ -3,26 +3,18 @@
     <div class="block wow slideInLeft" v-loading="loading">
       <!-- 您的位置 -->
       <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
-      <!-- <SwitchStyle/> -->
+      <!-- <SwitchStyle /> -->
       <!-- 具体文章 -->
       <article-contents :data="articleData" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
-        <el-button type="primary" round @click="isClick && like()"
-          ><i class="iconfont  My-new-icondianzan"></i>点赞（{{
+        <el-button type="primary" round @click="isClick && like()"><i class="iconfont  My-new-icondianzan"></i>点赞（{{
             likeCount
-          }}）</el-button
-        >
-        <el-button type="success" round @click="dialogVisible = true"
-          ><i class="iconfont My-new-icondashang"></i>打赏</el-button
-        >
+          }}）</el-button>
+        <el-button type="success" round @click="dialogVisible = true"><i class="iconfont My-new-icondashang"></i>打赏</el-button>
       </div>
       <!-- 弹框 -->
-      <el-dialog
-        :visible.sync="dialogVisible"
-        width="30%"
-        custom-class="tankuang"
-      >
+      <el-dialog :visible.sync="dialogVisible" width="30%" custom-class="tankuang">
       </el-dialog>
       <!-- 评论 -->
       <comment :articleId="id"></comment>
@@ -69,7 +61,7 @@ export default {
   },
   methods: {
     GetArticleDetail(id) {
-      getArticleDetail({article_id: id}).then(({data}) => {
+      getArticleDetail({ article_id: id }).then(({ data }) => {
         this.articleData = data;
         this.likeCount = data.like_count;
         this.loading = false;
@@ -101,7 +93,7 @@ export default {
     this.GetArticleDetail(this.id);
   },
   mounted() {
-this.$animation();
+    this.$animation();
   },
 };
 </script>

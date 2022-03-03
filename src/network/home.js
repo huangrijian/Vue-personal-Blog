@@ -1,7 +1,8 @@
-import {request} from './request'
+import { request } from './request'
 
-export function getAllArticle(){
+export function getAllArticle() {
   return request({
-    url:'/api/article/typeList'
+    url: '/api/article/typeList'
   })
 }
+
