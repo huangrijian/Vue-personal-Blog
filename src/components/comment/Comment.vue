@@ -6,24 +6,11 @@
       </div>
       <div class="bottom">
         <div class="dec">
-          <span
-            >共<span class="commentTotal">{{ commentArray.length }}</span
-            >条留言</span
-          >
+          <span>共<span class="commentTotal">{{ commentArray.length }}</span>条留言</span>
         </div>
         <div class="CommentInput">
           <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" />
-          <el-input
-            type="textarea"
-            :rows="3"
-            :placeholder="placeholder"
-            v-model="textarea"
-            class="inputbox"
-            size="350"
-            maxlength="350"
-            resize="none"
-            @keyup.13.native="SendComment(textarea)"
-          >
+          <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea)">
           </el-input>
         </div>
         <!-- 评论区 -->
@@ -37,11 +24,7 @@
               <div class="side">
                 <div class="CommentTitle">
                   <span class="nickname">{{ item.nickname }}</span>
-                  <div
-                    class="master"
-                    style="color:#409eff"
-                    v-if="item.user_id === 18"
-                  >
+                  <div class="master" style="color:#409eff" v-if="item.user_id === 18">
                     站主
                   </div>
                   <div style="fontWeight:600; fontSize:18px; marginRight:8px">
@@ -51,52 +34,30 @@
                 </div>
                 <div class="timerorlike">
                   <span class="timer">{{ item.create_time }}</span>
-                  <span @click="clickLike(item.commentId, $event)"
-                    ><i class="iconfont  My-new-icondianzan"></i>999</span
-                  >
+                  <span @click="clickLike(item.commentId, $event)"><i class="iconfont  My-new-icondianzan"></i>999</span>
                   <span class="vertical">|</span>
                   <span @click="reply(item.id, null, null, index)">回复</span>
-                  <span
-                    class="delete"
-                    v-if="thisNickName === '黄先森'"
-                    @click="handleDelect(item.id)"
-                    >删除</span
-                  >
+                  <span class="delete" v-if="thisNickName === '黄先森'" @click="handleDelect(item.id)">删除</span>
                 </div>
                 <el-collapse-transition>
                   <div v-show="show3[index]">
                     <div class="transition-box">
                       <div style="display:flex; align-items: center;">
-                        <img
-                          :src="imageUrl ? imageUrl : defaultAvatar"
-                          alt=""
-                          style="width:40px; marginRight:15px"
-                        />
-                        <el-input
-                          type="textarea"
-                          :rows="3"
-                          :placeholder="placeholder"
-                          v-model="textarea"
-                          class="inputbox"
-                          size="350"
-                          maxlength="350"
-                          resize="none"
-                          @keyup.13.native="SendComment(textarea)"
-                        >
+                        <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" style="width:40px; marginRight:15px" />
+                        <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea)">
                         </el-input>
                       </div>
                     </div>
                   </div>
                 </el-collapse-transition>
-                <ReplyItem
-                  :ReplyItem="item.son"
-                  :reply="reply"
-                  :index="index"
-                />
+                <ReplyItem :ReplyItem="item.son" :reply="reply" :index="index" />
               </div>
             </div>
           </li>
         </ul>
+        <!-- 分页 -->
+        <el-pagination background :page-size="pageSize" layout="prev, pager, next" :total="commentArrayCount" :current-page="currentPage" @current-change="GetNewComment" />
+        {{offset}}
       </div>
     </div>
   </div>
@@ -108,12 +69,17 @@ import ReplyItem from "./ReplyItem.vue";
 const placeholder = "请输入内容并按回车键发送";
 export default {
   inject: ["reload"],
-  props: ["articleId"],
+  props: {
+    articleId: {
+      type: Number,
+      default: 0
+    }
+  },
   components: {
     ReplyItem,
   },
-  watch:{
-    articleId(){
+  watch: {
+    articleId() {
       this.GetArticleComment();
     }
   },
@@ -121,6 +87,10 @@ export default {
     return {
       commentArray: [],
       textarea: "",
+
+      pageSize: 5,
+      commentArrayCount: 20,
+      currentPage: 1,
 
       imageUrl: sessionStorage.getItem("avatar"),
       defaultAvatar: require("@/assets/img/pl.jpg"),
@@ -206,23 +176,23 @@ export default {
       this.$router.push({ name: "login" });
     },
     // 获取文章评论
-    GetArticleComment() {
-      if (this.articleId) {
+    GetArticleComment(list, offset) {
+      if (this.articleId == 0) {
+        // 如果当前没有文章id,则属于留言 ，则把文章id赋值为0再发送请求
         this.$http
-          .get("/api/comment/list", { params: { article_id: this.articleId } })
+          .get("/api/comment/list", { params: { article_id: 0, list, offset } })
           .then((res) => {
             // 将得到的数组进行反转再保存
-            this.commentArray = res.data.data.reverse();
+            this.commentArray = res.data.data;
             this.show3.length = this.commentArray.length;
             this.show3.fill(false);
           });
       } else {
-        // 如果当前没有文章id,则属于留言 ，则把文章id赋值为0再发送请求
         this.$http
-          .get("/api/comment/list", { params: { article_id: 0 } })
+          .get("/api/comment/list", { params: { article_id: this.articleId, list, offset } })
           .then((res) => {
             // 将得到的数组进行反转再保存
-            this.commentArray = res.data.data.reverse();
+            this.commentArray = res.data.data;
             this.show3.length = this.commentArray.length;
             this.show3.fill(false);
           });
@@ -249,7 +219,7 @@ export default {
             reply_user_id: this.replyUserId,
           })
           .then((res) => {
-            this.GetArticleComment();
+            this.GetArticleComment(this.pageSize, this.offset);
             this.InitializeReplyAndTextareaData();
           });
       } else {
@@ -260,16 +230,38 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
+
+    // GetNewComment
+    GetNewComment(currentPage) {
+      this.currentPage = currentPage;
+      this.GetArticleComment(this.pageSize, this.offset);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    },
+    // 初始化数据
+    async initialization(pageSize, offset, article_id) {
+      let listCount = await this.$http.get('/api/comment/listCount', { params: { article_id } })
+      let { data: { count } } = listCount;
+      this.commentArrayCount = count
+      this.GetArticleComment(pageSize, offset);
+    }
   },
   computed: {
     // 查询登录状态
     isSignIn() {
       return this.$store.state.isSignIn;
     },
+    offset() {
+      return (this.currentPage - 1) * this.pageSize;
+    }
   },
   created() {
-    this.GetArticleComment();
+    this.initialization(this.pageSize, this.offset, this.articleId);
+    console.log(this.articleId)
   },
+
 };
 </script>
 
