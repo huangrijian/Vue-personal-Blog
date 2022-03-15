@@ -66,8 +66,10 @@
 </template>
 
 <script>
-import Cookie from "js-cookie";
 import ReplyItem from "./ReplyItem.vue";
+import globalBackTop from '@/assets/js/scrollTo.js';
+import { getArticleComment, sendComment, getArticleCommentCount, deleteComment } from '@/network/comment.js'
+
 const placeholder = "请输入内容并按回车键发送";
 export default {
   inject: ["reload"],
@@ -142,68 +144,35 @@ export default {
       this.parent_cm_id = parent_cm_id;
       this.placeholder = replyNickname ? `@${replyNickname}` : `${placeholder}`;
     },
-    handleDelect(id) {
-      this.$confirm("此操作将永久删除该评论, 是否继续?", "提示", {
+    async handleDelect(id) {
+
+      await this.$confirm("此操作将永久删除该评论, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
-        .then(() => {
-          // 发起删除的网络请求
-          this.$http
-            .post("/api/comment/delete", {
-              comment_id: id,
-            })
-            .then((res) => {
-              if (res.data.code === 0) {
-                //发起删除请求操作
-                this.$message({
-                  type: "success",
-                  message: `评论删除成功!`,
-                });
-                setTimeout(() => {
-                  this.reload();
-                }, 500);
-              }
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+      // 发起删除的网络请求
+      await deleteComment({ comment_id: id })
+      this.$message({
+        type: "success",
+        message: `评论删除成功!`,
+      });
+      // this.reload();
+      this.initialization(this.pageSize, this.offset, this.articleId);
     },
 
     GotoLogin() {
       this.$router.push({ name: "login" });
     },
     // 获取文章评论
-    GetArticleComment(list, offset) {
-      if (this.articleId == 0) {
-        // 如果当前没有文章id,则属于留言 ，则把文章id赋值为0再发送请求
-        this.$http
-          .get("/api/comment/list", { params: { article_id: 0, list, offset } })
-          .then((res) => {
-            // 将得到的数组进行反转再保存
-            this.commentArray = res.data.data;
-            this.show3.length = this.commentArray.length;
-            this.show3.fill(false);
-          });
-      } else {
-        this.$http
-          .get("/api/comment/list", { params: { article_id: this.articleId, list, offset } })
-          .then((res) => {
-            // 将得到的数组进行反转再保存
-            this.commentArray = res.data.data;
-            this.show3.length = this.commentArray.length;
-            this.show3.fill(false);
-          });
-      }
+    async GetArticleComment(list, offset) {
+      // this.articleId 为 0 则属于 网站留言
+      let { data } = await getArticleComment({ article_id: this.articleId, list, offset });
+      this.commentArray = data;
+      this.show3.length = this.commentArray.length;
+      this.show3.fill(false);
     },
+    // 初始化评论框的数据
     InitializeReplyAndTextareaData() {
       this.textarea = "";
       this.parent_cm_id = -1;
@@ -211,24 +180,21 @@ export default {
       this.replyUserId = null;
       this.placeholder = placeholder;
     },
+
     // 发送评论
-    SendComment(textarea) {
-      if (Cookie.get("token")) {
-        // 发起评论请求
-        this.$http
-          .post("/api/comment/publish", {
-            content: textarea,
-            // 有则发送文章id，无则发送0
-            article_id: this.articleId ? this.articleId : 0,
-            parent_cm_id: this.parent_cm_id,
-            reply_nickname: this.replyNickname,
-            reply_user_id: this.replyUserId,
-          })
-          .then((res) => {
-            this.getCommentCount(this.articleId);
-            this.GetArticleComment(this.pageSize, this.offset);
-            this.InitializeReplyAndTextareaData();
-          });
+    async SendComment(textarea) {
+      if (this.isSignIn === 1) {
+        let data = {
+          content: textarea,
+          article_id: this.articleId,
+          parent_cm_id: this.parent_cm_id,
+          reply_nickname: this.replyNickname,
+          reply_user_id: this.replyUserId,
+        }
+        await sendComment(data);
+        this.getCommentCount(this.articleId);
+        this.GetArticleComment(this.pageSize, this.offset);
+        this.InitializeReplyAndTextareaData();
       } else {
         this.$message({
           message: "请登录后进行操作",
@@ -237,15 +203,11 @@ export default {
         this.$router.push({ name: "login" });
       }
     },
-
-    // GetNewComment
+    // 跳转页数时获取新一页的评论
     GetNewComment(currentPage) {
       this.currentPage = currentPage;
       this.GetArticleComment(this.pageSize, this.offset);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      globalBackTop();
     },
     // 初始化数据
     async initialization(pageSize, offset, article_id) {
@@ -255,9 +217,8 @@ export default {
 
     // 获取评论总条数
     async getCommentCount(article_id) {
-      let listCount = await this.$http.get('/api/comment/listCount', { params: { article_id } })
-      let { data: { count } } = listCount;
-      this.commentArrayCount = count
+      let { count } = await getArticleCommentCount({ article_id })
+      this.commentArrayCount = count;
     }
   },
   computed: {
