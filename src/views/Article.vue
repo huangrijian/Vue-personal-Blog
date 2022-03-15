@@ -3,9 +3,7 @@
     <el-tabs type="border-card" @tab-click="tabClick">
       <el-tab-pane label="文章管理">
         <div class="article">
-          <el-button class="addBtn" @click="handleAdd('article')"
-            >新增+</el-button
-          >
+          <el-button class="addBtn" @click="handleAdd('article')">新增+</el-button>
           <el-table :data="articleList" border stripe>
             <el-table-column prop="title" label="标题" width="180">
             </el-table-column>
@@ -17,24 +15,9 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  type="primary"
-                  @click="handleLook(scope.row)"
-                  >查看</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="success"
-                  @click="handleEdit(scope.row, 'article')"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="handleDelect(scope.row)"
-                  >删除</el-button
-                >
+                <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
+                <el-button size="mini" type="success" @click="handleEdit(scope.row, 'article')">编辑</el-button>
+                <el-button size="mini" type="danger" @click="handleDelect(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -42,9 +25,7 @@
       </el-tab-pane>
       <el-tab-pane label="发言管理" v-if="isSignIn === 1 && grade === '1'">
         <div class="article">
-          <el-button class="addBtn" @click="handleAdd('speech')"
-            >新增+</el-button
-          >
+          <el-button class="addBtn" @click="handleAdd('speech')">新增+</el-button>
           <el-table :data="speechList" border stripe>
             <el-table-column prop="title" label="标题" width="180">
             </el-table-column>
@@ -56,24 +37,9 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  type="primary"
-                  @click="handleLook(scope.row)"
-                  >查看</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="success"
-                  @click="handleEdit(scope.row, 'speech')"
-                  >编辑</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="handleDelect(scope.row)"
-                  >删除</el-button
-                >
+                <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
+                <el-button size="mini" type="success" @click="handleEdit(scope.row, 'speech')">编辑</el-button>
+                <el-button size="mini" type="danger" @click="handleDelect(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -88,6 +54,7 @@
 
 <script>
 import Authority from "@/components/article/authority.vue";
+import { getSpeechList } from '@/network/speech'
 export default {
   data() {
     return {
@@ -106,12 +73,9 @@ export default {
           break;
       }
     },
-    getSpeech() {
-      this.$http.get("/api/speech/getSpeechList").then((res) => {
-        if (res.data.code === 0) {
-          this.speechList = res.data.data;
-        }
-      });
+    async getSpeech() {
+      let { data } = await getSpeechList();
+      this.speechList = data;
     },
 
     handleAdd(type) {
@@ -166,7 +130,7 @@ export default {
     },
     getMyBlogList() {
       this.$http.get("/api/article/myList").then((res) => {
-        console.log(res);
+
         if (res.data.code === 0) {
           this.articleList = res.data.data;
           console.log(this.articleList);

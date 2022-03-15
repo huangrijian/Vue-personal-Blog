@@ -1,25 +1,12 @@
 <template>
   <div class="wrapper wow slideInLeft">
     <div class="content">
-      <el-form
-        ref="form"
-        :rules="rules"
-        label-width="80px"
-        :inline="false"
-        size="normal"
-      >
+      <el-form ref="form" :rules="rules" label-width="80px" :inline="false" size="normal">
         <el-form-item label="昵称">
           <el-input v-model="nickname"></el-input>
         </el-form-item>
         <el-form-item label="头像">
-          <el-upload
-            class="avatar-uploader"
-            :action="`${baseUrl}api/article/upload`"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-            name="head_img"
-          >
+          <el-upload class="avatar-uploader" :action="`${baseUrl}api/article/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" name="head_img">
             <img :src="imageUrl" class="avatar" />
             <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
           </el-upload>
@@ -27,12 +14,7 @@
         <el-form-item>
           <el-button type="primary" @click="onSubmit">保存</el-button>
           <el-button @click="exit">退出登录</el-button>
-          <el-button
-            v-if="grade === '3'"
-            :style="{ marginTop: '10px' }"
-            @click="upgrade"
-            >申请成为管理员</el-button
-          >
+          <el-button v-if="grade === '3'" :style="{ marginTop: '10px' }" @click="upgrade">申请成为管理员</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -43,6 +25,7 @@
 
 import Cookie from "js-cookie";
 import { baseUrl } from '@/config/config'
+import { getUserInfo, updateUser, updateGrade } from '@/network/users'
 export default {
   data() {
     return {
@@ -53,7 +36,7 @@ export default {
       nickname: "",
       username: "",
       grade: sessionStorage.getItem("grade"),
-      baseUrl:baseUrl
+      baseUrl: baseUrl
     };
   },
   methods: {
@@ -81,34 +64,39 @@ export default {
       location.reload();
     },
     // 获取用户信息
-    GetInfo() {
-      this.$http.get("/api/users/info").then((res) => {
-        //  获取用户头像地址
-        this.nickname = res.data.data.nickname;
-        (this.imageUrl = res.data.data.head_img),
-          (this.username = res.data.data.username);
-      });
+    async GetInfo() {
+      let { data } = await getUserInfo()
+      //  获取用户头像地址
+      this.nickname = data.nickname;
+      this.imageUrl = data.head_img;
+      this.username = data.username;
     },
     // 更新用户信息
     async onSubmit() {
-      // if(this.nickname === '怪蜀黍' && this.imageUrl === this.imageUrl){
-      //   return this.$message.error('昵称已经被占用了，请换一个昵称吧~');
-      // }
-      await this.$http.post("/api/users/updateUser", {
+      let data = {
         nickname: this.nickname,
         head_img: this.imageUrl,
-      });
-      // 刷新页面
-      location.reload();
+      }
+      try {
+        await updateUser(data)
+        this.$message({
+          message: '更新成功',
+          type: 'success'
+        });
+      } catch (error) {
+        this.$message({
+          message: JSON.stringify(error),
+          type: 'warning'
+        });
+      }
     },
 
     async upgrade() {
-      let {
-        data: { code },
-      } = await this.$http.post("/api/users/updateGrade", {
+      let data = {
         username: this.username,
         is_apply: 1,
-      });
+      }
+      let { code } = await updateGrade(data);
       if (code === 200) {
         this.$message({
           message: "已向站长发起申请，请耐心等待",

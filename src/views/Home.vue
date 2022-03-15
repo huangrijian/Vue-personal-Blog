@@ -1,22 +1,22 @@
 <template>
-  <div class="home"> 
+  <div class="home">
     <div class="head">
       <!-- 轮播图 -->
-    <el-carousel trigger="click" height="260px" class="slideshow  wow slideInLeft">
-      <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
-        <div class="slideshowBox" @click="GotoDetail(item.id)">
-          <img class="headImg" :src="item.pic_url" alt="">
-          <div class="title threed"><span>{{item.title}}</span></div>
+      <el-carousel trigger="click" height="260px" class="slideshow  wow slideInLeft">
+        <el-carousel-item v-for="(item,index) in LbtArticle" :key="index">
+          <div class="slideshowBox" @click="GotoDetail(item.id)">
+            <img class="headImg" :src="item.pic_url" alt="">
+            <div class="title threed"><span>{{item.title}}</span></div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+      <!-- 轮播图旁边的盒子 -->
+      <div class="block wow slideInLeft">
+        <div class="img1" :key="index" v-for="(item,index) in headerArticle">
+          <img :src="item.pic_url" @click="GotoDetail(item.id)" alt="">
+          <div class="tit">{{item.title}}</div>
         </div>
-      </el-carousel-item>
-    </el-carousel>
-    <!-- 轮播图旁边的盒子 -->
-    <div class="block wow slideInLeft">
-      <div class="img1" :key="index" v-for="(item,index) in headerArticle">
-        <img :src="item.pic_url" @click="GotoDetail(item.id)" alt="">
-        <div class="tit">{{item.title}}</div>
       </div>
-    </div>
     </div>
     <div class="block main marginTop wow slideInLeft">
       <!-- 小标题组件 -->
@@ -41,29 +41,34 @@ export default {
   },
   data() {
     return {
-      AllArticle:[],
+      AllArticle: [],
       // 轮播图数据
-      LbtArticle:[],
+      LbtArticle: [],
       // 头部文章数据
-      headerArticle:[],
+      headerArticle: [],
 
     }
   },
-  methods:{
-    GotoDetail(id){
-      this.$router.push({path:'detail/'+id})
+  methods: {
+    GotoDetail(id) {
+      this.$router.push({ path: 'detail/' + id })
     },
   },
-  created(){
-    getAllArticle().then(({data})=> {
+  created() {
+    getAllArticle().then(({ data }) => {
       let copyData = data.concat().reverse()
-      this.AllArticle = copyData.slice(0,18)
-      this.LbtArticle = copyData.slice(0,6)
-      this.headerArticle = data.slice(6,8)
+      this.AllArticle = copyData.slice(0, 18)
+      this.LbtArticle = copyData.slice(0, 6)
+      this.headerArticle = data.slice(6, 8)
+    }).catch((err) => {
+      console.log(err)
     })
-    
+
   },
-  mounted(){
+  activated() {
+    this.$animation();
+  },
+  mounted() {
     this.$animation();
   }
 }
@@ -78,14 +83,13 @@ export default {
   transform: translateY(-60px);
 }
 
-
 .head {
   display: flex;
   .slideshow {
     margin-right: 10px;
   }
   .block {
-    background-color: rgba(255, 255, 255,0);
+    background-color: rgba(255, 255, 255, 0);
   }
 }
 
@@ -99,16 +103,16 @@ export default {
   position: relative;
   justify-content: center;
   align-content: center;
-  cursor:pointer;
+  cursor: pointer;
   .title {
-    font-size: 40px!important;
+    font-size: 40px !important;
     padding: 25px;
     color: #fff;
     opacity: 0;
     position: absolute;
     text-align: center;
     top: 60px;
-     transition: all 0.5s;
+    transition: all 0.5s;
   }
   .slideshow {
     flex: 2;
@@ -119,9 +123,6 @@ export default {
     padding: 0;
   }
 }
-
-
-
 
 // 轮播图旁边的盒子
 .block .img1 {
@@ -134,13 +135,13 @@ export default {
     border-radius: 5px;
     height: 128px;
     transition: all 0.6s;
-    cursor:pointer;
+    cursor: pointer;
   }
   .tit {
-    position:absolute;
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     color: rgb(228, 225, 225);
     width: 100%;
     text-align: center;
@@ -148,14 +149,12 @@ export default {
   img:hover {
     transform: scale(1.2);
   }
-
 }
 
 .main {
-  padding: 20px!important;
-  background-color: white!important;
+  padding: 20px !important;
+  background-color: white !important;
 }
-
 
 .BlogList {
   margin-top: 15px;
@@ -165,10 +164,9 @@ export default {
 }
 
 .rightBox {
-   margin-top: 15px;
+  margin-top: 15px;
   .el-tag {
     margin: 5px;
   }
 }
-
 </style>

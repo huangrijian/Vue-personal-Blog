@@ -1,37 +1,18 @@
 <template>
   <div>
-    <el-upload
-      :action="`${baseUrl}api/article/upload`"
-      list-type="picture-card"
-      class="photoWall"
-      :on-change="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload"
-      :file-list="list"
-      name="head_img"
-    >
+    <el-upload :action="`${baseUrl}api/article/upload`" list-type="picture-card" class="photoWall" :on-change="handleAvatarSuccess" :file-list="list" name="head_img">
       <i slot="default" class="el-icon-plus"></i>
       <div slot="file" slot-scope="{ file }">
         <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
         <span class="el-upload-list__item-actions">
           <div class="timeDescribe">2022/1/24</div>
-          <span
-            class="el-upload-list__item-preview"
-            @click="handlePictureCardPreview(file)"
-          >
+          <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
             <i class="el-icon-zoom-in"></i>
           </span>
-          <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleDownload(file)"
-          >
+          <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleDownload(file)">
             <i class="el-icon-download"></i>
           </span>
-          <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleRemove(file)"
-          >
+          <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
             <i class="el-icon-delete"></i>
           </span>
           <div class="title">
@@ -46,12 +27,7 @@
       <img width="100%" :src="dialogImageUrl" alt="" />
     </el-dialog>
 
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible02"
-      width="30%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="提示" :visible.sync="dialogVisible02" width="30%">
       <el-input v-model="input" placeholder="请输入内容"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible02 = false">取 消</el-button>
@@ -63,6 +39,7 @@
 
 <script>
 import { baseUrl } from "@/config/config";
+import { savePhoto, getPhoto, changeTitle } from '@/network/photoWall'
 export default {
   name: "photoWall",
   data() {
@@ -108,19 +85,19 @@ export default {
       }
     },
     examine() {
-      console.log(sessionStorage.getItem("grade"));
+
       if (sessionStorage.getItem("grade") !== "1") {
         let add = document.querySelector(".el-upload--picture-card");
         add.style.display = "none";
       }
     },
     async savePhoto(response) {
-      await this.$http.post("/api/photoWall/savePhoto", { response });
+      await savePhoto(response)
     },
     async getPhoto() {
-      let res = await this.$http.get("/api/photoWall/getPhoto");
-      this.list = res.data.data;
-      console.log(res);
+      let { data } = await getPhoto();
+      this.list = data;
+
     },
     editDescribe(title, uid) {
       if (sessionStorage.getItem("grade") === "1") {
@@ -131,17 +108,14 @@ export default {
     },
     async changeTitle() {
       // 修改服务器里的title
-      await this.$http.post("/api/photoWall/changeTitle", {
-        uid: this.uid,
-        title: this.input,
-      });
+      await changeTitle(this.uid, this.input)
       // 修改前端显示的title
       this.changeCurrentTitle();
       this.dialogVisible02 = false;
     },
     changeCurrentTitle() {
-       this.list.forEach((item, index, arr) => {
-        if(item.uid === this.uid) {
+      this.list.forEach((item, index, arr) => {
+        if (item.uid === this.uid) {
           arr[index].title = this.input
         }
       })
