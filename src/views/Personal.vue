@@ -8,12 +8,13 @@
         <el-form-item label="头像">
           <el-upload class="avatar-uploader" :action="`${baseUrl}api/article/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" name="head_img">
             <img :src="imageUrl" class="avatar" />
-            <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
           </el-upload>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">保存</el-button>
-          <el-button @click="exit">退出登录</el-button>
+          <div class="bottom">
+            <el-button type="primary" @click="onSubmit">保存</el-button>
+            <el-button @click="exit">退出登录</el-button>
+          </div>
           <el-button v-if="grade === '3'" :style="{ marginTop: '10px' }" @click="upgrade">申请成为管理员</el-button>
         </el-form-item>
       </el-form>
@@ -131,6 +132,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bottom {
+  display: flex;
+}
 .content {
   width: 30%;
   margin: 5% auto;
