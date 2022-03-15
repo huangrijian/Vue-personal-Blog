@@ -6,7 +6,7 @@
       </div>
       <div class="bottom">
         <div class="dec">
-          <span>共<span class="commentTotal">{{ commentArray.length }}</span>条留言</span>
+          <span>共<span class="commentTotal">{{ commentArrayCount }}</span>条留言</span>
         </div>
         <div class="CommentInput">
           <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" />
