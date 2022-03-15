@@ -3,10 +3,9 @@
     <!-- 返回顶部 -->
     <back-top></back-top>
     <!-- 整个视图 -->
-      <router-view v-if="isRouterShow"></router-view>
+    <router-view v-if="isRouterShow"></router-view>
     <!-- 背景 -->
     <div id="bgvid">
-      <!-- <img src="~@/assets/img/bgbg.jpg" alt=""> -->
       <img :src="bgimgUrl" alt="" />
     </div>
     <!-- 切换背景等操作 -->
@@ -20,6 +19,7 @@ export default {
   components: { BackTop, ActionBar },
   provide() {
     return {
+      // 刷新整个SPA页面的函数，分发给所有后代组件
       reload: this.reload,
     };
   },
