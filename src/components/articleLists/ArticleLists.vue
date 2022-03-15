@@ -2,14 +2,21 @@
   <div>
     <div class="block">
       <!-- 标题 -->
-      <title-box title="技术博文"></title-box>
+      <div v-if="searchCount === 0 && isSearch">
+        <not-find :searchTit="searchTit" />
+      </div>
+      <div class="top" v-else-if="isSearch">
+        <span>找到与‘{{searchTit}}’相关的{{searchCount}}篇文章</span>
+      </div>
+
+      <title-box title="技术博文" v-else></title-box>
       <!-- 列表 -->
       <ul>
         <li :key="index" v-for="(item,index) in AllArticle" @click="GotoArticleDetail(item.id)">
           <div class="title">{{item.title}}</div>
           <div class="content">
             <div class="image">
-                <img v-lazy="item.pic_url" alt="">
+              <img v-lazy="item.pic_url" alt="">
             </div>
             <div class="describe">
               <p>{{item.content}}</p>
@@ -33,28 +40,55 @@
 
 <script>
 import TitleBox from '../TitleBox/titleBox.vue'
-  export default {
-    props:['AllArticle'],
-    components:{
-      TitleBox
+import NotFind from '../NotFind/NotFind.vue'
+export default {
+  props: {
+    searchTit: {
+      type: String,
     },
-    methods:{
-           // 去文章详情
-      GotoArticleDetail(id){
-        this.$router.push({name:'detail',params: {id}});
-        this.$store.commit('setArticleId',id)
+    searchCount: {
+      type: Number,
+    },
+    isSearch: {
+      type: Boolean,
+      default: false
+    },
+    AllArticle: {
+      type: Array,
+      default() {
+        return []
       }
     }
+  },
+  components: {
+    TitleBox,
+    NotFind
+  },
+  methods: {
+    // 去文章详情
+    GotoArticleDetail(id) {
+      this.$router.push({ name: 'detail', params: { id } });
+      this.$store.commit('setArticleId', id)
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
+.top {
+  display: flex;
+  justify-content: center;
+  span {
+    font-size: 25px;
+    padding: 20px;
+  }
+}
 ul {
   margin-top: 15px;
 }
 li {
-  margin:20px 0 30px 0;
-  cursor:pointer;
+  margin: 20px 0 30px 0;
+  cursor: pointer;
 }
 .title {
   margin-bottom: 10px;
@@ -66,7 +100,7 @@ li {
   .image {
     overflow: hidden;
     border-radius: 5px;
-    cursor:pointer;
+    cursor: pointer;
     width: 200px;
     height: 130px;
     img {
@@ -80,7 +114,7 @@ li {
   }
   .describe {
     margin-left: 10px;
-    flex:5;
+    flex: 5;
     position: relative;
     overflow: hidden;
     height: 150px;
@@ -91,18 +125,18 @@ li {
       }
     }
 
-     p {
-        display: block;
-        font-size: 14px;
-        color: #666;
-        // 文字溢出隐藏
-        overflow: hidden;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        line-height: 26px;
-      }
+    p {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      // 文字溢出隐藏
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-height: 26px;
+    }
     .describe-bottom {
       position: absolute;
       bottom: 0;
@@ -119,7 +153,7 @@ li {
       .author {
         margin-left: 0;
       }
-     
+
       .el-button {
         float: right;
       }

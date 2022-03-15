@@ -1,6 +1,6 @@
 <template>
   <div class="wow slideInLeft">
-    <article-lists :AllArticle="AllArticle"></article-lists>
+    <article-lists :AllArticle="AllArticle" :searchTit="searchTit" :searchCount="searchCount" :isSearch="isSearch"></article-lists>
     <!-- 分页 -->
     <el-pagination background layout="prev, pager, next" :current-page="curPage" :page-size="pageSize" :total="count" @current-change="change">
     </el-pagination>
@@ -28,6 +28,10 @@ export default {
 
       currentType: 'default',
 
+      // 渲染搜索/点击分类后的检索结果
+      searchTit: '',
+      searchCount: 0,
+      isSearch: false
     }
   },
   // 路由发生变化, 根据类型重新初始化
@@ -83,6 +87,12 @@ export default {
 
     },
 
+    renderSearchView(searchTit, searchCount, isSearch) {
+      // 给子组件传递数据用于渲染当前的展示结果
+      this.searchTit = searchTit;
+      this.searchCount = searchCount;
+      this.isSearch = isSearch;
+    },
 
     // 初始化搜索类型的获取文章
     InitialSearch(keyword) {
@@ -96,6 +106,8 @@ export default {
       // 全部文章数量
       this.count = this.$store.state.searchResCount;
       this.AllArticle = this.$store.state.searchRes;
+
+      this.renderSearchView(this.keyword, this.count, true)
     },
     // 初始化默认类型的获取文章
     InitialDefault() {
@@ -106,22 +118,27 @@ export default {
       this.pageSize = 6
       getAllCount().then(({ count }) => {
         this.count = count//初始化全部文章数量
+        // 给子组件传递数据用于渲染当前的展示结果
+        this.renderSearchView('', 0, false)
       })
       // 获取 默认第一页文章
       this.GetAllArticle(this.curPage, this.pageSize);
     },
     // 初始化分类类型的获取文章
     InitialClassify(classname) {
+
       this.currentType = 'classify'; //初始化当前文章类型
       // 保存最新的分类名称
       this.classname = classname
       this.curPage = 1; // 初始化第一页
       this.pageSize = 3; //初始化每页显示数量
-      // 获取 默认第一页文章
       getSingleclassifyRes(classname).then(({ data, count }) => {
-        // 获取文章数组
+        // 获取 默认第一页文章
         this.AllArticle = data.list;
-        this.count = count
+        // 获取总数
+        this.count = count;
+        // 给子组件传递数据用于渲染当前的展示结果
+        this.renderSearchView(classname, count, true)
       })
 
     }
