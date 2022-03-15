@@ -3,7 +3,7 @@ import axios from 'axios'
 export function request(config) {
   // 1.创建axios的实例
   const instance = axios.create({
-    baseURL: 'https://cloud-music-api-f494k233x-mgod-monkey.vercel.app',
+    baseURL: 'http://112.124.52.188:3000/',
     timeout: 5000
   })
 
@@ -12,7 +12,7 @@ export function request(config) {
   instance.interceptors.request.use(config => {
     return config
   }, err => {
-     console.log(err);
+    console.log(err);
   })
 
   // 2.2.响应拦截
