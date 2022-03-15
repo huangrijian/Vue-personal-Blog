@@ -81,8 +81,12 @@ export default {
     ReplyItem,
   },
   watch: {
-    articleId() {
-      this.GetArticleComment();
+    articleId(newVal) {
+      // 初始化分页器
+      this.pageSize = 5
+      this.commentArrayCount = 20
+      this.currentPage = 1
+      this.initialization(this.pageSize, this.offset, newVal)
     }
   },
   data() {
@@ -221,6 +225,7 @@ export default {
             reply_user_id: this.replyUserId,
           })
           .then((res) => {
+            this.getCommentCount(this.articleId);
             this.GetArticleComment(this.pageSize, this.offset);
             this.InitializeReplyAndTextareaData();
           });
@@ -244,10 +249,15 @@ export default {
     },
     // 初始化数据
     async initialization(pageSize, offset, article_id) {
+      await this.getCommentCount(article_id);
+      this.GetArticleComment(pageSize, offset);
+    },
+
+    // 获取评论总条数
+    async getCommentCount(article_id) {
       let listCount = await this.$http.get('/api/comment/listCount', { params: { article_id } })
       let { data: { count } } = listCount;
       this.commentArrayCount = count
-      this.GetArticleComment(pageSize, offset);
     }
   },
   computed: {
@@ -261,7 +271,6 @@ export default {
   },
   created() {
     this.initialization(this.pageSize, this.offset, this.articleId);
-
   },
 
 };
