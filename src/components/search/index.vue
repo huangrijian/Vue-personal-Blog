@@ -12,7 +12,8 @@
 
 <script>
 import SearchItem from './searchItem.vue';
-import axios from 'axios'
+import axios from 'axios';
+import { searchArticle, getAllArticle, searchCount } from '@/network/article'
 let debounce = (fn, time = 1000) => {
   let timeLock = null
   return function (...args) {
@@ -22,12 +23,17 @@ let debounce = (fn, time = 1000) => {
     }, time)
   }
 }
-let getKeyWordArr = (newVal, vueThis) => {
-  axios.post('/api/article/search', { keyWord: newVal }).then(res => {
-    vueThis.dataArr = res.data.result.map(({ id, title, like_count }) => {
-      return { id, title, like_count }
-    })
+let getKeyWordArr = async (newVal, vueThis) => {
+  // axios.post('/api/article/search', { keyWord: newVal }).then(res => {
+  //   vueThis.dataArr = res.data.result.map(({ id, title, like_count }) => {
+  //     return { id, title, like_count }
+  //   })
+  // })
+  let { result } = await searchArticle(newVal);
+  vueThis.dataArr = result.map(({ id, title, like_count }) => {
+    return { id, title, like_count }
   })
+
 }
 let myDebounce = debounce(getKeyWordArr);
 export default {
@@ -48,9 +54,12 @@ export default {
   },
   methods: {
     async SearchWord() {
-      let { data: { result } } = await this.$http.post('/api/article/search', { keyWord: this.inputVal });
+      let { count } = await searchCount(this.inputVal);
+
+      let { result } = await searchArticle(this.inputVal);
       // 将结果存储至vuex
       this.$store.commit("setSearchRes", result);
+      this.$store.commit("setSearchResCount", count);
       this.$router.push({ name: 'Lists', query: { keyword: this.inputVal } });
       this.inputVal = null
     },
@@ -78,9 +87,10 @@ export default {
       return arr.reverse()
     },
     async getTypeList() {
-      let res = await this.$http.get('/api/article/typeList');
-      this.dataArr = this.handleDataType(res.data.data).slice(0, 6);
-      console.log(this.dataArr);
+      // 获取全部文章列表
+      let { data } = await getAllArticle();
+      this.dataArr = this.handleDataType(data).slice(0, 6);
+
     }
 
   },

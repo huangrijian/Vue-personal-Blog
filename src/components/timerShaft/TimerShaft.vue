@@ -3,15 +3,9 @@
     <el-card shadow="hover">
       <el-timeline v-for="(item, index) in timerData" :key="index">
         <!-- <h1>{{ item.year }}</h1> -->
-        <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse v-model="activeNames">
           <el-collapse-item :title="item.year+'年'" :name="`${index}`">
-            <el-timeline-item
-              v-for="(items, indexs) in item.data"
-              :key="indexs"
-              :timestamp="items.create_time"
-              placement="top"
-              type="primary"
-            >
+            <el-timeline-item v-for="(items, indexs) in item.data" :key="indexs" :timestamp="items.create_time" placement="top" type="primary">
               <span @click="gotoTodetail(items.id)">{{ items.title }}</span>
             </el-timeline-item>
           </el-collapse-item>
@@ -26,7 +20,7 @@ export default {
   data() {
     return {
       timerData: [],
-      activeNames:['0']
+      activeNames: ['0']
     };
   },
   created() {
@@ -37,7 +31,7 @@ export default {
       let {
         data: { data },
       } = await this.$http.get("api/article/timeShaft");
-      console.log(data);
+
       this.timerData = data;
     },
     gotoTodetail(id) {

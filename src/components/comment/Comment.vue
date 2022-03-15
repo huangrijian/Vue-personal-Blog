@@ -261,7 +261,7 @@ export default {
   },
   created() {
     this.initialization(this.pageSize, this.offset, this.articleId);
-    console.log(this.articleId)
+
   },
 
 };

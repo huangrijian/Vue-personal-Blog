@@ -2,10 +2,7 @@
   <div class="commonLayout">
     <!-- 导航条 -->
     <nav>
-      <common-header
-        class="wow slideInRight common-header"
-        style="top:0px"
-      ></common-header>
+      <common-header class="wow slideInRight common-header" style="top:0px"></common-header>
     </nav>
 
     <!-- 切换大屏阅读模式按钮 -->
@@ -13,18 +10,18 @@
 
     <!-- 中心 -->
     <section>
-       <div v-if="isPure">
-         <!-- 图片墙专有出口 -->
+      <div v-if="isPure">
+        <!-- 图片墙专有出口 -->
         <router-view></router-view>
       </div>
       <div class="wrapper marginTop" v-else>
         <el-row :gutter="10" class="head">
-           <el-col :lg="5" :xl="5">
+          <el-col :lg="5" :xl="5">
             <div class="grid-content bg-purple-light synopsis" ref="sidebar">
               <!-- 左侧边栏 -->
               <aside class="wow slideInRight">
                 <!-- 文章时间轴 -->
-                <TimerShaft/>
+                <TimerShaft />
               </aside>
             </div>
           </el-col>
@@ -32,7 +29,7 @@
             <div class="grid-content bg-purple slideshowBox">
               <!-- 中间视图切换 -->
               <article ref="article">
-                <keep-alive include="timeLocus">
+                <keep-alive include="timeLocus,Home,LeaveWord">
                   <router-view></router-view>
                 </keep-alive>
               </article>
@@ -42,9 +39,7 @@
             <div class="grid-content bg-purple-light synopsis" ref="sidebar">
               <!-- 右侧边栏 -->
               <aside class="wow slideInRight">
-                <personal-details
-                  class="wow slideInRight maginbot"
-                ></personal-details>
+                <personal-details class="wow slideInRight maginbot"></personal-details>
                 <music class="maginbot wow slideInLeft" data-wow-delay="0.2s" />
                 <tally class="maginbot"></tally>
                 <LickDog />
@@ -53,7 +48,7 @@
           </el-col>
         </el-row>
       </div>
-     
+
     </section>
 
     <!-- 底部 -->
