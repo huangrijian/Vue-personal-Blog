@@ -24,11 +24,6 @@ let debounce = (fn, time = 1000) => {
   }
 }
 let getKeyWordArr = async (newVal, vueThis) => {
-  // axios.post('/api/article/search', { keyWord: newVal }).then(res => {
-  //   vueThis.dataArr = res.data.result.map(({ id, title, like_count }) => {
-  //     return { id, title, like_count }
-  //   })
-  // })
   let { result } = await searchArticle(newVal);
   vueThis.dataArr = result.map(({ id, title, like_count }) => {
     return { id, title, like_count }

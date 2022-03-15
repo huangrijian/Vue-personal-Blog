@@ -6,9 +6,9 @@
 </template>
 
 <script>
-  export default {
-    props:['title']
-  }
+export default {
+  props: ['title']
+}
 </script>
 
 <style lang="scss" scoped>
@@ -17,7 +17,7 @@
   font-size: 16px;
 }
 .bottom {
-  width: 5%;
+  width: 8%;
   border-bottom: 2px solid #999;
 }
 </style>
