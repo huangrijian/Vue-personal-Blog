@@ -9,68 +9,74 @@ export default new Vuex.Store({
   // 全局属性变量
   state: {
     //  isSignIn 登录状态，0为未登录
-    isSignIn:0,
-    token:'',
+    isSignIn: 0,
+    token: '',
 
-    isPure:false,
+    isPure: false,
 
     // 时间轴状态，默认0为缓存状态，1为活跃状态
-    timeLocus:0,
+    timeLocus: 0,
 
     // 所有文章标题
-    articleTitle:[],
+    articleTitle: [],
 
     // 推荐排行
-    RecommendArry:JSON.parse(sessionStorage.getItem('RecommendArry')),
+    RecommendArry: JSON.parse(sessionStorage.getItem('RecommendArry')),
     // 点赞排行
-    LikeArry:JSON.parse(sessionStorage.getItem('LikeArry')),
+    LikeArry: JSON.parse(sessionStorage.getItem('LikeArry')),
 
     // 搜索结果
-    searchRes:[],
+    searchRes: [],
 
-    bgimgUrl:sessionStorage.getItem('bgimgUrl') || require('../assets/img/bgdm04.jpg'),
+    bgimgUrl: sessionStorage.getItem('bgimgUrl') || require('../assets/img/bgdm04.jpg'),
 
-    codeStyle:sessionStorage.getItem('codeStyle')
+    codeStyle: sessionStorage.getItem('codeStyle'),
+
+    searchResCount: sessionStorage.getItem('searchResCount')
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
-    changIsSignIn (state,n){
+    changIsSignIn(state, n) {
       state.isSignIn = n;
     },
-    setToken(state,val) {
+    setToken(state, val) {
       state.token = val;
     },
     // 推荐排行
-    setRecommendArry(state,val) {
+    setRecommendArry(state, val) {
       state.RecommendArry = val;
       sessionStorage.setItem("RecommendArry", JSON.stringify(val));
     },
     // 改变时间轴状态
-    changeTimeLocus(state,val){
+    changeTimeLocus(state, val) {
       state.timeLocus = val;
     },
     // 点赞排行
-    setLikeArry(state,val){
+    setLikeArry(state, val) {
       state.LikeArry = val;
       sessionStorage.setItem("LikeArry", JSON.stringify(val));
     },
     // 搜索结果
-    setSearchRes(state,val){
+    setSearchRes(state, val) {
       state.searchRes = val;
     },
 
-    setIsPure(state,val){
+    setIsPure(state, val) {
       state.isPure = val;
     },
 
-    setBgimgUrl(state,val){
+    setBgimgUrl(state, val) {
       state.bgimgUrl = val;
       sessionStorage.setItem("bgimgUrl", val);
     },
-    setCodeStyle(state,val) {
+    setCodeStyle(state, val) {
       state.codeStyle = val;
       sessionStorage.setItem("codeStyle", val);
     },
+    setSearchResCount(state, val) {
+      state.searchResCount = val;
+      sessionStorage.setItem("searchResCount", val);
+    }
   },
   // 异步方法 调用方法,this.$store.dispatch("xxx") 
   actions: {
