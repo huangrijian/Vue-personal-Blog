@@ -148,7 +148,11 @@ export default {
   methods: {
     // 注册
     async register() {
-      let data = { "username": this.regform.regname, "nickname": this.regform.nickname, "password": this.regform.pass };
+      let data = {
+        username: this.regform.regname,
+        nickname: this.regform.nickname,
+        password: this.regform.pass
+      };
       let { code } = await userRegister(data);
       if (code == -1) {
         this.$message({
@@ -181,7 +185,10 @@ export default {
       this.$refs['form'].validate(async (res) => {
         if (res) {
           // 发起登录请求
-          let { token } = await userLogin(this.form)
+          let { token, code, msg } = await userLogin(this.form);
+          // 如果为-1，则登录失败，弹出警告信息
+          if (code === -1) return this.$message({ message: msg, type: 'warning' });
+          this.$message({ message: msg, type: 'success' });
           // 登录成功，去vuex里修改登录状态
           this.$store.commit('changIsSignIn', 1)
           // 设置Cookie
@@ -191,7 +198,10 @@ export default {
           this.$router.push({ name: 'home' })
 
         } else {
-          alert("登录失败")
+          this.$message({
+            message: '未通过验证，请重新输入',
+            type: 'warning'
+          });
           return false
         }
       })
