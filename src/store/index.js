@@ -1,6 +1,7 @@
 // 导入vue及vuex
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Cookie from 'js-cookie'
 // 挂载vuex
 Vue.use(Vuex)
 
@@ -8,9 +9,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 全局属性变量
   state: {
-    //  isSignIn 登录状态，0为未登录
-    isSignIn: 0,
-    token: '',
+    //  isSignIn 登录状态，0为未登录, 1为已登录
+    isSignIn: Cookie.get('token') ? 1 : 0,
+    token: Cookie.get('token'),
 
     isPure: false,
 
