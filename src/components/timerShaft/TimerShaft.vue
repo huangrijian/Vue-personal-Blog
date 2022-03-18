@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { getTimeShaft } from '@/network/article'
 export default {
   data() {
     return {
@@ -28,10 +29,7 @@ export default {
   },
   methods: {
     async getTimerData() {
-      let {
-        data: { data },
-      } = await this.$http.get("api/article/timeShaft");
-
+      let { data } = await getTimeShaft();
       this.timerData = data;
     },
     gotoTodetail(id) {
