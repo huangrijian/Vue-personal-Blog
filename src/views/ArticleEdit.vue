@@ -6,38 +6,15 @@
     <div class="edit_title">标题</div>
     <el-input v-model="title" placeholder="请输入标题"></el-input>
     <!-- 分类 -->
-    <el-tag
-      :key="tag"
-      v-for="tag in dynamicTags"
-      closable
-      :disable-transitions="false"
-      @close="handleClose(tag)"
-    >
+    <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
       {{ tag }}
     </el-tag>
-    <el-input
-      class="input-new-tag"
-      v-if="inputVisible"
-      v-model="inputValue"
-      ref="saveTagInput"
-      size="small"
-      @keyup.enter.native="handleInputConfirm"
-      @blur="handleInputConfirm"
-    >
+    <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
     </el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput"
-      >+ New Tag</el-button
-    >
+    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
     <!-- 上传封面 -->
     <div>
-      <el-upload
-        class="avatar-uploader"
-        :action="`${baseUrl}api/article/upload`"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-        name="head_img"
-      >
+      <el-upload class="avatar-uploader" :action="`${baseUrl}api/article/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" name="head_img">
         <img :src="imageUrl ? imageUrl : defaultAvatar" class="avatar" />
       </el-upload>
     </div>
@@ -57,6 +34,8 @@
 
 <script>
 import { baseUrl } from "@/config/config";
+import { uploadPhoto } from '@/network/article';
+
 export default {
   data() {
     return {
@@ -188,19 +167,15 @@ export default {
     },
 
     // 绑定@imgAdd event
-    $imgAdd(pos, $file) {
+    async $imgAdd(pos, $file) {
       // 第一步.将图片上传到服务器.
-      var formdata = new FormData();
+      let formdata = new FormData();
       formdata.append("head_img", $file);
-      this.$http({
-        url: `${this.baseUrl}api/article/upload`,
-        method: "post",
+      let { data } = await uploadPhoto({
         data: formdata,
         headers: { "Content-Type": "multipart/form-data" },
-      }).then(({data:{data}}) => {
-        data = data.replace(/\\/g,"/");
-        this.$refs.md.$img2Url(pos, data);//将url进行替换
-      });
+      })
+      this.$refs.md.$img2Url(pos, data.replace(/\\/g, "/"));//将url进行替换
     },
   },
   created() {
