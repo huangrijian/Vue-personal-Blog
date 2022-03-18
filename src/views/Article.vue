@@ -17,7 +17,7 @@
               <template slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
                 <el-button size="mini" type="success" @click="handleEdit(scope.row, 'article')">编辑</el-button>
-                <el-button size="mini" type="danger" @click="handleDelect(scope.row)">删除</el-button>
+                <el-button size="mini" type="danger" @click="handleDelect(scope.row,'article')">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -39,7 +39,7 @@
               <template slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
                 <el-button size="mini" type="success" @click="handleEdit(scope.row, 'speech')">编辑</el-button>
-                <el-button size="mini" type="danger" @click="handleDelect(scope.row)">删除</el-button>
+                <el-button size="mini" type="danger" @click="handleDelect(scope.row,'speech')">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -89,7 +89,7 @@ export default {
     handleEdit({ id }, type) {
       this.$router.push({ name: "editArticle", params: { id, type } });
     },
-    handleDelect(row) {
+    handleDelect(row, type) {
       let id = row.id;
       this.$confirm("此操作将删除该文章, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -103,7 +103,7 @@ export default {
           });
           // 发起删除的网络请求
           this.$http
-            .post("/api/article/delete", {
+            .post(`/api/${type}/delete`, {
               article_id: id,
             })
             .then((res) => {
