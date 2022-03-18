@@ -100,7 +100,6 @@ export default {
     },
     // 获取用户信息
     async GetInfo() {
-      console.log(this.$store.state.isSignIn)
       if (this.$store.state.isSignIn === 0) return;
       let { data } = await getUserInfo();
       this.UserInfo = data
