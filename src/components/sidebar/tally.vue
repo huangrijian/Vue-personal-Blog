@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { getClassify } from '@/network/article'
 export default {
   data() {
     return {
@@ -17,15 +18,9 @@ export default {
   },
   methods: {
     // 获取所有文章分类
-    GetAllArticleClassName() {
-      this.$http.get('/api/article/classify').then(res => {
-        if (res.data.code === 0) {
-
-          this.AllArticleClassName = res.data.data
-          // 获取文章分类后，获取文章数据
-          // this.GetAllArticle();
-        }
-      })
+    async GetAllArticleClassName() {
+      let { data } = await getClassify();
+      this.AllArticleClassName = data;
     },
     // 点击标签去列表
     GotoList(key) {
