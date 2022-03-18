@@ -6,13 +6,6 @@ import { BASE_ARTICLE_URL } from './BASE_URL'
  * POST********************************************
  * */
 
-export function getArticleDetail(params) {
-  return request({
-    url: `${BASE_ARTICLE_URL}/detail`,
-    params,
-  })
-}
-
 // 获取搜索的关键字文章，默认第一页是3篇
 export function searchArticle(keyWord, limit = 3, offset = 0) {
   return request({
@@ -48,6 +41,14 @@ export function uploadPhoto(data) {
  * 
  * Get********************************************
  * */
+// 获取文章详细
+export function getArticleDetail(params) {
+  return request({
+    method: 'get',
+    url: `${BASE_ARTICLE_URL}/detail`,
+    params,
+  })
+}
 
 // 获取全部文章
 export function getAllArticle() {
