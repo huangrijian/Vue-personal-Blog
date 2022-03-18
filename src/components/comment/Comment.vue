@@ -24,17 +24,16 @@
               <div class="side">
                 <div class="CommentTitle">
                   <span class="nickname">{{ item.nickname }}</span>
-                  <div class="master" style="color:#409eff" v-if="item.user_id === 18">
-                    站主
-                  </div>
-                  <div style="fontWeight:600; fontSize:18px; marginRight:8px">
-                    :
-                  </div>
+                  <div class="master" style="color:#409eff" v-if="item.user_id === 18">站主</div>
+                  <div style="fontWeight:600; fontSize:18px; marginRight:8px">:</div>
                   <span class="cmcontent">{{ item.cmcontent }}</span>
                 </div>
                 <div class="timerorlike">
                   <span class="timer">{{ item.create_time }}</span>
-                  <span @click="clickLike(item.id, index)"><i :class="['iconfont',  'My-new-icondianzan', {isLike:item.is_like}]"></i>{{item.like_count}}</span>
+                  <span @click="clickLike(item.id, index)">
+                    <i :class="['iconfont',  'My-new-icondianzan', {isLike:item.is_like}]"></i>
+                    {{item.like_count}}
+                  </span>
                   <span class="vertical">|</span>
                   <span @click="reply(item.id, null, null, index)">回复</span>
                   <span class="delete" v-if="thisNickName === '黄先森'" @click="handleDelect(item.id)">删除</span>
@@ -190,6 +189,13 @@ export default {
     },
 
     async clickLike(comment_id, index) {
+      if (this.$store.state.isSignIn === 0) {
+        this.$message({
+          message: '请登录再进行点赞',
+          type: 'warning'
+        })
+        return this.$router.push({ name: 'login' })
+      }
       let { code, msg, count } = await clickLike({ comment_id });
       let message = {};
       if (code === 200) {
