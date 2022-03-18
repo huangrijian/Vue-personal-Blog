@@ -111,6 +111,7 @@ export default {
       sessionStorage.setItem("avatar", avatar);
       sessionStorage.setItem("grade", this.grade);
       sessionStorage.setItem("nickname", this.nickname);
+      sessionStorage.setItem("username", data.username);
     },
     // 移动端导航
     handleOpen(key, keyPath, index) {

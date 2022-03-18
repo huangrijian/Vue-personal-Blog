@@ -1,12 +1,12 @@
 @import url("./checkbox.css");
 
 .wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 textarea {
-    resize: none;
+  resize: none;
 }
 
 .marginTop {
@@ -25,7 +25,7 @@ textarea {
   border: none !important;
 }
 .v-note-wrapper {
-  min-height: 0!important;
+  min-height: 0 !important;
 }
 
 .v-show-content {
@@ -36,41 +36,36 @@ textarea {
   padding: 0px !important;
 }
 
-.element::-webkit-scrollbar { width: 0 !important }
-
+.element::-webkit-scrollbar {
+  width: 0 !important;
+}
 
 ::-webkit-scrollbar {
-      display: none;
+  display: none;
 }
 
 // 弹框
 .el-dialog__wrapper .tankuang {
-  background: url('~@/assets/img/555.png')!important;
-  width: 50%!important;
-  height: 70%!important;
+  background: url("~@/assets/img/555.png") !important;
+  width: 50% !important;
+  height: 70% !important;
 }
 
 // 特效字体
-.threed{
+.threed {
   color: #fafafa;
   letter-spacing: 0;
-  font-size: 25px!important;
+  font-size: 25px !important;
   text-align: center;
-  text-shadow: 
-      0px 1px 0px #999, 
-      0px 2px 0px #888, 
-      0px 3px 0px #777, 
-      0px 4px 0px #666, 
-      0px 5px 0px #555, 
-      0px 6px 0px #444, 
-      0px 7px 0px #333, 
-      0px 8px 7px #001135 
-  }
-
-  // 改变编辑器字体大小
-  .hljs {
-    font-size: 20px;
+  text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777,
+    0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333,
+    0px 8px 7px #001135;
 }
+
+// // 改变编辑器字体大小
+// .hljs {
+//   font-size: 20px;
+// }
 
 // 改变编辑器字体大小
 .markdown-body pre code {
@@ -93,13 +88,17 @@ textarea {
   color: white;
   outline: none;
   position: relative;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 #frozen-btn button:before {
-  content: '';
+  content: "";
   display: block;
-  background: linear-gradient(to left, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.4) 50%);
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.4) 50%
+  );
   background-size: 210% 100%;
   background-position: right bottom;
   height: 100%;
@@ -121,7 +120,7 @@ textarea {
 }
 
 #frozen-btn .purple {
-  background-image: linear-gradient(to right, #6253e1, #852D91);
+  background-image: linear-gradient(to right, #6253e1, #852d91);
   box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
 }
 
@@ -136,10 +135,10 @@ textarea {
 .el-upload-list__item {
   overflow: hidden;
   box-sizing: border-box;
-  width: 300px!important;
-  height: 300px!important;
+  width: 300px !important;
+  height: 300px !important;
   display: inline-block;
-  margin: 10px!important;
+  margin: 10px !important;
 }
 
 .hrj-dialog .el-dialog {
@@ -161,4 +160,8 @@ textarea {
 
 .el-timeline-item {
   margin-left: 1px;
+}
+
+.el-message {
+  z-index: 999999 !important;
 }
