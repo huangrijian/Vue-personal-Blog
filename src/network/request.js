@@ -26,10 +26,11 @@ export function request(config) {
   instance.interceptors.response.use(res => {
     return res.data
   }, ({ response }) => {
-    if (response.status === 401) return alert('401网络异常')
-    if (response.status === 404) return alert('404找不到资源')
-    if (response.status === 500) return alert('服务器异常')
-    return Promise.reject(response.status)
+    const URL = response.config.baseURL + response.config.url
+    if (response.status === 401) alert(`${URL}---401错误---请求未通过认证`)
+    if (response.status === 404) alert(`${URL}---404错误---找不到资源`)
+    if (response.status === 500) alert(`${URL}---500错误---服务器异常`)
+    return Promise.reject(response)
   })
 
   // 3.发送真正的网络请求
