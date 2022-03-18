@@ -90,7 +90,6 @@ export default {
           value
         }
       });
-      console.log("res", res);
       if (res.data.code === 200) {
         callback();
       } else {
@@ -149,7 +148,7 @@ export default {
     // 注册
     async register() {
       let data = {
-        username: this.regform.regname,
+        username: this.regform.regname.toLowerCase(), // 用户名不可变动，使用小写
         nickname: this.regform.nickname,
         password: this.regform.pass
       };
@@ -184,8 +183,13 @@ export default {
     onSubmit() {
       this.$refs['form'].validate(async (res) => {
         if (res) {
+          // 用户名不可变动，使用小写
+          let formData = {
+            name: this.form.name.toLowerCase(),
+            password: this.form.password
+          }
           // 发起登录请求
-          let { token, code, msg } = await userLogin(this.form);
+          let { token, code, msg } = await userLogin(formData);
           // 如果为-1，则登录失败，弹出警告信息
           if (code === -1) return this.$message({ message: msg, type: 'warning' });
           this.$message({ message: msg, type: 'success' });
