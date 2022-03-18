@@ -34,7 +34,7 @@
                 </div>
                 <div class="timerorlike">
                   <span class="timer">{{ item.create_time }}</span>
-                  <span @click="clickLike(item.commentId, $event)"><i class="iconfont  My-new-icondianzan"></i>999</span>
+                  <span @click="clickLike(item.id, index)"><i :class="['iconfont',  'My-new-icondianzan', {isLike:item.is_like}]"></i>{{item.like_count}}</span>
                   <span class="vertical">|</span>
                   <span @click="reply(item.id, null, null, index)">回复</span>
                   <span class="delete" v-if="thisNickName === '黄先森'" @click="handleDelect(item.id)">删除</span>
@@ -68,7 +68,13 @@
 <script>
 import ReplyItem from "./ReplyItem.vue";
 import globalBackTop from '@/assets/js/scrollTo.js';
-import { getArticleComment, sendComment, getArticleCommentCount, deleteComment } from '@/network/comment.js'
+import {
+  getArticleComment,
+  sendComment,
+  getArticleCommentCount,
+  deleteComment,
+  clickLike
+} from '@/network/comment.js'
 
 const placeholder = "请输入内容并按回车键发送";
 export default {
@@ -95,6 +101,8 @@ export default {
     return {
       commentArray: [],
       textarea: "",
+
+      like_count: 0,
 
       pageSize: 5,
       commentArrayCount: 20,
@@ -167,7 +175,7 @@ export default {
     // 获取文章评论
     async GetArticleComment(list, offset) {
       // this.articleId 为 0 则属于 网站留言
-      let { data } = await getArticleComment({ article_id: this.articleId, list, offset });
+      let { data } = await getArticleComment({ article_id: this.articleId, list, offset, username: sessionStorage.getItem('username') });
       this.commentArray = data;
       this.show3.length = this.commentArray.length;
       this.show3.fill(false);
@@ -179,6 +187,25 @@ export default {
       this.reply_nickname = null;
       this.replyUserId = null;
       this.placeholder = placeholder;
+    },
+
+    async clickLike(comment_id, index) {
+      let { code, msg, count } = await clickLike({ comment_id });
+      let message = {};
+      if (code === 200) {
+        this.commentArray[index].like_count = count.like_count;
+        this.commentArray[index].is_like = true;
+        message = {
+          message: msg,
+          type: "success",
+        }
+      } else {
+        message = {
+          message: msg,
+          type: "warning",
+        }
+      }
+      this.$message(message);
     },
 
     // 发送评论
@@ -388,5 +415,9 @@ export default {
 
 .transition-box {
   margin-bottom: 5px;
+}
+
+.isLike {
+  color: red;
 }
 </style>

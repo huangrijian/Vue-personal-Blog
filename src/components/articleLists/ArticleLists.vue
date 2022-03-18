@@ -27,7 +27,7 @@
                 <span class="author">{{item.author}}</span>
                 <span v-if="item.create_time" class="timer">{{item.create_time.slice(0,10)}}</span>
                 <span class="browse"><i class="el-icon-view"></i>577</span>
-                <span class="like"><i class="iconfont  My-new-icondianzan"></i>399</span>
+                <span class="like"><i class="iconfont  My-new-icondianzan"></i>{{item.like_count}}</span>
                 <el-button size="mini" type="primary" plain>阅读文章</el-button>
               </div>
             </div>

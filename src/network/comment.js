@@ -17,7 +17,6 @@ export function getArticleCommentCount(params) {
   })
 }
 
-
 export function sendComment(data) {
   return request({
     method: 'post',
@@ -31,5 +30,14 @@ export function deleteComment(data) {
     method: 'post',
     url: `${BASE_COMMENT_URL}/delete`,
     data,
+  })
+}
+
+// 点赞
+export function clickLike(data) {
+  return request({
+    method: 'post',
+    url: `${BASE_COMMENT_URL}/like`,
+    data
   })
 }

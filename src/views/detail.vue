@@ -8,7 +8,7 @@
       <article-contents :data="articleData" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
-        <el-button type="primary" round @click="isClick && like()"><i class="iconfont  My-new-icondianzan"></i>点赞（{{
+        <el-button type="primary" round @click="like"><i class="iconfont  My-new-icondianzan"></i>点赞（{{
             likeCount
           }}）</el-button>
         <el-button type="success" round @click="dialogVisible = true"><i class="iconfont My-new-icondashang"></i>打赏</el-button>
@@ -52,8 +52,6 @@ export default {
 
       likeCount: "",
 
-      isClick: true,
-
       dialogVisible: false,
 
       nickname: "",
@@ -76,9 +74,20 @@ export default {
             article_id: this.$route.params.id,
           })
           .then((res) => {
-            console.log(res.data.data[0]);
-            this.likeCount = res.data.data[0].like_count;
-            this.isClick = false;
+            let message = {};
+            if (res.data.code === 200) {
+              this.likeCount = res.data.count.like_count;
+              message = {
+                message: res.data.msg,
+                type: "success",
+              }
+            } else {
+              message = {
+                message: res.data.msg,
+                type: "warning",
+              }
+            }
+            this.$message(message);
           });
       } else {
         this.$message({
