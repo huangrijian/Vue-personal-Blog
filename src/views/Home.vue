@@ -31,7 +31,7 @@
 
 import BlogList from '../components/BlogList/BlogList.vue'
 import TitleBox from '../components/TitleBox/titleBox.vue'
-import { getAllArticle } from '@/network/home.js'
+import { getAllArticle } from '@/network/article.js'
 
 export default {
   name: 'Home',

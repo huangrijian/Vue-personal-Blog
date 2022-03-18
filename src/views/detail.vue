@@ -29,7 +29,7 @@ import location from "../components/Location/location.vue";
 import ArticleContents from "../components/ArticleContents/ArticleContents.vue";
 import Cookie from "js-cookie";
 import SwitchStyle from "@/components/switchStyle/SwitchStyle.vue";
-import { getArticleDetail } from '@/network/detail.js'
+import { getArticleDetail } from '@/network/article.js'
 export default {
   components: {
     comment,
