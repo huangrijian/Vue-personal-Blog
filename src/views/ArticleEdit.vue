@@ -5,13 +5,17 @@
     </div>
     <div class="edit_title">标题</div>
     <el-input v-model="title" placeholder="请输入标题"></el-input>
+    <div class="edit_title">简介</div>
+    <el-input v-model="brief" placeholder="请输入简介"></el-input>
     <!-- 分类 -->
-    <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
-      {{ tag }}
-    </el-tag>
-    <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
-    </el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+    <div :style="{ padding:'20px 0' }">
+      <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
+        {{ tag }}
+      </el-tag>
+      <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
+      </el-input>
+      <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+    </div>
     <!-- 上传封面 -->
     <div>
       <el-upload class="avatar-uploader" :action="`${baseUrl}api/article/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" name="head_img">
@@ -42,13 +46,6 @@ export default {
       title: "",
       content: "",
       baseUrl: baseUrl,
-      class01: "",
-      class02: "",
-      class03: "",
-
-      classid_01: "",
-      classid_02: "",
-      classid_03: "",
 
       imageUrl: "",
       defaultAvatar: require("@/assets/img/avatar.jpg"),
@@ -61,6 +58,8 @@ export default {
 
       id: this.$route.params.id,
       type: this.$route.params.type,
+
+      brief: ''
     };
   },
   methods: {
@@ -94,10 +93,9 @@ export default {
           title: this.title,
           content: this.content,
           article_id: this.$route.params.id,
-
           classify: this.dynamicTags,
-
           pic_url: this.imageUrl,
+          brief: this.brief
         };
         this.$http.post(`/api/${this.type}/update`, data).then((res) => {
           if (res.data.code === 0) {
@@ -111,6 +109,7 @@ export default {
           content: this.content,
           pic_url: this.imageUrl,
           classify: this.dynamicTags,
+          brief: this.brief
         };
         this.$http.post(`/api/${this.type}/addArticle`, data).then((res) => {
           if (res.data.code === 0) {
@@ -126,6 +125,7 @@ export default {
         .then((res) => {
           if (res.data.code === 0) {
             this.title = res.data.data.title;
+            this.brief = res.data.data.brief;
             this.content = res.data.data.content;
             // 获取文章封面pic_url:this.imageUrl
             this.imageUrl = res.data.data.pic_url;
