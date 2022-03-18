@@ -5,15 +5,18 @@
         <div class="img">
           <img v-lazy="item.pic_url" alt="">
         </div>
-        <div class="title">{{item.title}}</div>
-        <div class="brief">{{item.content}}</div>
-        <div class="tag">
-         <el-tag :key="index" v-for="(items,index) in item.classify" size="small">{{items}}</el-tag>
+        <div :style="{display:'flex'}">
+          <img :style="{width:20+'px', marginRight:5+'px'}" src="../../assets/icon/活动.svg">
+          <div class="title press">{{item.title}}</div>
         </div>
+        <div class="brief">{{item.brief}}</div>
         <div class="Item-end">
           <span>+文章阅读</span>
           <span class="timer">{{item.create_time | timer()}}</span>
-          <span class="like"><i class="iconfont  My-new-icondianzan"></i>{{item.like_count}}</span>
+          <div :style="{display:'flex', alignItems:'center'}">
+            <img :style="{width:20+'px'}" src="../../assets/icon/赞评.svg">
+            <span class="like_count">{{item.like_count}}</span>
+          </div>
         </div>
       </li>
     </ul>
@@ -21,26 +24,26 @@
 </template>
 
 <script>
-  export default {
-    props:['AllArticle'],
-    filters:{
-      timer(val){
-        return val.slice(0,10)
-      },
+export default {
+  props: ['AllArticle'],
+  filters: {
+    timer(val) {
+      return val.slice(0, 10)
+    },
 
-    },
-    data() {
-      return {
-      }
-    },
-    methods:{
-          // 去文章详情
-      GotoArticleDetail(id){
-        this.$router.push({name:'detail',params: {id}});
-        this.$store.commit('setArticleId',id);
-      }
-    },
-  }
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
+    // 去文章详情
+    GotoArticleDetail(id) {
+      this.$router.push({ name: 'detail', params: { id } });
+      this.$store.commit('setArticleId', id);
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -54,7 +57,9 @@
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 5px;
-    border: 1px solid rgba(153, 149, 149,0.3);
+    border: 1px solid rgba(153, 149, 149, 0.3);
+    flex-direction: column;
+    justify-content: space-between;
     .img {
       width: 100%;
       height: 150px;
@@ -66,25 +71,22 @@
         position: relative;
         transition: all 0.6s;
       }
-      img:hover{
+      img:hover {
         transform: scale(1.2);
       }
-
     }
-    .tag {
-      margin: 10px 0;
-     .el-tag {
-       margin-right: 10px;
-     }
-    }
-
     .title {
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 700;
       margin: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .brief {
       font-size: 14px;
+      line-height: 22px;
+      height: 65px;
       margin-bottom: 15px;
       color: rgb(107, 107, 107);
       display: -webkit-box;
@@ -92,28 +94,45 @@
       -webkit-line-clamp: 3;
       overflow: hidden;
     }
-    .Item-end {
-      .like {
-        float: right;
-      }
-    }
     .timer {
       font-size: 14px;
       color: rgb(107, 107, 107);
     }
-    .Item-end span:first-of-type{
-      color: rgb(29, 202, 218);
-      margin-right: 10px;
+
+    .Item-end {
+      height: 25px;
+      display: flex;
+      align-items: center;
+      color: skyblue;
+      justify-content: space-between;
+      .like_count {
+        color: gray;
+        font-weight: 700;
+      }
     }
   }
-  .liItem:hover{
+  .liItem:hover {
     box-sizing: border-box;
-   
-    box-shadow: 0px 2px 10px 3px rgba(179, 177, 177, 0.5); 
+
+    box-shadow: 0px 2px 10px 3px rgba(179, 177, 177, 0.5);
   }
 }
 
 .iconfont {
   margin-right: 3px;
+}
+
+/* 两种字体样式风格 */
+.press {
+  color: transparent;
+  background-color: black;
+  text-shadow: rgba(255, 255, 255, 0.5) 0 5px 6px,
+    rgba(255, 255, 255, 0.2) 1px 3px 3px;
+  -webkit-background-clip: text;
+}
+.stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(98, 98, 98);
+  letter-spacing: 0.04em;
 }
 </style>

@@ -19,7 +19,7 @@
               <img v-lazy="item.pic_url" alt="">
             </div>
             <div class="describe">
-              <p>{{item.content}}</p>
+              <p>{{item.brief}}</p>
               <div class="tag">
                 <el-tag :key="index" v-for="(items,index) in item.classify" size="small">{{items}}</el-tag>
               </div>
