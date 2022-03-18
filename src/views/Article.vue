@@ -54,6 +54,7 @@
 
 <script>
 import Authority from "@/components/article/authority.vue";
+import { getMyArticleList } from '@/network/article'
 import { getSpeechList } from '@/network/speech'
 export default {
   data() {
@@ -128,14 +129,9 @@ export default {
           });
         });
     },
-    getMyBlogList() {
-      this.$http.get("/api/article/myList").then((res) => {
-
-        if (res.data.code === 0) {
-          this.articleList = res.data.data;
-          console.log(this.articleList);
-        }
-      });
+    async getMyBlogList() {
+      let { data } = await getMyArticleList()
+      this.articleList = data;
     },
   },
   computed: {
