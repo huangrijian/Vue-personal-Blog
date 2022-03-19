@@ -77,7 +77,6 @@ import {
 
 const placeholder = "请输入内容并按回车键发送";
 export default {
-  inject: ["reload"],
   props: {
     articleId: {
       type: Number,
@@ -164,7 +163,6 @@ export default {
         type: "success",
         message: `评论删除成功!`,
       });
-      // this.reload();
       this.initialization(this.pageSize, this.offset, this.articleId);
     },
 

@@ -12,7 +12,6 @@ import ArticleLists from '../components/articleLists/ArticleLists.vue';
 import { getSingleclassifyRes, getAllCount, searchArticle, getSinglePageArticleList } from '@/network/article';
 export default {
   name: 'List',
-  inject: ['reload'],
   components: { ArticleLists },
   data() {
     return {
