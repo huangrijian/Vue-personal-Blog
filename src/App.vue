@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Introduce />
     <!-- 返回顶部 -->
     <back-top></back-top>
     <!-- 整个视图 -->
@@ -13,8 +14,10 @@
   </div>
 </template>
 <script>
+import { Notification } from 'element-ui';
 import BackTop from "@/components/backTop/BackTop.vue";
 import ActionBar from "@/components/actionBar/ActionBar.vue";
+import Introduces from './html.js';
 export default {
   components: { BackTop, ActionBar },
   provide() {
@@ -46,6 +49,13 @@ export default {
       // 加载页面完后移除加载动画
       document.body.removeChild(document.getElementById("Loading"));
     }, 1000);
+
+    Notification({
+      // title: 'HTML 片段',
+      duration: 8000,
+      dangerouslyUseHTMLString: true,
+      message: Introduces
+    })
   },
 };
 </script>
@@ -67,5 +77,9 @@ export default {
     width: 100%;
     height: 100%;
   }
+}
+
+.el-notification {
+  z-index: 999999 !important;
 }
 </style>
