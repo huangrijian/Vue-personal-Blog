@@ -29,18 +29,20 @@
     </div>
     <div class="save_btn">
       <el-button type="primary" @click="save">保存</el-button>
-      <!-- <el-button type="primary" v-if="grade === '1'" @click="save(1)"
-        >保存为生活说说</el-button
-      > -->
     </div>
   </div>
 </template>
 
 <script>
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 import { baseUrl } from "@/config/config";
 import { uploadPhoto } from '@/network/article';
 
 export default {
+  components: {
+    mavonEditor
+  },
   data() {
     return {
       title: "",

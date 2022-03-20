@@ -14,14 +14,8 @@ import '@/assets/scss/loadding.scss'
 import '@/assets/scss/mobile.scss'
 // 引入动画函数
 import animation from '@/tool/animation.js'
-Vue.prototype.$animation = animation;
-
-// 引入文本编辑器
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-Vue.use(mavonEditor)
-
 import 'wowjs/css/libs/animate.css'
+Vue.prototype.$animation = animation;
 
 // 引入图片懒加载
 import VueLazyload from 'vue-lazyload'

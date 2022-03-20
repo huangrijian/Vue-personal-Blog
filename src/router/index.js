@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 import store from '../store'
 
 // 使用懒加载的方式引入
+// 首屏代码不要异步加载
+import Home from '@/views/Home.vue'
+// 异步加载非首屏页面
 const CommonLayout = () => import('@/components/commonLayout.vue')
-const home = () => import('@/views/Home.vue')
 const login = () => import('@/views/Login.vue')
 const detail = () => import('@/views/detail.vue')
 const personal = () => import('@/views/Personal.vue')
@@ -37,7 +39,7 @@ const routes = [
       {
         path: '/home',
         name: 'home',
-        component: home
+        component: Home
       },
       {
         path: '/Lists',

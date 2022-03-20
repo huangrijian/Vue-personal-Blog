@@ -19,7 +19,7 @@
             <el-button @click="isRootEmoji = !isRootEmoji">😊🤩😉🤣😁😘</el-button>
           </div>
           <!-- 表情框 -->
-          <Picker v-show="isRootEmoji" class="transition-box" title="请选择需要的emoji表情包" :showSearch="false" :showCategories="false" :showSkinTones="false" :style="{width:'50%',height:'295px'}" :include="['people']" @select="(e)=>{ addEmoji(e,'textarea')}" />
+          <Emoji v-if="isRootEmoji" class="transition-box" title="请选择需要的emoji表情包" :showSearch="false" :showCategories="false" :showSkinTones="false" :style="{width:'50%',height:'295px'}" :include="['people']" @select="(e)=>{ addEmoji(e,'textarea')}" />
         </div>
 
         <!-- 评论区 -->
@@ -58,7 +58,7 @@
                       <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea02" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea02)">
                       </el-input>
                       <el-button @click="showEmoji(index)">😊🤩😉</el-button>
-                      <Picker class="transition-box" v-show="SubCommentEmojiArr[index]" :showPreview="false" :showSearch="false" :showCategories="false" :showSkinTones="false" :style="{width:'50%',height:'295px'}" :include="['people']" @select="(e)=>{ addEmoji(e,'textarea02')}" />
+                      <Emoji class="transition-box" v-if="SubCommentEmojiArr[index]" :showPreview="false" :showSearch="false" :showCategories="false" :showSkinTones="false" :style="{width:'50%',height:'295px'}" :include="['people']" @select="(e)=>{ addEmoji(e,'textarea02')}" />
                     </div>
                   </div>
                 </el-collapse-transition>
@@ -79,9 +79,10 @@
 </template>
 
 <script>
-import { Picker } from "emoji-mart-vue";
 import ReplyItem from "./ReplyItem.vue";
 import globalBackTop from '@/assets/js/scrollTo.js';
+// 异步加载
+const Emoji = () => import('@/components/Emoji/Emoji.vue');
 import {
   getArticleComment,
   sendComment,
@@ -100,7 +101,7 @@ export default {
   },
   components: {
     ReplyItem,
-    Picker
+    Emoji
   },
   watch: {
     articleId(newVal) {
