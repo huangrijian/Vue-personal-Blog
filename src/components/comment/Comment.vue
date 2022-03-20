@@ -5,17 +5,27 @@
         <span class="login" @click="GotoLogin">登录</span>留言吧
       </div>
       <div class="bottom">
+        <!-- 留言数 -->
         <div class="dec">
           <span>共<span class="commentTotal">{{ commentArrayCount }}</span>条留言</span>
         </div>
-        <div class="CommentInput">
-          <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" />
-          <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea)">
-          </el-input>
+        <!-- 根节点评论框 -->
+        <div class="CommentBox">
+          <!-- 评论框 -->
+          <div class="CommentInput">
+            <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" />
+            <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea)" @focus="focusHandle">
+            </el-input>
+            <el-button @click="isRootEmoji = !isRootEmoji">😊🤩😉🤣😁😘</el-button>
+          </div>
+          <!-- 表情框 -->
+          <Picker v-show="isRootEmoji" class="transition-box" title="请选择需要的emoji表情包" :showSearch="false" :showCategories="false" :showSkinTones="false" :style="{width:'50%',height:'295px'}" :include="['people']" @select="(e)=>{ addEmoji(e,'textarea')}" />
         </div>
+
         <!-- 评论区 -->
         <ul class="Commentarea">
           <h3>热门留言</h3>
+          <!-- 根评论项 -->
           <li :key="index" v-for="(item, index) in commentArray">
             <div class="Commentareabox">
               <div class="pic">
@@ -35,20 +45,24 @@
                     {{item.like_count}}
                   </span>
                   <span class="vertical">|</span>
-                  <span @click="reply(item.id, null, null, index)">回复</span>
+                  <span @click="reply(item.id, null, null, index, 'default')">
+                    <span v-show="SubCommentContentArr[index]">收起</span>
+                    <span v-show="!SubCommentContentArr[index]">回复</span>
+                  </span>
                   <span class="delete" v-if="thisNickName === '黄先森'" @click="handleDelect(item.id)">删除</span>
                 </div>
                 <el-collapse-transition>
-                  <div v-show="show3[index]">
-                    <div class="transition-box">
-                      <div style="display:flex; align-items: center;">
-                        <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" style="width:40px; marginRight:15px" />
-                        <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea)">
-                        </el-input>
-                      </div>
+                  <div v-show="SubCommentContentArr[index]">
+                    <div class="replyBox" style="display:flex; align-items: center;">
+                      <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" style="width:40px; marginRight:15px" />
+                      <el-input type="textarea" :rows="3" :placeholder="placeholder" v-model="textarea02" class="inputbox" size="350" maxlength="350" resize="none" @keyup.13.native="SendComment(textarea02)">
+                      </el-input>
+                      <el-button @click="showEmoji(index)">😊🤩😉</el-button>
+                      <Picker class="transition-box" v-show="SubCommentEmojiArr[index]" :showPreview="false" :showSearch="false" :showCategories="false" :showSkinTones="false" :style="{width:'50%',height:'295px'}" :include="['people']" @select="(e)=>{ addEmoji(e,'textarea02')}" />
                     </div>
                   </div>
                 </el-collapse-transition>
+                <!-- 回复输入框 -->
                 <ReplyItem :ReplyItem="item.son" :reply="reply" :index="index" />
               </div>
             </div>
@@ -65,6 +79,7 @@
 </template>
 
 <script>
+import { Picker } from "emoji-mart-vue";
 import ReplyItem from "./ReplyItem.vue";
 import globalBackTop from '@/assets/js/scrollTo.js';
 import {
@@ -75,7 +90,7 @@ import {
   clickLike
 } from '@/network/comment.js'
 
-const placeholder = "请输入内容并按回车键发送";
+const PLACEHOLDER = "请输入内容并按回车键发送";
 export default {
   props: {
     articleId: {
@@ -85,6 +100,7 @@ export default {
   },
   components: {
     ReplyItem,
+    Picker
   },
   watch: {
     articleId(newVal) {
@@ -97,30 +113,44 @@ export default {
   },
   data() {
     return {
-      commentArray: [],
-      textarea: "",
+      isRootEmoji: false, //根表情框显示的`控制逻辑`
 
-      like_count: 0,
+      commentArray: [],//当前页的评论数组
 
-      pageSize: 5,
-      commentArrayCount: 20,
-      currentPage: 1,
+      textarea: "", // 根评论内容
+      textarea02: "", //子评论内容
+
+      pageSize: 5,//当前页面显示几条评论
+      commentArrayCount: 20,//全部评论数量
+      currentPage: 1,//当前第几页的页数
 
       imageUrl: sessionStorage.getItem("avatar"),
       defaultAvatar: require("@/assets/img/pl.jpg"),
 
       thisNickName: sessionStorage.getItem("nickname"),
 
-      parent_cm_id: -1,
-      replyNickname: null,
-      replyUserId: null,
+      parent_cm_id: -1, // 根节点评论id
+      replyNickname: null, //被@人昵称
+      replyUserId: null, //被@人id
 
-      placeholder: placeholder,
+      placeholder: PLACEHOLDER, //占位符
 
-      show3: [],
+      SubCommentContentArr: [],//子评论内容框
+      SubCommentEmojiArr: [], //子评论emoji框
     };
   },
   methods: {
+    // 跟评论框获取到焦点时初始化数据
+    focusHandle() {
+      this.parent_cm_id = -1;
+      this.reply_nickname = null;
+      this.replyUserId = null;
+      this.placeholder = PLACEHOLDER;
+      this.SubCommentContentArr.splice(0, 5, false, false, false, false, false);
+      this.SubCommentEmojiArr.splice(0, 5, false, false, false, false, false);
+
+    },
+
     getElementTop(element) {
       var actualTop = element.offsetTop;
       var current = element.offsetParent;
@@ -132,17 +162,31 @@ export default {
 
       return actualTop;
     },
-    reply(parent_cm_id, replyNickname = null, replyUserId = null, index) {
-      this.showInputBox(index);
+    reply(parent_cm_id, replyNickname = null, replyUserId = null, index, type) {
+
+      this.showInputBox(index, type);
       this.SaveReplyData(parent_cm_id, replyNickname, replyUserId);
       window.scrollTo({
-        top: this.getElementTop(document.querySelectorAll(".CommentTitle")[index]),
+        top: this.getElementTop(document.querySelectorAll(".CommentTitle")[index]) - 200,
         behavior: "smooth",
       });
     },
-    showInputBox(index) {
-      this.show3.fill(false);
-      this.show3.splice(index, 1, !this.show3[index]);
+    showInputBox(index, type) {
+      // @模式且当前回复框已经打开
+      if (type === '@' && this.SubCommentContentArr[index]) return;
+
+      this.textarea02 = '';
+      // 先取反
+      let flag = !this.SubCommentContentArr[index]
+      // 再重置
+      this.SubCommentContentArr.fill(false);
+      // 最后替换
+      this.SubCommentContentArr.splice(index, 1, flag);
+    },
+    showEmoji(index) {
+      let flag = !this.SubCommentEmojiArr[index]
+      this.SubCommentEmojiArr.fill(false);
+      this.SubCommentEmojiArr.splice(index, 1, flag);
     },
     SaveReplyData(parent_cm_id, replyNickname, replyUserId) {
       this.replyNickname = replyNickname;
@@ -166,6 +210,9 @@ export default {
       this.initialization(this.pageSize, this.offset, this.articleId);
     },
 
+    addEmoji(e, type) {
+      this[type] += e.native;
+    },
     GotoLogin() {
       this.$router.push({ name: "login" });
     },
@@ -174,16 +221,20 @@ export default {
       // this.articleId 为 0 则属于 网站留言
       let { data } = await getArticleComment({ article_id: this.articleId, list, offset, username: sessionStorage.getItem('username') });
       this.commentArray = data;
-      this.show3.length = this.commentArray.length;
-      this.show3.fill(false);
+      this.SubCommentContentArr.length = this.commentArray.length;
+      this.SubCommentEmojiArr.length = this.commentArray.length;
+      this.SubCommentContentArr.fill(false);
+      this.SubCommentEmojiArr.fill(false);
     },
     // 初始化评论框的数据
-    InitializeReplyAndTextareaData() {
+    InitializeInputData() {
       this.textarea = "";
+      this.textarea02 = "";
       this.parent_cm_id = -1;
       this.reply_nickname = null;
       this.replyUserId = null;
-      this.placeholder = placeholder;
+      this.placeholder = PLACEHOLDER;
+      this.isRootEmoji = false;
     },
 
     async clickLike(comment_id, index) {
@@ -225,7 +276,7 @@ export default {
         await sendComment(data);
         this.getCommentCount(this.articleId);
         this.GetArticleComment(this.pageSize, this.offset);
-        this.InitializeReplyAndTextareaData();
+        this.InitializeInputData();
       } else {
         this.$message({
           message: "请登录后进行操作",
@@ -302,16 +353,26 @@ export default {
   .dec {
     margin-bottom: 25px;
   }
-  .CommentInput {
-    display: flex;
-    margin-bottom: 55px;
-    img {
-      width: 75px;
-      height: 75px;
-      margin: 0 15px;
-      border-radius: 5px;
+  .CommentBox {
+    position: relative;
+    .CommentInput {
+      display: flex;
+      margin-bottom: 55px;
+      img {
+        width: 75px;
+        height: 75px;
+        margin: 0 15px;
+        border-radius: 5px;
+      }
+    }
+    .transition-box {
+      margin-bottom: 5px;
+      position: absolute;
+      top: 85px;
+      right: 15px;
     }
   }
+
   .pagination {
     display: flex;
     justify-content: center;
@@ -417,11 +478,22 @@ export default {
   }
 }
 
-.transition-box {
-  margin-bottom: 5px;
-}
-
 .isLike {
   color: red;
+}
+
+/deep/.emoji-mart-category-label {
+  display: none;
+}
+
+.replyBox {
+  position: relative;
+  height: 120px;
+  .transition-box {
+    margin-bottom: 5px;
+    position: absolute;
+    top: 85px;
+    right: 15px;
+  }
 }
 </style>

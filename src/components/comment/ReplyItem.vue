@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="ReplyItem" :key="indexs" v-for="(items, indexs) in ReplyItem">
-      <img
-        :src="items.head_img"
-        alt=""
-      />
+      <img :src="items.head_img" alt="" />
       <div class="ReplyMainBox">
         <div style="display: flex; align-items: center; flexWrap: wrap">
           <span style="fontWeight: 600;">{{ items.nickname }}</span>
@@ -19,12 +16,9 @@
         </div>
         <div style="display: flex; justifyContent: space-between; fontSize:14px">
           <span>{{ items.create_time }}</span>
-          <span
-            @click="
-              reply(items.parent_cm_id, items.nickname, items.user_id, index)
-            "
-            style="color:rgb(64, 158, 255); cursor:pointer;"
-          >
+          <span @click="
+              reply(items.parent_cm_id, items.nickname, items.user_id, index, '@')
+            " style="color:rgb(64, 158, 255); cursor:pointer;">
             &nbsp;&nbsp;&nbsp;回复
           </span>
         </div>
@@ -64,15 +58,15 @@ export default {
     justify-content: space-between;
     width: 100%;
     .master {
-    width: 40px;
-    height: 20px;
-    border: 1px solid #056a99;
-    border-radius: 10px;
-    font-size: 14px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    margin: 0 3px;
+      width: 40px;
+      height: 20px;
+      border: 1px solid #056a99;
+      border-radius: 10px;
+      font-size: 14px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin: 0 3px;
     }
   }
 }
