@@ -1,6 +1,6 @@
 const HTML = `
 <style>
-.root {
+#root {
   width: 280px;
   display: flex;
   flex-direction: column;
@@ -11,12 +11,12 @@ const HTML = `
   font-wigth:700;
   margin:10px
 }
-li {
+#root ul li {
   font-size:18px;
   margin:10px
 }
 </style>
-<div class="root">
+<div id="root">
 <div class="title">欢迎来到我的个人小站🎈🎈</div>
 <div class="title">已完成的功能如下🤣</div>
 <ul>
