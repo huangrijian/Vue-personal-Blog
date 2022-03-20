@@ -172,9 +172,10 @@ export default {
       });
     },
     showInputBox(index, type) {
-      // @模式且当前回复框已经打开
+      //如果 当前是@模式且当前回复框已经打开则跳过
       if (type === '@' && this.SubCommentContentArr[index]) return;
-
+      // 否则打开/关闭回复框
+      this.placeholder = PLACEHOLDER;
       this.textarea02 = '';
       // 先取反
       let flag = !this.SubCommentContentArr[index]
@@ -390,7 +391,6 @@ export default {
     border-bottom: 1px dashed rgb(204, 204, 204);
     .Commentareabox {
       padding: 10px 0;
-      overflow: hidden;
       display: flex;
       .pic,
       .side {
