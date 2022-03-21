@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Introduce />
     <!-- 返回顶部 -->
     <back-top></back-top>
     <!-- 整个视图 -->
