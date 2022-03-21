@@ -8,7 +8,7 @@
     </div>
     <!-- 具体文章内容 -->
     <div class="detail">
-      <mavon-editor v-model="data.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" :boxShadow="false">
+      <mavon-editor v-model="data.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" :boxShadow="false" :ishljs="true" :codeStyle="codeStyle">
       </mavon-editor>
     </div>
   </div>
@@ -19,7 +19,7 @@
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 export default {
-  props: ['data'],
+  props: ['data', 'codeStyle'],
   components: {
     mavonEditor
   },

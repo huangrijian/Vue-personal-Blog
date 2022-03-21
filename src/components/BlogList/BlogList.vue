@@ -121,18 +121,4 @@ export default {
 .iconfont {
   margin-right: 3px;
 }
-
-/* 两种字体样式风格 */
-.press {
-  color: transparent;
-  background-color: black;
-  text-shadow: rgba(255, 255, 255, 0.5) 0 5px 6px,
-    rgba(255, 255, 255, 0.2) 1px 3px 3px;
-  -webkit-background-clip: text;
-}
-.stroke {
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(98, 98, 98);
-  letter-spacing: 0.04em;
-}
 </style>

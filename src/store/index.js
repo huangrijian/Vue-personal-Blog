@@ -31,7 +31,7 @@ export default new Vuex.Store({
 
     bgimgUrl: sessionStorage.getItem('bgimgUrl') || require('../assets/img/bgdm04.jpg'),
 
-    codeStyle: sessionStorage.getItem('codeStyle'),
+    codeStyle: sessionStorage.getItem('codeStyle') || 'shades-of-purple',
 
     searchResCount: sessionStorage.getItem('searchResCount')
   },

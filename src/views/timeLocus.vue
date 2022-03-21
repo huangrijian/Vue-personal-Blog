@@ -1,10 +1,14 @@
 <template>
   <div class="block wow slideInLeft">
+    <div class="selectCodeBox">
+      <code-style-select @OnCodeStyle="getCodeStyle" />
+    </div>
+
     <el-timeline :reverse="true">
       <el-timeline-item :timestamp="item.create_time" placement="top" :key="index" v-for="(item,index) in AllArticle">
         <el-card>
           <span class="title">{{item.title}}</span>
-          <mavon-editor v-model="item.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" codeStyle="nord" :boxShadow="false" :ishljs="true">
+          <mavon-editor v-model="item.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" :codeStyle="codeStyle" :boxShadow="false" :ishljs="true">
           </mavon-editor>
           <p v-if="item.create_time">黄先森 {{item.create_time}}</p>
         </el-card>
@@ -14,11 +18,10 @@
 </template>
 
 <script>
-
+import CodeStyleSelect from '@/components/CodeStyleSelect/CodeStyleSelect.vue'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { getSpeech } from '@/network/speech';
-
 export default {
   name: 'timeLocus',
   inject: ['reload'],
@@ -26,6 +29,7 @@ export default {
     return {
       AllArticle: [],
       state: this.$store.state.timeLocus,
+      codeStyle: this.$store.state.codeStyle
     }
   },
   methods: {
@@ -33,10 +37,14 @@ export default {
     async getSpeech() {
       let { data } = await getSpeech()
       this.AllArticle = data
+    },
+    getCodeStyle(newVal) {
+      this.codeStyle = newVal
     }
   },
   components: {
-    mavonEditor
+    mavonEditor,
+    CodeStyleSelect
   },
   created() {
     this.getSpeech();
@@ -59,5 +67,10 @@ export default {
 }
 .content {
   margin: 20px 0;
+}
+.selectCodeBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 </style>

@@ -2,10 +2,12 @@
   <div>
     <div class="block wow slideInLeft" v-loading="loading">
       <!-- 您的位置 -->
-      <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft"></location>
+      <location Tit1="首页" Tit2="技术博文" class="wow slideInLeft">
+        <code-style-select @OnCodeStyle="getCodeStyle" />
+      </location>
       <!-- <SwitchStyle /> -->
       <!-- 具体文章 -->
-      <article-contents :data="articleData" class="wow slideInLeft"></article-contents>
+      <article-contents :codeStyle="codeStyle" :data="articleData" class="wow slideInLeft"></article-contents>
       <!-- 点赞/打赏 -->
       <div class="likeBox">
         <el-button type="primary" round @click="like"><i class="iconfont  My-new-icondianzan"></i>点赞（{{
@@ -27,6 +29,7 @@
 import comment from "@/components/comment/Comment.vue";
 import location from "../components/Location/location.vue";
 import ArticleContents from "../components/ArticleContents/ArticleContents.vue";
+import CodeStyleSelect from '@/components/CodeStyleSelect/CodeStyleSelect.vue'
 import Cookie from "js-cookie";
 import SwitchStyle from "@/components/switchStyle/SwitchStyle.vue";
 import { getArticleDetail } from '@/network/article.js'
@@ -36,6 +39,7 @@ export default {
     location,
     ArticleContents,
     SwitchStyle,
+    CodeStyleSelect
   },
   // 同一组件路由动态变化时被调用 /detail/168 -> /detail/204
   beforeRouteUpdate(to, from, next) {
@@ -55,9 +59,14 @@ export default {
       dialogVisible: false,
 
       nickname: "",
+
+      codeStyle: this.$store.state.codeStyle
     };
   },
   methods: {
+    getCodeStyle(newVal) {
+      this.codeStyle = newVal
+    },
     GetArticleDetail(id) {
       getArticleDetail({ article_id: id }).then(({ data }) => {
         this.articleData = data;
