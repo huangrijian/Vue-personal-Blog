@@ -26,6 +26,7 @@ export function request(config) {
   instance.interceptors.response.use(res => {
     return res.data
   }, ({ response }) => {
+    if (!response) return alert(`网络请求未响应`)
     const URL = response.config.baseURL + response.config.url
     if (response.status === 401) alert(`${URL}---401错误---请求未通过认证`)
     if (response.status === 404) alert(`${URL}---404错误---找不到资源`)
