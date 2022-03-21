@@ -17,11 +17,26 @@
       <div class="wrapper marginTop" v-else>
         <el-row :gutter="10" class="head">
           <el-col :lg="5" :xl="5">
-            <div class="grid-content bg-purple-light synopsis" ref="sidebar">
+            <div class="grid-content bg-purple-light synopsis" style="margin-right: 6px;" ref="sidebar">
               <!-- 左侧边栏 -->
               <aside class="wow slideInRight">
                 <!-- 文章时间轴 -->
                 <TimerShaft />
+                <LickDog style="margin-top:20px">
+                  <template v-slot:title>
+                    <img style="width:25px" src="../assets/img/dog.svg">
+                    <span style="margin-left:5px">舔狗日记</span>
+                  </template>
+                  <template v-slot:pic>
+                    <img src="~@/assets/img/1111.png" alt="">
+                  </template>
+                  <template v-slot:content>
+                    {{diary}}
+                  </template>
+                  <template v-slot:click>
+                    <img @click="nextDiary" style="width:25px" src="../assets/img/dog.svg">
+                  </template>
+                </LickDog>
               </aside>
             </div>
           </el-col>
@@ -42,7 +57,22 @@
                 <personal-details class="wow slideInRight maginbot"></personal-details>
                 <music class="maginbot wow slideInLeft" data-wow-delay="0.2s" />
                 <tally class="maginbot"></tally>
-                <LickDog />
+                <HotSearch :newslist="newslist" />
+                <LickDog style="margin-top:20px">
+                  <template v-slot:title>
+                    <img style="width:25px" src="../assets/img/jitan.svg">
+                    <span style="margin-left:5px">心灵毒药</span>
+                  </template>
+                  <template v-slot:pic>
+                    <img src="~@/assets/img/fc.gif" alt="">
+                  </template>
+                  <template v-slot:content>
+                    {{content}}
+                  </template>
+                  <template v-slot:click>
+                    <img @click="nextContent" style="width:25px" src="../assets/img/jitan.svg">
+                  </template>
+                </LickDog>
               </aside>
             </div>
           </el-col>
@@ -69,7 +99,9 @@ import RankingList from "./sidebar/rankingList.vue";
 import CheckBox from "@/components/checkbox/checkbox.vue";
 import TimerShaft from "@/components/timerShaft/TimerShaft.vue";
 import LickDog from "./sidebar/LickDog.vue";
-
+import HotSearch from "@/components/HotSearch/HotSearch.vue";
+const DIARY = '你说你想买AJ，今天我去了叔叔的口罩厂做了一天的打包。拿到了两百块钱，加上我这几天省下的钱刚好能给你买一个鞋盒。即没有给我自己剩下一分钱，但你不用担心，因为厂里包吃包住。对了打包的时候，满脑子都是你，想着你哪天突然就接受我的橄榄枝了呢。而且今天我很棒呢，主管表扬我很能干，其实也有你的功劳啦，是你给了我无穷的力量。今天我比昨天多想你一点，比明天少想你一点。'
+const CONTENT = '当你觉得自己不行的时候，就走马路上走走，这样你就是一个行人了。'
 export default {
   name: "commonLayout",
   components: {
@@ -82,14 +114,61 @@ export default {
     RankingList,
     CheckBox,
     LickDog,
-    TimerShaft
+    TimerShaft,
+    HotSearch
+  },
+  data() {
+    return {
+      content: '',
+      diary: '',
+      newslist: []
+    }
   },
   computed: {
     isPure() {
       return this.$store.state.isPure;
     },
   },
-};
+  methods: {
+    async nextContent() {
+      const url = 'http://api.tianapi.com/dujitang/index';
+      const key = 'f5a89e80e1b532e8966c393f22320dea'
+      try {
+        let { data } = await this.$http.get(url, { params: { key } })
+        this.content = data.newslist ? data.newslist[0].content : CONTENT;
+      } catch (error) {
+        this.content = CONTENT
+      }
+    },
+    async nextDiary() {
+      const url = 'http://api.tianapi.com/txapi/tiangou/index';
+      const key = 'f5a89e80e1b532e8966c393f22320dea'
+      try {
+        let { data } = await this.$http.get(url, { params: { key } })
+        this.diary = data.newslist ? data.newslist[0] : DIARY;
+      } catch (error) {
+        this.context = DIARY
+      }
+    },
+    async getHotSearch() {
+      const url = 'http://api.tianapi.com/networkhot/index';
+      const key = 'f5a89e80e1b532e8966c393f22320dea'
+      let res = await this.$http.get(url, {
+        params: {
+          key
+        }
+      })
+      this.newslist = res.data.newslist.slice(0, 9)
+    }
+  },
+  created() {
+    this.nextContent();
+    this.nextDiary();
+    this.getHotSearch();
+  }
+
+}
+
 </script>
 
 <style scoped lang="scss">
