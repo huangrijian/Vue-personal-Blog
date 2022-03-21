@@ -152,7 +152,7 @@ export default {
 }
 
 .main {
-  padding: 20px !important;
+  padding: 15px !important;
   background-color: white !important;
 }
 

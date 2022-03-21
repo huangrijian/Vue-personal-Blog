@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import scrollTo from '../assets/js/scrollTo.js';
 import ArticleLists from '../components/articleLists/ArticleLists.vue';
 import { getSingleclassifyRes, getAllCount, searchArticle, getSinglePageArticleList } from '@/network/article';
 export default {
@@ -66,6 +67,8 @@ export default {
           this.getOnlyClassifyArticlePage(curPage, this.pageSize);
           break;
       }
+      // 跳转顶部
+      scrollTo();
     },
     // 默认入口 --- 获取默认的文章分页
     async GetAllArticle(curPage, pageSize) {
