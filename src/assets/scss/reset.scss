@@ -112,6 +112,11 @@ ol,
 ul {
   list-style: none;
 }
+// markdown样式的不可被全局覆盖
+.markdown-body ol,
+.markdown-body ul {
+  list-style-type: disc;
+}
 blockquote,
 q {
   quotes: none;
