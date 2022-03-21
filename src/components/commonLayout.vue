@@ -134,7 +134,7 @@ export default {
       const url = 'http://api.tianapi.com/dujitang/index';
       const key = 'f5a89e80e1b532e8966c393f22320dea'
       try {
-        let { data } = await this.$http.get(url, { params: { key } })
+        let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
         this.content = data.newslist ? data.newslist[0].content : CONTENT;
       } catch (error) {
         this.content = CONTENT
@@ -144,7 +144,7 @@ export default {
       const url = 'http://api.tianapi.com/txapi/tiangou/index';
       const key = 'f5a89e80e1b532e8966c393f22320dea'
       try {
-        let { data } = await this.$http.get(url, { params: { key } })
+        let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
         this.diary = data.newslist ? data.newslist[0] : DIARY;
       } catch (error) {
         this.context = DIARY
@@ -153,11 +153,7 @@ export default {
     async getHotSearch() {
       const url = 'http://api.tianapi.com/networkhot/index';
       const key = 'f5a89e80e1b532e8966c393f22320dea'
-      let res = await this.$http.get(url, {
-        params: {
-          key
-        }
-      })
+      let res = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
       this.newslist = res.data.newslist.slice(0, 9)
     }
   },
