@@ -25,7 +25,7 @@
     <!-- 文章内容 -->
     <div class="edit_title">文章内容 (Markdown编辑器)</div>
     <div class="markdown">
-      <mavon-editor v-model="content" ref="md" @imgAdd="$imgAdd" />
+      <mavon-editor v-model="content" ref="md" @imgAdd="$imgAdd" :externalLink="external_link" />
     </div>
     <div class="save_btn">
       <el-button type="primary" @click="save">保存</el-button>
@@ -36,6 +36,7 @@
 <script>
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import { external_link } from '@/assets/js/codeStyle.js';
 import { baseUrl } from "@/config/config";
 import { uploadPhoto } from '@/network/article';
 
@@ -45,6 +46,8 @@ export default {
   },
   data() {
     return {
+      external_link: external_link,
+
       title: "",
       content: "",
       baseUrl: baseUrl,

@@ -268,3 +268,36 @@ export default [
   },
 
 ];
+
+// 国内cdn链接
+export const external_link = {
+  markdown_css: function () {
+    return 'https://cdn.bootcdn.net/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css';
+  },
+  hljs_js: function () {
+    return 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/highlight.min.js';
+  },
+  hljs_lang: function (lang) {
+    return (
+      'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/languages/' +
+      lang +
+      '.min.js'
+    );
+  },
+  hljs_css: function (css) {
+    if (css) {
+      return (
+        'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/styles/' +
+        css +
+        '.min.css'
+      );
+    }
+    return '';
+  },
+  katex_js: function () {
+    return 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.8.3/katex.min.js';
+  },
+  katex_css: function () {
+    return 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.8.3/katex.min.css';
+  }
+}

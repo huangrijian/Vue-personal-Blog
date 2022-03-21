@@ -8,7 +8,7 @@
       <el-timeline-item :timestamp="item.create_time" placement="top" :key="index" v-for="(item,index) in AllArticle">
         <el-card>
           <span class="title">{{item.title}}</span>
-          <mavon-editor v-model="item.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" :codeStyle="codeStyle" :boxShadow="false" :ishljs="true">
+          <mavon-editor v-model="item.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" :codeStyle="codeStyle" :boxShadow="false" :ishljs="true" :externalLink="external_link">
           </mavon-editor>
           <p v-if="item.create_time">黄先森 {{item.create_time}}</p>
         </el-card>
@@ -22,6 +22,7 @@ import CodeStyleSelect from '@/components/CodeStyleSelect/CodeStyleSelect.vue'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { getSpeech } from '@/network/speech';
+import { external_link } from '@/assets/js/codeStyle.js';
 export default {
   name: 'timeLocus',
   inject: ['reload'],
@@ -29,7 +30,8 @@ export default {
     return {
       AllArticle: [],
       state: this.$store.state.timeLocus,
-      codeStyle: this.$store.state.codeStyle
+      codeStyle: this.$store.state.codeStyle,
+      external_link: external_link,
     }
   },
   methods: {

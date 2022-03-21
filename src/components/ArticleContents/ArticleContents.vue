@@ -8,7 +8,7 @@
     </div>
     <!-- 具体文章内容 -->
     <div class="detail">
-      <mavon-editor v-model="data.content" defaultOpen="preview" :toolbarsFlag="false" :subfield="false" :boxShadow="false" :ishljs="true" :codeStyle="codeStyle">
+      <mavon-editor v-model="data.content" defaultOpen="preview" :subfield="false" :boxShadow="false" :ishljs="true" :codeStyle="codeStyle" :externalLink="external_link" :toolbars="toolbars">
       </mavon-editor>
     </div>
   </div>
@@ -18,28 +18,37 @@
 
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import { external_link } from '@/assets/js/codeStyle.js';
 export default {
   props: ['data', 'codeStyle'],
   components: {
     mavonEditor
   },
+  data() {
+    return {
+      external_link: external_link,
+      toolbars: {
+        readmodel: true, // 沉浸式阅读
+        navigation: true, // 导航目录
+        subfield: true, // 单双栏模式
+        preview: true, // 预览
+      }
+    }
+  },
   filters: {
     timer(str) {
       return str.substring(0, 9);
     },
-  },
-  created() {
-
-  },
-  computed: {
-    codeStyle() {
-      return this.$store.state.codeStyle;
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+/deep/ ol,
+ul,
+li {
+  list-style-type: disc;
+}
 .timer {
   margin-right: 15px;
 }

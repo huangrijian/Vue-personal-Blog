@@ -194,7 +194,7 @@ export default {
       this.replyNickname = replyNickname;
       this.replyUserId = replyUserId;
       this.parent_cm_id = parent_cm_id;
-      this.placeholder = replyNickname ? `@${replyNickname}` : `${placeholder}`;
+      this.placeholder = replyNickname ? `@${replyNickname}` : `${PLACEHOLDER}`;
     },
     async handleDelect(id) {
 

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import codeStyle from '@/assets/js/codeStyle.js'
+import codeStyle from '@/assets/js/codeStyle.js';
 export default {
   data() {
     return {
