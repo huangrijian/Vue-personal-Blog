@@ -14,7 +14,7 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="用户名">
           <el-input v-model="form.username"></el-input>
@@ -74,10 +74,7 @@ export default {
   },
   mounted() {
     this.$animation();
-  },
-  beforeDestroy() {
-    console.log("beforeDestroy");
-  },
+  }
 };
 </script>
 

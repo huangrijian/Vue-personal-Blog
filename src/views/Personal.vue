@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper wow slideInLeft">
     <div class="content">
-      <el-form ref="form" :rules="rules" label-width="80px" :inline="false" size="normal">
+      <el-form ref="form" label-width="80px" :inline="false" size="normal">
         <el-form-item label="昵称">
           <el-input v-model="nickname"></el-input>
         </el-form-item>
@@ -116,17 +116,9 @@ export default {
   },
   created() {
     this.GetInfo();
-    console.log(this.defaultAvatar);
   },
   mounted() {
-    let wow = new WOW.WOW({
-      boxClass: "wow",
-      animateClass: "animated",
-      offset: 0,
-      mobile: true,
-      live: true,
-    });
-    wow.init();
+    this.$animation();
   },
 };
 </script>
