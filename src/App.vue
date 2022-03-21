@@ -18,6 +18,7 @@ import { Notification } from 'element-ui';
 import BackTop from "@/components/backTop/BackTop.vue";
 import ActionBar from "@/components/actionBar/ActionBar.vue";
 import Introduces from './html.js';
+
 export default {
   components: { BackTop, ActionBar },
   provide() {
@@ -51,14 +52,15 @@ export default {
     }, 1000);
 
     Notification({
-      // title: 'HTML 片段',
-      duration: 8000,
+      duration: 5000,
       dangerouslyUseHTMLString: true,
       message: Introduces
     })
   },
 };
 </script>
+
+    
 <style lang="scss">
 #app {
   width: 100%;
