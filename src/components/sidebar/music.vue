@@ -8,80 +8,91 @@
       </div>
     </div>
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-    <aplayer :music="audio[0]" :list="audio" :showlrc="true"></aplayer>
+    <aplayer :music="audio[0]" :list="audio" :show-lrc="true"></aplayer>
   </div>
 </template>
 
 <script>
 import aplayer from "vue-aplayer";
 import { GetSong, GetPlayMisicUrl, GetPlayMisicLyric } from "@/musicNetWork/music.js";
+import defaultLrc from '@/assets/defaultLrc.js'
 export default {
   name: 'music',
   data() {
     return {
-      songName: 'cmj',
-
+      songName: '许嵩',
       // 音频列表
       audio: [
         // 默认播放列表
         {
-          title: '所念皆星河',
-          artist: 'CMJ',
-          url: 'https://rt01-sycdn.kuwo.cn/7b5137bac33d558e774c26a95ed38bf4/6077019a/resource/n1/18/25/1394031454.mp3',
-          pic: "http://p4.music.126.net/M34HFzLO2xhDLuX_zEALKA==/109951164291347934.jpg?param=100y100",
-          lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
+          title: '有何不可',
+          artist: '许嵩',
+          src: require('../../assets/default.mp3'),
+          pic: require('../../assets/defaultpic.jpg'),
+          lrc: defaultLrc,
         },
       ],
     }
   },
   methods: {
-    playMusic(songName) {
-      this.songName = ''
-      // 定义一个存放歌词数据对象的数组
-      let songDataArray = []
-      GetSong(songName).then(res => {
-
-        // 循环请求得到的歌曲数据
-        res.result.songs.forEach(async (item, index, array) => {
-          // 定义一个对象，用于存放具体数据
-          let songData = {}
-          // 获取歌名
-          songData.title = item.name
-          // 获取歌手名
-          songData.artist = item.ar[0].name
-          // 获取照片
-          for (var key in item.al) {
-            songData.pic = item.al.picUrl + '?param=100y100'
-          }
-          // 获取歌曲播放地址
-          let musicUrl = await GetPlayMisicUrl(item.id)
-          songData.url = musicUrl.data[0].url
-          // 获取歌词
-          let MisicLyric = await GetPlayMisicLyric(item.id)
-          if (MisicLyric.nolyric) {
-            songData.lrc = '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词'
-          } else {
-            songData.lrc = MisicLyric.lrc.lyric
-          }
-          //  完成此条数据的循环，将得到的歌曲数据push到数组
-          songDataArray.push(songData)
-        }
-        );
+    // 获取歌曲数组元素的歌曲地址和歌词
+    async getSrcAndLrcArr(songsArr) {
+      let promiseArr = []
+      songsArr.forEach((item) => {
+        // 每首歌曲都需要获取自己的歌曲地址和歌词
+        promiseArr = promiseArr.concat(GetPlayMisicUrl(item.id), GetPlayMisicLyric(item.id))
       })
-      // 将此次搜索得到的数据全部赋值给audio,等待播放
-      this.audio = songDataArray
-    }
+      // 一起发起获取请求，然后等到全部promise被兑现后拿到结果存储到res
+      let res = await Promise.all(promiseArr);
+      let resObjArr = [];
+      // 将播放链接和歌词存到一个对象，再push到resObjArr
+      for (let i = 0; i < res.length; i += 2) {
+        let obj = {};
+        let [url, lrc] = res.slice(i, i + 2);
+        obj.url = url.data[0].url
+        obj.lrc = lrc.lrc.lyric
+        resObjArr.push(obj);
+      }
+      return resObjArr
+    },
+    // 保存歌曲数据格式并返回
+    async saveSongData(songsArr, srcAndLrcArr) {
+      let songDataArray = [];
+      songsArr.forEach((item, index) => {
+        // 定义一个对象，用于存放具体数据
+        let songData = {}
+        // 获取歌名
+        songData.title = item.name
+        // 获取歌手名
+        songData.artist = item.ar[0].name
+        // 获取照片
+        for (var key in item.al) {
+          songData.pic = item.al.picUrl + '?param=100y100'
+        }
+        // 获取歌曲播放地址
+        songData.src = srcAndLrcArr[index].url
+        // 获取歌词
+        let MisicLyric = srcAndLrcArr[index].lrc
+        songData.lrc = MisicLyric || '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词'
+        // 最后统一push
+        songDataArray.push(songData)
+      })
+      return songDataArray;
+    },
+
+    async playMusic(songName) {
+      let { result: { songs } } = await GetSong(songName);
+      // 获取歌曲数组的歌曲播放链接和歌词
+      let resSrcAndLrcArr = await this.getSrcAndLrcArr(songs);
+      // 存储歌曲各种数据,并保存为当前状态
+      let songDataArray = await this.saveSongData(songs, resSrcAndLrcArr);
+      this.audio = songDataArray;
+      // 初始化搜索数据
+      this.songName = '';
+    },
   },
   components: {
     aplayer
-  },
-  mounted() {
-    // 页面刷新添加一个自动点击事件
-    let searchMusic = document.querySelector('#searchMusic');
-    searchMusic.click();
-
-
-
   }
 }
 </script>
