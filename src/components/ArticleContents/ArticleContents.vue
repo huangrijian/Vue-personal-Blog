@@ -30,14 +30,12 @@ export default {
       toolbars: {
         readmodel: true, // 沉浸式阅读
         navigation: true, // 导航目录
-        subfield: true, // 单双栏模式
-        preview: true, // 预览
       }
     }
   },
   filters: {
     timer(str) {
-      return str.substring(0, 9);
+      return str.substring(0, 10);
     },
   }
 }
