@@ -154,7 +154,7 @@ export default {
       const url = 'http://api.tianapi.com/networkhot/index';
       const key = 'f5a89e80e1b532e8966c393f22320dea'
       let res = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
-      this.newslist = res.data.newslist.slice(0, 9)
+      this.newslist = res.data.newslist.slice(0, 15)
     }
   },
   created() {

@@ -12,8 +12,8 @@
       </div>
       <div class="card-container">
         <div class="hot-item" v-for="(item, index) in newslist" :key="item.title">
-          <span class="item-left">{{index+1}}</span>
-          <a class="item-mid" target="_blank" :href="`https://www.baidu.com/s?wd=${item.title}`">{{item.title}}</a>
+          <span class="item-left" :index="index">{{index+1}}</span>
+          <a class="item-mid" target="_blank" :href="`https://www.baidu.com/s?wd=${item.title}`" :title="item.digest">{{item.title}}</a>
           <span class="c-text-hot" v-if="index <= 2">热</span>
           <span class="c-text-hot" v-if="item.hotnum >= 6000000">爆</span>
         </div>
@@ -30,14 +30,12 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  overflow: hidden;
-  height: 280px;
-  border-radius: 12px;
+  border-radius: 6px;
   box-shadow: 0 2px 10px 0 rgb(151, 150, 150);
   background: #ffffff;
   .card-big {
     width: 100%;
-    padding: 16px 13px 0 13px;
+    padding: 16px 13px;
     .card-title {
       font-size: 14px;
       display: flex;
@@ -53,22 +51,37 @@ export default {
       }
     }
     .card-container {
-      margin-top: 14px;
+      margin-top: 8px;
       overflow: hidden;
       .hot-item {
         margin-top: 10px;
         display: flex;
         justify-content: space-between;
+
         .item-mid {
           font-size: 13px;
           flex: 1;
           margin-left: 5px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         .item-left {
           width: 14px;
           height: 14px;
           font-family: PingFangSC-Medium;
           font-size: 14px;
+          color: rgb(128, 128, 129);
+          text-align: center;
+        }
+        [index="0"] {
+          color: rgb(255, 51, 0);
+        }
+        [index="1"] {
+          color: #f60;
+        }
+        [index="2"] {
+          color: rgb(255, 136, 0);
         }
         .c-text-hot {
           width: 16px;
