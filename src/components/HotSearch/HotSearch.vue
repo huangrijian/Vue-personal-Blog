@@ -3,8 +3,10 @@
     <div class="card-big">
       <div class="card-title">
         <div style="display:flex;align-items: center;">
-          <img class="card-icon" src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3779990328,1416553241&fm=179&app=35&f=PNG?w=108&h=108&s=E7951B62A4639D153293A4E90300401B">
-          <span style="color:#FF6600">百度热搜版</span>
+          <div class="card-icon" style="display:inline-block">
+            <slot />
+          </div>
+          <span style="color:#FF6600">{{type}}</span>
         </div>
         <div>
           <span style="color:#9195A3"><a target="_blank" :href="`https://www.baidu.com/s?wd=热搜`">更多</a></span>
@@ -24,7 +26,7 @@
 
 <script>
 export default {
-  props: ['newslist']
+  props: ['newslist', 'type']
 }
 </script>
 
@@ -62,6 +64,7 @@ export default {
           font-size: 13px;
           flex: 1;
           margin-left: 5px;
+          /* 单行显示，超出显示省略符 */
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;

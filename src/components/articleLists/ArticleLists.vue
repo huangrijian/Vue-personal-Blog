@@ -68,7 +68,6 @@ export default {
     // 去文章详情
     GotoArticleDetail(id) {
       this.$router.push({ name: 'detail', params: { id } });
-      this.$store.commit('setArticleId', id)
     }
   }
 }
