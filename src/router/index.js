@@ -19,6 +19,7 @@ const aboutMe = () => import('@/views/aboutMe.vue')
 const recommend = () => import('@/views/recommend.vue')
 const LeaveWord = () => import('@/views/LeaveWord.vue')
 const LearningPath = () => import('@/views/LearningPath.vue')
+const MusicDetail = () => import('@/views/MusicDetail.vue')
 const silinsi = () => import('@/views/404.vue')
 
 
@@ -45,6 +46,11 @@ const routes = [
         path: '/Lists',
         name: 'Lists',
         component: Lists
+      },
+      {
+        path: '/musicDetail/:id',
+        name: 'MusicDetail',
+        component: MusicDetail
       },
       {
         path: '/personal',
