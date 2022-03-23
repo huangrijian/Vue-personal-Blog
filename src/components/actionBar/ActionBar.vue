@@ -3,20 +3,30 @@
     <el-tooltip class="item" effect="dark" content="切换背景" placement="left">
       <el-button icon="el-icon-edit" circle @click="drawer = true" />
     </el-tooltip>
-
     <el-drawer :visible.sync="drawer" :direction="direction" :before-close="handleClose" size="50%" :with-header="false" :show-close="false" ref="drawer">
       <el-tabs v-model="activeName">
         <el-tab-pane label="风景" name="first">
           <div class="box">
             <div class="block" @click="handleClick(item)" v-for="(item, index) in src" :key="index">
-              <el-image :src="item"></el-image>
+              <el-image style="width: 100%;height: 100%;" :src="item">
+                <div slot="placeholder" class="image-slot">
+                  <Loading />
+                </div>
+              </el-image>
             </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="动漫" name="second">
           <div class="box">
             <div class="block" @click="handleClick(item)" v-for="(item, index) in src2" :key="index">
-              <el-image :src="item"></el-image>
+              <el-image style="width: 100%;height: 100%;" :src="item">
+                <div slot="placeholder" class="image-slot">
+                  <Loading />
+                </div>
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline"></i>
+                </div>
+              </el-image>
             </div>
           </div>
         </el-tab-pane>
@@ -25,7 +35,11 @@
   </div>
 </template>
 <script>
+import Loading from '@/components/Loading/Loading.vue'
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       drawer: false,
@@ -73,6 +87,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.loading-box {
+  background: red;
+}
 .container {
   position: fixed;
   right: 10px;
@@ -88,5 +105,12 @@ export default {
 .box {
   display: flex;
   flex-wrap: wrap;
+}
+.image-slot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
