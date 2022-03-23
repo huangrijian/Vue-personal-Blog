@@ -5,8 +5,8 @@
         <div class="img">
           <img v-lazy="item.pic_url" alt="">
         </div>
-        <div :style="{display:'flex'}">
-          <img :style="{width:20+'px', marginRight:5+'px'}" src="../../assets/icon/活动.svg">
+        <div :style="{display:'flex',alignItems:'center'}">
+          <img :style="{width:20+'px',height:20+'px', marginRight:5+'px'}" src="../../assets/img/hd.png">
           <div class="title press">{{item.title}}</div>
         </div>
         <div class="brief">{{item.brief}}</div>
@@ -14,7 +14,7 @@
           <span>+文章阅读</span>
           <span class="timer">{{item.create_time | timer()}}</span>
           <div :style="{display:'flex', alignItems:'center'}">
-            <img :style="{width:20+'px'}" src="../../assets/icon/赞评.svg">
+            <img :style="{width:20+'px'}" src="../../assets/img/like.png">
             <span class="like_count">{{item.like_count}}</span>
           </div>
         </div>

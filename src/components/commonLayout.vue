@@ -24,7 +24,7 @@
                 <TimerShaft />
                 <LickDog style="margin-top:20px">
                   <template v-slot:title>
-                    <img style="width:25px" src="../assets/img/dog.svg">
+                    <img style="width:25px" src="../assets/img/dog.png">
                     <span style="margin-left:5px">舔狗日记</span>
                   </template>
                   <template v-slot:pic>
@@ -34,7 +34,7 @@
                     {{diary}}
                   </template>
                   <template v-slot:click>
-                    <img @click="nextDiary" style="width:25px" src="../assets/img/dog.svg">
+                    <img @click="nextDiary" style="width:25px" src="../assets/img/dog.png">
                   </template>
                 </LickDog>
               </aside>
@@ -87,7 +87,7 @@
 
                 <LickDog style="margin-top:20px">
                   <template v-slot:title>
-                    <img style="width:25px" src="../assets/img/jitan.svg">
+                    <img style="width:25px" src="../assets/img/jitan.png">
                     <span style="margin-left:5px">心灵毒药</span>
                   </template>
                   <template v-slot:pic>
@@ -97,7 +97,7 @@
                     {{content}}
                   </template>
                   <template v-slot:click>
-                    <img @click="nextContent" style="width:25px" src="../assets/img/jitan.svg">
+                    <img @click="nextContent" style="width:25px" src="../assets/img/jitan.png">
                   </template>
                 </LickDog>
               </aside>

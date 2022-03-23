@@ -8,7 +8,7 @@
       <p>
         <span class="content">{{item.content}}</span>
         <span class="like">
-          <img src="../assets/img/like.svg" />
+          <img src="../assets/img/like.png" />
           <span class="like_count">({{item.likedCount}})</span>
         </span>
       </p>
