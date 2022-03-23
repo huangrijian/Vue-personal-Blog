@@ -8,13 +8,20 @@
       </div>
     </div>
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-    <aplayer :music="audio[0]" :list="audio" :show-lrc="true"></aplayer>
+    <!-- this.$refs.player.$children 才是真正的音乐播放组件 -->
+    <MyAplayer ref="player" :music="audio[0]" @play="handlePlay" :list="audio" :show-lrc="true">
+      <el-tooltip effect="light" content="查看评论" placement="right">
+        <img width="100%" src="../../assets/img/music.png" @click="showComment" title="查看评论" />
+      </el-tooltip>
+    </MyAplayer>
   </div>
 </template>
 
 <script>
 import aplayer from "vue-aplayer";
+aplayer.disableVersionBadge = true
 import { GetSong, GetPlayMisicUrl, GetPlayMisicLyric } from "@/musicNetWork/music.js";
+import MyAplayer from '@/components/MyAplayer/MyAplayer.vue'
 import defaultLrc from '@/assets/defaultLrc.js'
 export default {
   name: 'music',
@@ -30,11 +37,21 @@ export default {
           src: require('../../assets/default.mp3'),
           pic: require('../../assets/defaultpic.jpg'),
           lrc: defaultLrc,
+          songId: 167876
         },
       ],
+      songId: 0
     }
   },
   methods: {
+    handlePlay() {
+      // 根据当前所在route决定是否查看评论
+      if (this.$route.name === 'MusicDetail') this.showComment();
+    },
+    showComment() {
+      let id = this.$refs.player.$children[this.$refs.player.$children.length - 1].currentMusic.songId
+      this.$router.push({ name: 'MusicDetail', params: { id } })
+    },
     // 获取歌曲数组元素的歌曲地址和歌词
     async getSrcAndLrcArr(songsArr) {
       let promiseArr = []
@@ -63,6 +80,8 @@ export default {
         let songData = {}
         // 获取歌名
         songData.title = item.name
+        // 获取歌曲id
+        songData.songId = item.id
         // 获取歌手名
         songData.artist = item.ar[0].name
         // 获取照片
@@ -92,7 +111,8 @@ export default {
     },
   },
   components: {
-    aplayer
+    aplayer,
+    MyAplayer
   }
 }
 </script>
@@ -100,6 +120,9 @@ export default {
 <style lang="scss" scoped>
 * {
   box-sizing: border-box;
+}
+/deep/.aplayer-music {
+  cursor: pointer !important;
 }
 // 音乐组件
 .aplayer {
@@ -114,7 +137,7 @@ export default {
 }
 div.search {
   padding: 10px 0;
-  transform: translateY(20px);
+  transform: translateY(5px);
 }
 div {
   position: relative;
