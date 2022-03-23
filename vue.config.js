@@ -38,11 +38,39 @@ module.exports = {
     //...其它配置
   },
   chainWebpack: config => {
-    //...其它配置  
     // 注入cdn变量 (打包时会执行)
     config.plugin('html').tap(args => {
       args[0].cdn = cdn // 配置cdn给插件
       return args
     })
+
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer('js')
+        .use(require.resolve('terser-webpack-plugin'), [{
+          terserOptions: {
+            // 打包删掉正文
+            comments: true,
+            compress: {
+              drop_console: true,//去除console语句
+              drop_debugger: true//去除debugger语句
+              // pure_funcs: ["console.log"]
+
+            }
+          }
+        }])
+    } else {
+      // disable optimization during tests to speed things up
+      config.optimization.minimize(false)
+    }
+    // 压缩图片
+    config.module
+      .rule('images')
+      .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+      .use('image-webpack-loader')
+      .loader('image-webpack-loader')
+      .options({
+        bypassOnDebug: true
+      })
+      .end()
   }
 }
