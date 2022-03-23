@@ -59,27 +59,27 @@
                 <tally class="maginbot"></tally>
                 <el-carousel height="302px" trigger="click" :interval="5000" arrow="never" indicator-position="outside">
                   <el-carousel-item>
-                    <HotSearch :newslist="newslist" type="全网热搜榜">
+                    <HotSearch :newslist="networkhot" type="全网热搜榜">
                       <img width="100%" src="~@/assets/img/hot.png">
                     </HotSearch>
                   </el-carousel-item>
                   <el-carousel-item>
-                    <HotSearch :newslist="newsNBAlist" type="NBA新闻榜">
+                    <HotSearch :newslist="nba" type="NBA新闻榜">
                       <img width="100%" src="~@/assets/img/lq.png">
                     </HotSearch>
                   </el-carousel-item>
                   <el-carousel-item>
-                    <HotSearch :newslist="newsTTlist" type="今日头条榜">
+                    <HotSearch :newslist="topnews" type="今日头条榜">
                       <img width="100%" src="~@/assets/img/tt.png">
                     </HotSearch>
                   </el-carousel-item>
                   <el-carousel-item>
-                    <HotSearch :newslist="newsGJlist" type="国际新闻榜">
+                    <HotSearch :newslist="world" type="国际新闻榜">
                       <img width="100%" src="~@/assets/img/gj.png">
                     </HotSearch>
                   </el-carousel-item>
                   <el-carousel-item>
-                    <HotSearch :newslist="newsITlist" type="IT资讯榜">
+                    <HotSearch :newslist="it" type="IT资讯榜">
                       <img width="100%" src="~@/assets/img/it.png">
                     </HotSearch>
                   </el-carousel-item>
@@ -148,11 +148,12 @@ export default {
     return {
       content: '',
       diary: '',
-      newslist: [],
-      newsNBAlist: [],
-      newsTTlist: [],
-      newsGJlist: [],
-      newsITlist: []
+      networkhot: [],
+      nba: [],
+      topnews: [],
+      world: [],
+      it: [],
+      newsKeyWordList: ['networkhot', 'nba', 'topnews', 'world', 'it']
     }
   },
   computed: {
@@ -161,6 +162,18 @@ export default {
     },
   },
   methods: {
+
+    async getNewListArr(keyWord) {
+      const url = `http://api.tianapi.com/${keyWord}/index`;
+      const key = 'f5a89e80e1b532e8966c393f22320dea'
+      let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
+      if (data.newslist) {
+        sessionStorage.setItem(keyWord, JSON.stringify(data.newslist.slice(0, 10)))
+      }
+      this[keyWord] = JSON.parse(sessionStorage.getItem(keyWord));
+    },
+
+
     async nextContent() {
       const url = 'http://api.tianapi.com/dujitang/index';
       const key = 'f5a89e80e1b532e8966c393f22320dea'
@@ -181,60 +194,16 @@ export default {
         this.context = DIARY
       }
     },
-    async getHotSearch() {
-      const url = 'http://api.tianapi.com/networkhot/index';
-      const key = 'f5a89e80e1b532e8966c393f22320dea'
-      let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
-      if (data.newslist) {
-        sessionStorage.setItem('hotSearch', JSON.stringify(data.newslist.slice(0, 10)))
-      }
-      this.newslist = JSON.parse(sessionStorage.getItem('hotSearch'));
-    },
-    async getHotSearch02() {
-      const url = 'http://api.tianapi.com/nba/index';
-      const key = 'f5a89e80e1b532e8966c393f22320dea'
-      let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
-      if (data.newslist) {
-        sessionStorage.setItem('hotSearch02', JSON.stringify(data.newslist.slice(0, 10)))
-      }
-      this.newsNBAlist = JSON.parse(sessionStorage.getItem('hotSearch02'));
-    },
-    async getHotSearch03() {
-      const url = 'http://api.tianapi.com/topnews/index';
-      const key = 'f5a89e80e1b532e8966c393f22320dea'
-      let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
-      if (data.newslist) {
-        sessionStorage.setItem('hotSearch03', JSON.stringify(data.newslist.slice(0, 10)))
-      }
-      this.newsTTlist = JSON.parse(sessionStorage.getItem('hotSearch03'));
-    },
-    async getHotSearch04() {
-      const url = 'http://api.tianapi.com/world/index';
-      const key = 'f5a89e80e1b532e8966c393f22320dea'
-      let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
-      if (data.newslist) {
-        sessionStorage.setItem('hotSearch04', JSON.stringify(data.newslist.slice(0, 10)))
-      }
-      this.newsGJlist = JSON.parse(sessionStorage.getItem('hotSearch04'));
-    },
-    async getHotSearch05() {
-      const url = 'http://api.tianapi.com/it/index';
-      const key = 'f5a89e80e1b532e8966c393f22320dea'
-      let { data } = await this.$http.get(url, { params: { key }, type: 'specialRequest' })
-      if (data.newslist) {
-        sessionStorage.setItem('hotSearch05', JSON.stringify(data.newslist.slice(0, 10)))
-      }
-      this.newsITlist = JSON.parse(sessionStorage.getItem('hotSearch05'));
+    getNewList() {
+      this.newsKeyWordList.forEach(item => {
+        this.getNewListArr(item);
+      })
     }
   },
   created() {
     this.nextContent();
     this.nextDiary();
-    this.getHotSearch();
-    this.getHotSearch02();
-    this.getHotSearch03();
-    this.getHotSearch04();
-    this.getHotSearch05();
+    this.getNewList();
   }
 
 }
