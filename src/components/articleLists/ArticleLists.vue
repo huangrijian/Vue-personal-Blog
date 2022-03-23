@@ -100,8 +100,8 @@ li {
     overflow: hidden;
     border-radius: 5px;
     cursor: pointer;
-    width: 200px;
-    height: 130px;
+    width: 210px;
+    height: 145px;
     img {
       width: 100%;
       height: 100%;

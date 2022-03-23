@@ -57,28 +57,28 @@
                 <personal-details class="wow slideInRight maginbot"></personal-details>
                 <music class="maginbot wow slideInLeft" data-wow-delay="0.2s" />
                 <tally class="maginbot"></tally>
-                <el-carousel height="302px" trigger="click" :interval="5000" arrow="never" indicator-position="outside">
-                  <el-carousel-item>
+                <el-carousel height="302px" v-if="networkhot || nba || topnews || world || it" trigger="click" :interval="5000" arrow="never" indicator-position="outside">
+                  <el-carousel-item v-if="networkhot">
                     <HotSearch :newslist="networkhot" type="全网热搜榜">
                       <img width="100%" src="~@/assets/img/hot.png">
                     </HotSearch>
                   </el-carousel-item>
-                  <el-carousel-item>
+                  <el-carousel-item v-if="nba">
                     <HotSearch :newslist="nba" type="NBA新闻榜">
                       <img width="100%" src="~@/assets/img/lq.png">
                     </HotSearch>
                   </el-carousel-item>
-                  <el-carousel-item>
+                  <el-carousel-item v-if="topnews">
                     <HotSearch :newslist="topnews" type="今日头条榜">
                       <img width="100%" src="~@/assets/img/tt.png">
                     </HotSearch>
                   </el-carousel-item>
-                  <el-carousel-item>
+                  <el-carousel-item v-if="world">
                     <HotSearch :newslist="world" type="国际新闻榜">
                       <img width="100%" src="~@/assets/img/gj.png">
                     </HotSearch>
                   </el-carousel-item>
-                  <el-carousel-item>
+                  <el-carousel-item v-if="it">
                     <HotSearch :newslist="it" type="IT资讯榜">
                       <img width="100%" src="~@/assets/img/it.png">
                     </HotSearch>
@@ -171,6 +171,7 @@ export default {
         sessionStorage.setItem(keyWord, JSON.stringify(data.newslist.slice(0, 10)))
       }
       this[keyWord] = JSON.parse(sessionStorage.getItem(keyWord));
+      console.log(keyWord, this[keyWord])
     },
 
 
