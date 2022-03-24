@@ -5,7 +5,7 @@
         <el-table-column prop="username" label="用户名" width="180" />
         <el-table-column prop="nickname" label="昵称" width="180" />
         <el-table-column prop="grade" label="权限" />
-        <el-table-column prop="is_apply" label="是否申请管理员" />
+        <el-table-column prop="is_apply" label="是否申请成为博主" />
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -24,8 +24,8 @@
         </el-form-item>
         <el-form-item label="权限设置">
           <el-select v-model="form.grade" placeholder="请选择活动区域">
-            <el-option label="管理员" :value="2"></el-option>
-            <el-option label="普通用户" :value="3"></el-option>
+            <el-option label="博主" value="博主"></el-option>
+            <el-option label="普通用户" value="普通用户"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -46,16 +46,16 @@ export default {
       form: {
         username: "",
         nickname: "",
-        grade: 3,
+        grade: '普通用户',
+        is_apply: '未申请'
       },
       tableData: [],
     };
   },
   methods: {
     handleClick(row) {
-      console.log(row);
       this.dialogVisible = true;
-      this.form = row;
+      this.form = JSON.parse(JSON.stringify(row));
     },
     GetInfoList() {
       if (this.$store.state.isSignIn === 1) {
@@ -65,7 +65,12 @@ export default {
       }
     },
     async onSubmit() {
-      await setAuthority(this.form)
+      let data = {
+        grade: this.form.grade === '博主' ? 2 : 3,
+        username: this.form.username,
+      }
+      await setAuthority(data);
+      this.GetInfoList();
       this.dialogVisible = false;
     },
   },
