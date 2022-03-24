@@ -2,7 +2,7 @@
   <div class="commonLayout">
     <!-- 导航条 -->
     <nav>
-      <common-header class="wow slideInRight common-header" style="top:0px"></common-header>
+      <common-header id="nav_header" class="animated  common-header" style="top:0px"></common-header>
     </nav>
 
     <!-- 切换大屏阅读模式按钮 -->
@@ -206,26 +206,15 @@ export default {
     this.nextDiary();
     this.getNewList();
   }
-
 }
 
 </script>
 
 <style scoped lang="scss">
 .commonLayout {
-  // width: 100%;
-  // height: 100%;
-  // 导航条
-  .common-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 9999;
-  }
   // 切换部分
   section {
-    margin-top: 80px;
+    margin-top: 20px;
     .slideshowBox {
       margin-right: 7px;
     }
