@@ -15,7 +15,7 @@
             <el-button type="primary" @click="onSubmit">保存</el-button>
             <el-button @click="exit">退出登录</el-button>
           </div>
-          <el-button v-if="grade === '3'" :style="{ marginTop: '10px' }" @click="upgrade">申请成为管理员</el-button>
+          <el-button v-if="grade === '3'" :style="{ marginTop: '10px' }" @click="upgrade">申请成为博主</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -93,11 +93,7 @@ export default {
     },
 
     async upgrade() {
-      let data = {
-        username: this.username,
-        is_apply: 1,
-      }
-      let { code } = await updateGrade(data);
+      let { code } = await updateGrade({ is_apply: 1 });
       if (code === 200) {
         this.$message({
           message: "已向站长发起申请，请耐心等待",

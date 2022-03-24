@@ -80,7 +80,7 @@ export default {
     },
 
     handleAdd(type) {
-      this.$router.push({ name: "editArticle", params: { type } });
+      this.$router.push({ name: "editArticle", params: { id: -1, type } });
     },
     handleLook(row) {
       let id = row.id;

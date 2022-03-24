@@ -184,7 +184,7 @@ export default {
     },
   },
   created() {
-    if (this.id) this.getDetail();
+    if (this.id && this.id !== -1) this.getDetail();
   },
 };
 </script>

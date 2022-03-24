@@ -47,7 +47,7 @@ export function getInfoList() {
 export function setAuthority(form) {
   return request({
     method: 'post',
-    url: `${BASE_USERS_URL}/api/users/authority`,
+    url: `${BASE_USERS_URL}/authority`,
     data: {
       form
     }
