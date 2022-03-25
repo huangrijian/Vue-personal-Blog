@@ -138,5 +138,6 @@ button {
   margin-right: 20px;
   position: absolute;
   top: 50px;
+  z-index: 1;
 }
 </style>
