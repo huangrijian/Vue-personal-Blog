@@ -1,14 +1,14 @@
 <template>
   <div class="edit_wrap wrapper">
     <div class="backBtn">
-      <el-button @click="goBack">返回</el-button>
+      <el-button @click="goBack" :disabled="isDelete">返回</el-button>
     </div>
     <div class="edit_title">标题</div>
     <el-input v-model="title" placeholder="请输入标题"></el-input>
-    <div class="edit_title">简介</div>
-    <el-input v-model="brief" placeholder="请输入简介"></el-input>
+    <div class="edit_title" v-if="isArticle">简介</div>
+    <el-input v-model="brief" v-if="isArticle" placeholder="请输入简介"></el-input>
     <!-- 分类 -->
-    <div :style="{ padding:'20px 0' }">
+    <div v-if="isArticle" :style="{ padding:'20px 0' }">
       <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
         {{ tag }}
       </el-tag>
@@ -17,16 +17,16 @@
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
     </div>
     <!-- 上传封面 -->
-    <div>
+    <div v-if="isArticle">
       <el-upload class="avatar-uploader" :action="`${baseUrl}api/article/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" name="head_img">
         <img :src="imageUrl ? imageUrl : defaultAvatar" class="avatar" />
       </el-upload>
     </div>
     <!-- 文章内容 -->
     <div class="edit_title">文章内容 (Markdown编辑器)</div>
-    <div class="markdown">
-      <mavon-editor v-model="content" ref="md" @imgAdd="$imgAdd" :externalLink="external_link" />
-    </div>
+
+    <mavon-editor class="markdown-jian" v-model="content" ref="md" @imgAdd="$imgAdd" :externalLink="external_link" />
+
     <div class="save_btn">
       <el-button type="primary" @click="save">保存</el-button>
     </div>
@@ -43,6 +43,11 @@ import { uploadPhoto } from '@/network/article';
 export default {
   components: {
     mavonEditor
+  },
+  computed: {
+    isArticle() {
+      return this.type === 'article'
+    }
   },
   data() {
     return {
@@ -64,7 +69,9 @@ export default {
       id: this.$route.params.id,
       type: this.$route.params.type,
 
-      brief: ''
+      brief: '',
+
+      isDelete: false
     };
   },
   methods: {
@@ -80,24 +87,24 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error("上传图片只能是 JPG 格式!");
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error("上传图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
     },
     goBack() {
       this.$router.go(-1);
     },
+
     save() {
-      console.log(this.$route.params);
-      if (this.$route.params.id) {
+      if (this.id && this.id !== -1) {
         //  如果是编辑保存，则发起更新请求
         let data = {
           title: this.title,
           content: this.content,
-          article_id: this.$route.params.id,
+          article_id: this.id,
           classify: this.dynamicTags,
           pic_url: this.imageUrl,
           brief: this.brief
@@ -144,15 +151,22 @@ export default {
 
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-      console.log(tag);
       this.$http
         .post("/api/article/deleteClassify", {
-          article_id: this.$route.params.id,
+          article_id: this.id,
           classifyName: tag,
         })
-        .then((res) => {
-          console.log("res", res);
+        .then(({ data: { code } }) => {
+          if (code === 200) {
+            // 分类被删除，则必须保存文章才能返回
+            this.isDelete = true;
+            this.$message({
+              type: "success",
+              message: `分类删除成功,请保存文章后才能返回`,
+            });
+          }
         });
+
     },
 
     showInput() {
@@ -236,5 +250,9 @@ export default {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+}
+/* 输入框最小高度 */
+/deep/.v-note-panel {
+  min-height: 300px;
 }
 </style>
