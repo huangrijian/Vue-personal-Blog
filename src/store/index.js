@@ -27,13 +27,13 @@ export default new Vuex.Store({
     LikeArry: JSON.parse(sessionStorage.getItem('LikeArry')),
 
     // 搜索结果
-    searchRes: [],
+    searchRes: JSON.parse(sessionStorage.getItem('setSearchRes')) || [],
 
     bgimgUrl: sessionStorage.getItem('bgimgUrl') || require('../assets/img/bgdm04.jpg'),
 
     codeStyle: sessionStorage.getItem('codeStyle') || 'shades-of-purple',
 
-    searchResCount: sessionStorage.getItem('searchResCount')
+    searchResCount: Number(sessionStorage.getItem('searchResCount'))
   },
   // 全局同步方法, 调用方法,this.$store.commit("xxx")
   mutations: {
@@ -60,6 +60,7 @@ export default new Vuex.Store({
     // 搜索结果
     setSearchRes(state, val) {
       state.searchRes = val;
+      sessionStorage.setItem("setSearchRes", JSON.stringify(val));
     },
 
     setIsPure(state, val) {
