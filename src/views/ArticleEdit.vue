@@ -9,7 +9,7 @@
     <el-input v-model="brief" v-if="isArticle" placeholder="请输入简介"></el-input>
     <!-- 分类 -->
     <div v-if="isArticle" :style="{ padding:'20px 0' }">
-      <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
+      <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleDelete(tag)">
         {{ tag }}
       </el-tag>
       <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
@@ -149,7 +149,8 @@ export default {
         });
     },
 
-    handleClose(tag) {
+    // 删除分类
+    handleDelete(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
       this.$http
         .post("/api/article/deleteClassify", {
