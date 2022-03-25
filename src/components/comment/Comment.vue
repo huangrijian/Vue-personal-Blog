@@ -49,9 +49,10 @@
                     <span v-show="SubCommentContentArr[index]">收起</span>
                     <span v-show="!SubCommentContentArr[index]">回复</span>
                   </span>
-                  <span class="delete" v-if="thisNickName === '黄先森'" @click="handleDelect(item.id)">删除</span>
+                  <span class="delete" v-if="grade === '1'" @click="handleDelect(item.id)">删除</span>
                 </div>
                 <el-collapse-transition>
+                  <!-- 点击回复评论时展开的评论框 -->
                   <div v-show="SubCommentContentArr[index]">
                     <div class="replyBox" style="display:flex; align-items: center;">
                       <img :src="imageUrl ? imageUrl : defaultAvatar" alt="" style="width:40px; marginRight:15px" />
@@ -62,7 +63,7 @@
                     </div>
                   </div>
                 </el-collapse-transition>
-                <!-- 回复输入框 -->
+                <!-- 子评论项 -->
                 <ReplyItem :ReplyItem="item.son" :reply="reply" :index="index" />
               </div>
             </div>
@@ -91,6 +92,7 @@ import {
   clickLike
 } from '@/network/comment.js'
 
+
 const PLACEHOLDER = "请输入内容并按回车键发送";
 export default {
   props: {
@@ -104,6 +106,7 @@ export default {
     Emoji
   },
   watch: {
+    // 作为文章评论，当文章切换时
     articleId(newVal) {
       // 初始化分页器
       this.pageSize = 5
@@ -128,7 +131,7 @@ export default {
       imageUrl: sessionStorage.getItem("avatar"),
       defaultAvatar: require("@/assets/img/pl.jpg"),
 
-      thisNickName: sessionStorage.getItem("nickname"),
+      grade: sessionStorage.getItem("grade"),
 
       parent_cm_id: -1, // 根节点评论id
       replyNickname: null, //被@人昵称
@@ -147,6 +150,7 @@ export default {
       this.reply_nickname = null;
       this.replyUserId = null;
       this.placeholder = PLACEHOLDER;
+      // 收起全部子评论内容框和子评论emoji框
       this.SubCommentContentArr.splice(0, 5, false, false, false, false, false);
       this.SubCommentEmojiArr.splice(0, 5, false, false, false, false, false);
 
@@ -223,10 +227,9 @@ export default {
       // this.articleId 为 0 则属于 网站留言
       let { data } = await getArticleComment({ article_id: this.articleId, list, offset, username: sessionStorage.getItem('username') });
       this.commentArray = data;
-      this.SubCommentContentArr.length = this.commentArray.length;
-      this.SubCommentEmojiArr.length = this.commentArray.length;
-      this.SubCommentContentArr.fill(false);
-      this.SubCommentEmojiArr.fill(false);
+      // 初始化子评论框和表情框
+      this.SubCommentContentArr = new Array(this.commentArray.length).fill(false);
+      this.SubCommentEmojiArr = new Array(this.commentArray.length).fill(false);
     },
     // 初始化评论框的数据
     InitializeInputData() {
