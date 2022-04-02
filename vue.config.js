@@ -1,4 +1,5 @@
 const isProduction = process.env.NODE_ENV === 'production'
+// 分析引入依赖包的大小
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 //正式环境不打包公共js
@@ -64,13 +65,27 @@ module.exports = {
     }
     // 压缩图片
     config.module
+      // .rule('images')
+      // .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+      // .use('image-webpack-loader')
+      // .loader('image-webpack-loader')
+      // .options({
+      //   bypassOnDebug: true
+      // })
+      // .end()
+      // vue-cli 4.x版本需要进行以下配置
       .rule('images')
-      .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
-      .use('image-webpack-loader')
-      .loader('image-webpack-loader')
+      .test(/\.(png|jpe?g|gif|webp)(\?.*)?$/)
+      .use('url-loader')
+      .loader(require.resolve('url-loader'))
       .options({
-        bypassOnDebug: true
+        limit: 4096,
+        fallback: {
+          loader: require.resolve('file-loader'),
+          options: {
+            name: `static/img[name].[hash:8].[ext]`
+          }
+        }
       })
-      .end()
   }
 }
