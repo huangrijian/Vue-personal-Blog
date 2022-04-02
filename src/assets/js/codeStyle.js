@@ -270,16 +270,19 @@ export default [
 ];
 
 // 国内cdn链接
+// cdnjs.cloudflare.com
+// 国外
+// cdnjs.cloudflare.com
 export const external_link = {
   markdown_css: function () {
-    return 'https://cdn.bootcdn.net/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css';
+    return 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css';
   },
   hljs_js: function () {
-    return 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/highlight.min.js';
+    return 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js';
   },
   hljs_lang: function (lang) {
     return (
-      'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/languages/' +
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/' +
       lang +
       '.min.js'
     );
@@ -287,7 +290,7 @@ export const external_link = {
   hljs_css: function (css) {
     if (css) {
       return (
-        'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/styles/' +
+        'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/' +
         css +
         '.min.css'
       );
@@ -295,9 +298,9 @@ export const external_link = {
     return '';
   },
   katex_js: function () {
-    return 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.8.3/katex.min.js';
+    return 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js';
   },
   katex_css: function () {
-    return 'https://cdn.bootcdn.net/ajax/libs/KaTeX/0.8.3/katex.min.css';
+    return 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css';
   }
 }

@@ -7,7 +7,7 @@ let externals = {}
 //储存cdn的文件
 let cdn = {
   css: [
-    'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.6/theme-chalk/index.min.css' // element-ui css 样式表
+    'https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.15.6/theme-chalk/index.min.css' // element-ui css 样式表
   ],
   js: []
 }
@@ -18,9 +18,9 @@ if (isProduction) {
     'element-ui': 'ELEMENT'
   }
   cdn.js = [
-    'https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js', // vuejs
-    'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.6/index.min.js', // element-ui js
-    'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.6/locale/zh-CN.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js', // vuejs
+    'https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.15.6/index.min.js', // element-ui js
+    'https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.15.6/locale/zh-CN.min.js',
   ]
 }
 
