@@ -1,6 +1,4 @@
 const isProduction = process.env.NODE_ENV === 'production'
-// 分析引入依赖包的大小
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   publicPath: './',
